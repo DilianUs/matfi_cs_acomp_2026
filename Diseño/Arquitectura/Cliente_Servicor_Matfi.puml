@@ -1,4 +1,4 @@
-@startuml ArquitecturaClienteServidor_MatFi_Completa
+@startuml ArquitecturaClienteServidor_MatFi
 
 skinparam componentStyle rectangle
 skinparam backgroundColor #FFFFFF
@@ -51,48 +51,36 @@ package "SERVIDOR (Node.js + Express)" #D4E6F1 {
         [Error Handler] as errorHandler
     }
     
-    package "API REST Endpoints" #E1F5FE {
+    package "API REST - 7 Módulos" #E1F5FE {
         
-        package "Auth Routes" #FFE5CC {
-            [POST /api/auth/register]
-            [POST /api/auth/login]
-            [POST /api/auth/logout]
-        }
+        component "1. Autenticación" as authRoutes #FFE5CC
+        component "2. Usuarios" as userRoutes #D4E6F1
+        component "3. Rutinas" as rutinaRoutes #C5E1A5
+        component "4. Ejercicios" as ejercicioRoutes #B3E5FC
+        component "5. Recetas" as recetaRoutes #FFE082
+        component "6. Registros" as registroRoutes #CE93D8
+        component "7. Objetivos" as progresoRoutes #FFCCBC
         
-        package "Usuario Routes" #FFF9C4 {
-            [GET /api/usuarios/:id]
-            [PUT /api/usuarios/:id]
-            [PUT /api/usuarios/:id/password]
-        }
+        authRoutes -[hidden]right-> userRoutes
+        userRoutes -[hidden]right-> rutinaRoutes
+        rutinaRoutes -[hidden]right-> ejercicioRoutes
         
-        package "Rutina Routes" #C8E6C9 {
-            [GET /api/rutinas]
-            [GET /api/rutinas/:id]
-            [POST /api/usuarios/:id/rutinas]
-        }
-        
-        package "Receta Routes" #FFE0B2 {
-            [GET /api/recetas]
-            [GET /api/recetas/:id]
-            [POST /api/usuarios/:id/recetas/favoritas]
-        }
-        
-        package "Registro Routes" #E1BEE7 {
-            [POST /api/usuarios/:id/entrenamientos]
-            [POST /api/usuarios/:id/agua]
-            [GET /api/usuarios/:id/progreso]
-        }
+        ejercicioRoutes -[hidden]down-> recetaRoutes
+        recetaRoutes -[hidden]right-> registroRoutes
+        registroRoutes -[hidden]right-> progresoRoutes
     }
     
     package "Controllers (MVC)" #B3E5FC {
         [authController] as authCtrl
         [usuarioController] as userCtrl
         [rutinaController] as rutCtrl
+        [ejercicioController] as ejCtrl
         [recetaController] as recCtrl
         [registroController] as regCtrl
+        [progresoController] as progCtrl
     }
     
-    package "Middleware de Auth" #FFCCBC {
+    package "Middleware de Seguridad" #FFCCBC {
         [authMiddleware\nVerificar JWT] as authMW
         [validationMiddleware\nValidar datos] as valMW
     }
@@ -100,9 +88,11 @@ package "SERVIDOR (Node.js + Express)" #D4E6F1 {
     package "Models (Acceso a Datos)" #CE93D8 {
         [Usuario.js] as userModel
         [Rutina.js] as rutModel
+        [Ejercicio.js] as ejModel
         [Receta.js] as recModel
         [Entrenamiento.js] as entModel
         [Registro.js] as regModel
+        [Progreso.js] as progModel
     }
     
     package "Services" #E1BEE7 {
@@ -115,19 +105,26 @@ internet -down-> express
 express -down-> cors
 cors -down-> bodyParser
 
-bodyParser -down-> [POST /api/auth/register]
-bodyParser -down-> [POST /api/auth/login]
+bodyParser -down-> authRoutes
+bodyParser -down-> userRoutes
+bodyParser -down-> rutinaRoutes
 
-[POST /api/auth/register] -down-> authCtrl
-[POST /api/auth/login] -down-> authCtrl
-[GET /api/usuarios/:id] -down-> authMW
-[GET /api/rutinas] -down-> authMW
+authRoutes -down-> authCtrl
+userRoutes -down-> authMW
+rutinaRoutes -down-> authMW
+ejercicioRoutes -down-> authMW
+recetaRoutes -down-> authMW
+registroRoutes -down-> authMW
+progresoRoutes -down-> authMW
 
 authMW -down-> valMW
+
 valMW -down-> userCtrl
 valMW -down-> rutCtrl
+valMW -down-> ejCtrl
 valMW -down-> recCtrl
 valMW -down-> regCtrl
+valMW -down-> progCtrl
 
 authCtrl -right-> authSvc
 userCtrl -right-> valSvc
@@ -135,8 +132,10 @@ userCtrl -right-> valSvc
 authCtrl -down-> userModel
 userCtrl -down-> userModel
 rutCtrl -down-> rutModel
+ejCtrl -down-> ejModel
 recCtrl -down-> recModel
 regCtrl -down-> regModel
+progCtrl -down-> progModel
 
 ' ==================== BASE DE DATOS ====================
 database "MySQL Database\nmatfi_db" as mysql #FFF9C4 {
@@ -166,11 +165,14 @@ database "MySQL Database\nmatfi_db" as mysql #FFF9C4 {
 }
 
 userModel -down-> [usuario]
+userModel -down-> [objetivo]
 rutModel -down-> [rutina]
 rutModel -down-> [entrenamiento]
+ejModel -down-> [ejercicio]
 recModel -down-> [receta]
 regModel -down-> [registro_entrenamiento]
 regModel -down-> [registro_agua]
+progModel -down-> [progreso_semanal]
 
 [usuario] -[hidden]right-> [nivel_entrenamiento]
 [nivel_entrenamiento] -[hidden]right-> [categoria_receta]
@@ -182,7 +184,37 @@ note top of html
   • Vanilla JavaScript ES6+
   • Fetch API para HTTP
   • LocalStorage para tokens
-  • Responsivo
+  • Diseño responsivo
+end note
+
+note bottom of authRoutes
+  3 endpoints
+  (Sin JWT)
+end note
+
+note bottom of userRoutes
+  3 endpoints
+  (JWT requerido)
+end note
+
+note bottom of rutinaRoutes
+  4 endpoints
+end note
+
+note bottom of ejercicioRoutes
+  2 endpoints
+end note
+
+note bottom of recetaRoutes
+  4 endpoints
+end note
+
+note bottom of registroRoutes
+  4 endpoints
+end note
+
+note bottom of progresoRoutes
+  3 endpoints
 end note
 
 note top of express
@@ -190,8 +222,9 @@ note top of express
   • Node.js v18+
   • Express.js 4.x
   • Patrón MVC
-  • APIs REST
-  • JWT para auth
+  • 7 módulos de APIs REST
+  • JWT para autenticación
+  • Bcrypt para contraseñas
 end note
 
 note bottom of mysql
@@ -200,42 +233,42 @@ note bottom of mysql
   • Motor InnoDB
   • UTF-8 (utf8mb4)
   • Normalizada 3NF
-  • 14 tablas
+  • 14 tablas en total
 end note
 
-note right of authMW
-  Valida token JWT
-  en todas las rutas
-  protegidas
+note top of authMW
+  Valida JWT (módulos 2-7)
 end note
 
-' ==================== FLUJO ====================
+' ==================== LEYENDA ====================
 legend bottom
   **FLUJO DE PETICIÓN COMPLETA:**
   
-  1. Usuario interactúa con interfaz HTML
+  1. Usuario interactúa con HTML/JS en navegador
   2. JavaScript (api.js) hace HTTP request con Fetch
-  3. Request viaja por internet (HTTPS)
-  4. Express recibe en puerto 3000
-  5. Middleware CORS y Body Parser procesan
-  6. Router identifica endpoint
-  7. authMiddleware verifica JWT (si aplica)
-  8. validationMiddleware valida datos
-  9. Controller ejecuta lógica de negocio
-  10. Controller llama a Services si necesita
-  11. Model ejecuta queries SQL en MySQL
-  12. MySQL retorna resultados
-  13. Model procesa datos
-  14. Controller formatea respuesta JSON
-  15. Express envía HTTP response
-  16. JavaScript recibe JSON
-  17. ui.js actualiza DOM
-  18. Usuario ve resultado
+  3. Request viaja por internet vía HTTPS
+  4. Express Server recibe en puerto 3000
+  5. Middleware CORS permite el origen
+  6. Body Parser procesa JSON
+  7. Router identifica el módulo correspondiente (1-7)
+  8. authMiddleware verifica JWT (módulos 2-7)
+  9. validationMiddleware valida estructura de datos
+  10. Controller ejecuta lógica de negocio
+  11. Controller usa Services si necesita (auth, validation)
+  12. Model ejecuta queries SQL en MySQL
+  13. MySQL retorna resultados
+  14. Model procesa y formatea datos
+  15. Controller envía respuesta JSON
+  16. Express retorna HTTP response
+  17. JavaScript recibe y procesa JSON
+  18. ui.js actualiza el DOM
+  19. Usuario ve el resultado en pantalla
   
-  **Tecnologías:**
-  Frontend: HTML5, CSS3, Vanilla JS ES6+
-  Backend: Node.js, Express.js, MySQL2, JWT, Bcrypt
-  Base de Datos: MySQL 8.0+ (14 tablas normalizadas)
+  **Stack Tecnológico:**
+  Frontend: HTML5 + CSS3 + Vanilla JavaScript ES6+
+  Backend: Node.js + Express.js + MySQL2 + JWT + Bcrypt
+  Base de Datos: MySQL 8.0+ (14 tablas, normalizada 3NF)
+  Comunicación: REST APIs con JSON sobre HTTPS
 end legend
 
 @enduml
