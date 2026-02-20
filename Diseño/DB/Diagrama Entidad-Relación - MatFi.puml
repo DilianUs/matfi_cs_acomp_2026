@@ -1,9 +1,10 @@
-@startuml DiagramaER_MatFi_Radial
+@startuml DiagramaER_MatFi_Final
 
 !define ENTITY entity
 !define ATTR(x) (x)
 
 skinparam backgroundColor #FFFFFF
+skinparam linetype ortho
 skinparam DefaultFontSize 10
 
 skinparam entity {
@@ -14,104 +15,110 @@ skinparam entity {
     FontStyle bold
 }
 
-skinparam circle {
-    BackgroundColor #FFFFFF
-    BorderColor #2C5F77
-    FontSize 9
+title Diagrama Entidad-Relación Completo - MatFi\n(Sincronizado con Modelo Relacional)
+
+' ====== MÓDULO USUARIO ======
+ENTITY Usuario {
+    <u>id_usuario</u>
+    nombre
+    email
+    telefono
+    contraseña
 }
 
-title Diagrama Entidad-Relación - MatFi\n
+' ====== MÓDULO NUTRICIÓN (Recetas) ======
+ENTITY "Categoría Receta" as CatReceta {
+    <u>id_categoria</u>
+    nombre
+    descripcion
+}
 
-' ====== CENTRO: Usuario ======
-ENTITY Usuario
-ATTR(<u>id_usuario</u>) -- Usuario
-ATTR(nombre) -up- Usuario
-ATTR(email) -down- Usuario
-ATTR(telefono) -left- Usuario
-ATTR(contraseña) -right- Usuario
+ENTITY Receta {
+    <u>id_receta</u>
+    titulo
+    ingredientes
+    preparacion
+    proteinas
+    calorias_totales
+}
 
-' ====== ARRIBA: Registro Agua ======
-ENTITY "Registro\nAgua" as RegAgua
-ATTR(<u>id_registro</u>) -- RegAgua
-ATTR(fecha) -- RegAgua
-ATTR(cantidad_ml) -- RegAgua
+ENTITY "Receta Favorita" as Favorito {
+    <u>id_favorita</u>
+    fecha_agregada
+}
 
-Usuario }o--|| RegAgua : "Registra"
+' Relaciones Nutrición
+CatReceta ||--o{ Receta : "Clasifica"
+Usuario ||--o{ Favorito : "Marca"
+Receta ||--o{ Favorito : "Es marcada"
 
-' ====== ARRIBA IZQUIERDA: Objetivo ======
-ENTITY Objetivo
-ATTR(<u>id_objetivo</u>) -- Objetivo
-ATTR(tipo) -- Objetivo
-ATTR(descripcion) -- Objetivo
-ATTR(valor) -- Objetivo
+' ====== MÓDULO ENTRENAMIENTO ======
+ENTITY "Nivel Entrenamiento" as Nivel {
+    <u>id_nivel</u>
+    nombre
+}
 
-Usuario }o--o{ Objetivo : "Define"
+ENTITY Rutina {
+    <u>id_rutina</u>
+    nombre
+    duracion_estimada
+}
 
-' ====== DERECHA: Sistema de Entrenamiento ======
-ENTITY "Nivel\nEntrenamiento" as Nivel
-ATTR(<u>id_nivel</u>) -- Nivel
-ATTR(nombre) -- Nivel
+ENTITY Entrenamiento {
+    <u>id_entrenamiento</u>
+    nombre
+    orden
+}
 
-ENTITY Rutina
-ATTR(<u>id_rutina</u>) -- Rutina
-ATTR(nombre) -- Rutina
-ATTR(duracion) -- Rutina
+ENTITY Ejercicio {
+    <u>id_ejercicio</u>
+    nombre
+    dificultad
+}
 
-ENTITY Entrenamiento
-ATTR(<u>id_entrenamiento</u>) -- Entrenamiento
-ATTR(nombre) -- Entrenamiento
-ATTR(orden) -- Entrenamiento
+ENTITY "Entrenamiento_Ejercicio" as EntEj {
+    orden
+    series_especificas
+    repeticiones_especificas
+}
 
-ENTITY Ejercicio
-ATTR(<u>id_ejercicio</u>) -- Ejercicio
-ATTR(nombre) -- Ejercicio
-ATTR(series) -- Ejercicio
-ATTR(repeticiones) -- Ejercicio
+ENTITY "Usuario_Rutina" as UsuRut {
+    fecha_inicio
+    activa
+}
 
-' Relaciones de entrenamiento
-Nivel ||--o{ Rutina : "Clasifica"
+' Relaciones Entrenamiento
+Nivel ||--o{ Rutina : "Define"
 Rutina ||--o{ Entrenamiento : "Compone"
-Entrenamiento }o--o{ Ejercicio : "Incluye"
+Entrenamiento ||--o{ EntEj : "Incluye"
+EntEj }o--|| Ejercicio : "Referencia"
+Usuario ||--o{ UsuRut : "Sigue"
+Rutina ||--o{ UsuRut : "Es seguida"
 
-Usuario }o--o{ Rutina : "Sigue"
-Usuario }o--o{ Entrenamiento : "Realiza"
+' ====== MÓDULO SEGUIMIENTO Y METRICAS ======
+ENTITY Objetivo {
+    <u>id_objetivo</u>
+    tipo (ENUM)
+    valor_objetivo
+    completado
+}
 
-' ====== IZQUIERDA: Sistema de Recetas ======
-ENTITY "Categoria\nReceta" as CatReceta
-ATTR(<u>id_categoria</u>) -- CatReceta
-ATTR(nombre) -- CatReceta
+ENTITY "Registro Agua" as RegAgua {
+    <u>id_registro_agua</u>
+    fecha
+    cantidad_ml
+}
 
-ENTITY Receta
-ATTR(<u>id_receta</u>) -- Receta
-ATTR(titulo) -- Receta
-ATTR(ingredientes) -- Receta
-ATTR(preparacion) -- Receta
-ATTR(proteinas) -- Receta
-ATTR(calorias) -- Receta
+ENTITY "Registro Entrenamiento" as RegEnt {
+    <u>id_registro</u>
+    fecha
+    completado
+}
 
-' Relaciones de recetas
-CatReceta ||--o{ Receta : "Contiene"
-Usuario }o--o{ Receta : "Guarda\nFavorita"
-
-' ====== Layout Control ======
-Usuario -[hidden]up- RegAgua
-Usuario -[hidden]right- Rutina
-Usuario -[hidden]down- Entrenamiento  
-Usuario -[hidden]left- Receta
-
-Objetivo -[hidden]right- RegAgua
-Nivel -[hidden]down- Rutina
-Rutina -[hidden]down- Entrenamiento
-Entrenamiento -[hidden]down- Ejercicio
-
-CatReceta -[hidden]right- Receta
-Receta -[hidden]up- Objetivo
-
-legend bottom right
-**Leyenda**
-||--o{ = Uno a muchos (1:N)
-}o--o{ = Muchos a muchos (N:M)
-<u>id</u> = Clave primaria
-end legend
+' Relaciones Seguimiento
+Usuario ||--o{ Objetivo : "Establece"
+Usuario ||--o{ RegAgua : "Registra"
+Usuario ||--o{ RegEnt : "Realiza"
+Entrenamiento ||--o{ RegEnt : "Se registra"
 
 @enduml
