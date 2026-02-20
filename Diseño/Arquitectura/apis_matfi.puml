@@ -1,0 +1,255 @@
+@startuml APIs_REST_MatFi_Vertical
+
+skinparam componentStyle rectangle
+skinparam backgroundColor #FFFFFF
+skinparam packageStyle rectangle
+
+title APIs REST - MatFi\nExpress.js Endpoints
+
+' ==================== AUTENTICACIÓN ====================
+package "1. AUTENTICACIÓN (Sin JWT)" #FFE5CC {
+    
+    [POST /api/auth/register] as register
+    [POST /api/auth/login] as login
+    [POST /api/auth/logout] as logout
+}
+
+note right of register
+  **Registro de usuario**
+  Body: nombre, telefono, email, contraseña
+  Response 201: Usuario registrado + id
+  Errores: 400, 422
+end note
+
+note right of login
+  **Inicio de sesión**
+  Body: email, contraseña
+  Response 200: token JWT + usuario
+  Errores: 401, 404
+end note
+
+note right of logout
+  **Cerrar sesión**
+  Headers: Authorization Bearer
+  Response 200: Sesión cerrada
+end note
+
+register -[hidden]down-> login
+login -[hidden]down-> logout
+
+' ==================== USUARIOS ====================
+package "2. USUARIOS (Requiere JWT)" #D4E6F1 {
+    
+    [GET /api/usuarios/:id] as getUser
+    [PUT /api/usuarios/:id] as updateUser
+    [PUT /api/usuarios/:id/password] as changePass
+}
+
+note right of getUser
+  **Obtener perfil**
+  Headers: Authorization
+  Response 200: Datos usuario
+end note
+
+note right of updateUser
+  **Actualizar perfil**
+  Body: nombre, telefono
+  Response 200: Actualizado
+end note
+
+note right of changePass
+  **Cambiar contraseña**
+  Body: contraseña_actual, nueva
+  Response 200: Actualizada
+end note
+
+getUser -[hidden]down-> updateUser
+updateUser -[hidden]down-> changePass
+
+logout -[hidden]down-> getUser
+
+' ==================== RUTINAS ====================
+package "3. RUTINAS" #C5E1A5 {
+    
+    [GET /api/rutinas] as getRutinas
+    [GET /api/rutinas/:id] as getRutina
+    [GET /api/rutinas/:id/entrenamientos] as getEntrenamientos
+    [POST /api/usuarios/:id/rutinas] as asignarRutina
+}
+
+note right of getRutinas
+  **Listar rutinas**
+  Query: ?nivel=principiante
+  Response 200: Array rutinas
+end note
+
+note right of getRutina
+  **Detalle de rutina**
+  Response 200: Rutina completa
+end note
+
+note right of getEntrenamientos
+  **Entrenamientos**
+  Response 200: Array
+end note
+
+note right of asignarRutina
+  **Asignar rutina**
+  Body: id_rutina, fecha_inicio
+  Response 201: Asignada
+end note
+
+getRutinas -[hidden]down-> getRutina
+getRutina -[hidden]down-> getEntrenamientos
+getEntrenamientos -[hidden]down-> asignarRutina
+
+changePass -[hidden]down-> getRutinas
+
+' ==================== EJERCICIOS ====================
+package "4. EJERCICIOS" #B3E5FC {
+    
+    [GET /api/ejercicios] as getEjercicios
+    [GET /api/ejercicios/:id] as getEjercicio
+}
+
+note right of getEjercicios
+  **Listar ejercicios**
+  Query: ?musculo=pecho
+  Response 200: Array
+end note
+
+note right of getEjercicio
+  **Detalle ejercicio**
+  Response 200: Con video
+  y descripción completa
+end note
+
+getEjercicios -[hidden]down-> getEjercicio
+
+asignarRutina -[hidden]down-> getEjercicios
+
+' ==================== RECETAS ====================
+package "5. RECETAS" #FFE082 {
+    
+    [GET /api/recetas] as getRecetas
+    [GET /api/recetas/:id] as getReceta
+    [POST /api/usuarios/:id/recetas/favoritas] as addFavorita
+    [GET /api/usuarios/:id/recetas/favoritas] as getFavoritas
+}
+
+note right of getRecetas
+  **Listar recetas**
+  Query: ?categoria=desayuno
+  Response 200: Array recetas
+end note
+
+note right of getReceta
+  **Detalle receta**
+  Response 200: Ingredientes,
+  preparación, macronutrientes
+end note
+
+note right of addFavorita
+  **Agregar favorita**
+  Body: id_receta
+  Response 201: Agregada
+end note
+
+note right of getFavoritas
+  **Listar favoritas**
+  Response 200: Array
+end note
+
+getRecetas -[hidden]down-> getReceta
+getReceta -[hidden]down-> addFavorita
+addFavorita -[hidden]down-> getFavoritas
+
+getEjercicio -[hidden]down-> getRecetas
+
+' ==================== REGISTROS ====================
+package "6. REGISTROS" #CE93D8 {
+    
+    [POST /api/usuarios/:id/entrenamientos] as registrarEntrenamiento
+    [GET /api/usuarios/:id/entrenamientos] as getRegistros
+    [POST /api/usuarios/:id/agua] as registrarAgua
+    [GET /api/usuarios/:id/agua] as getAgua
+}
+
+note right of registrarEntrenamiento
+  **Registrar entrenamiento**
+  Body: id_entrenamiento,
+  fecha, duracion, completado
+  Response 201: Registrado
+end note
+
+note right of getRegistros
+  **Historial entrenamientos**
+  Query: ?fecha_desde=...
+  Response 200: Array registros
+end note
+
+note right of registrarAgua
+  **Registrar agua**
+  Body: cantidad_ml, fecha
+  Response 201: Registrado
+end note
+
+note right of getAgua
+  **Consumo agua**
+  Query: ?fecha=YYYY-MM-DD
+  Response 200: cantidad, objetivo
+end note
+
+registrarEntrenamiento -[hidden]down-> getRegistros
+getRegistros -[hidden]down-> registrarAgua
+registrarAgua -[hidden]down-> getAgua
+
+getFavoritas -[hidden]down-> registrarEntrenamiento
+
+' ==================== OBJETIVOS ====================
+package "7. OBJETIVOS Y PROGRESO" #FFCCBC {
+    
+    [POST /api/usuarios/:id/objetivos] as crearObjetivo
+    [GET /api/usuarios/:id/objetivos] as getObjetivos
+    [GET /api/usuarios/:id/progreso] as getProgreso
+}
+
+note right of crearObjetivo
+  **Crear objetivo**
+  Body: tipo, descripcion,
+  valor_objetivo
+  Response 201: Creado
+end note
+
+note right of getObjetivos
+  **Listar objetivos**
+  Response 200: Array
+end note
+
+note right of getProgreso
+  **Progreso semanal**
+  Query: ?semana=7&año=2025
+  Response 200: entrenamientos,
+  tiempo, calorias, dias_activos
+end note
+
+crearObjetivo -[hidden]down-> getObjetivos
+getObjetivos -[hidden]down-> getProgreso
+
+getAgua -[hidden]down-> crearObjetivo
+
+' ==================== LEYENDA ====================
+legend bottom
+  **CÓDIGOS HTTP:**
+  200 OK | 201 Created | 400 Bad Request
+  401 Unauthorized | 404 Not Found | 422 Validation Error
+  
+  **AUTENTICACIÓN:**
+  JWT en header: Authorization: Bearer <token>
+  Expira en 2 horas
+  
+  **FORMATO:**
+  Content-Type: application/json
+end legend
+
+@enduml
