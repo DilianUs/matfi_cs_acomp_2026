@@ -1,0 +1,263 @@
+@startuml DiagramaRelacional_MatFi
+
+' Configuración del estilo
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, #FFAAAA) >>
+
+skinparam linetype ortho
+skinparam class {
+    BackgroundColor #FEFECE
+    BorderColor #A80036
+    ArrowColor #A80036
+}
+
+title Diagrama Relacional (Modelo Físico) - MatFi\nBase de Datos MySQL
+
+' ========== TABLAS ==========
+
+entity "usuario" as usuario {
+  primary_key(id_usuario) : INT AUTO_INCREMENT
+  --
+  nombre : VARCHAR(100) NOT NULL
+  telefono : VARCHAR(20) NOT NULL
+  email : VARCHAR(100) UNIQUE NOT NULL
+  contraseña : VARCHAR(255) NOT NULL
+  fecha_registro : DATETIME DEFAULT CURRENT_TIMESTAMP
+  ultima_sesion : DATETIME
+  --
+  INDEX idx_email (email)
+}
+
+entity "categoria_receta" as categoria_receta {
+  primary_key(id_categoria) : INT AUTO_INCREMENT
+  --
+  nombre : VARCHAR(50) NOT NULL
+  descripcion : TEXT
+}
+
+entity "receta" as receta {
+  primary_key(id_receta) : INT AUTO_INCREMENT
+  foreign_key(id_categoria) : INT NOT NULL
+  --
+  titulo : VARCHAR(150) NOT NULL
+  imagen_url : VARCHAR(255)
+  ingredientes : TEXT NOT NULL
+  preparacion : TEXT NOT NULL
+  proteinas : DECIMAL(5,2)
+  carbohidratos : DECIMAL(5,2)
+  grasas : DECIMAL(5,2)
+  calorias_totales : INT
+  tiempo_preparacion : INT
+  --
+  INDEX idx_categoria (id_categoria)
+  FOREIGN KEY (id_categoria) REFERENCES categoria_receta(id_categoria)
+}
+
+entity "receta_favorita" as receta_favorita {
+  primary_key(id_favorita) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  foreign_key(id_receta) : INT NOT NULL
+  --
+  fecha_agregada : DATETIME DEFAULT CURRENT_TIMESTAMP
+  --
+  UNIQUE KEY uk_usuario_receta (id_usuario, id_receta)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+  FOREIGN KEY (id_receta) REFERENCES receta(id_receta)
+}
+
+entity "nivel_entrenamiento" as nivel {
+  primary_key(id_nivel) : INT AUTO_INCREMENT
+  --
+  nombre : VARCHAR(50) NOT NULL
+  descripcion : TEXT
+  orden : INT
+}
+
+entity "rutina" as rutina {
+  primary_key(id_rutina) : INT AUTO_INCREMENT
+  foreign_key(id_nivel) : INT NOT NULL
+  --
+  nombre : VARCHAR(150) NOT NULL
+  descripcion : TEXT
+  duracion_estimada : INT
+  grupos_musculares : TEXT
+  objetivo : VARCHAR(100)
+  imagen_url : VARCHAR(255)
+  --
+  INDEX idx_nivel (id_nivel)
+  FOREIGN KEY (id_nivel) REFERENCES nivel_entrenamiento(id_nivel)
+}
+
+entity "entrenamiento" as entrenamiento {
+  primary_key(id_entrenamiento) : INT AUTO_INCREMENT
+  foreign_key(id_rutina) : INT NOT NULL
+  --
+  nombre : VARCHAR(150) NOT NULL
+  descripcion : TEXT
+  orden : INT NOT NULL
+  duracion_estimada : INT
+  --
+  INDEX idx_rutina (id_rutina)
+  FOREIGN KEY (id_rutina) REFERENCES rutina(id_rutina)
+}
+
+entity "ejercicio" as ejercicio {
+  primary_key(id_ejercicio) : INT AUTO_INCREMENT
+  --
+  nombre : VARCHAR(150) NOT NULL
+  descripcion_ejecucion : TEXT NOT NULL
+  series : INT
+  repeticiones : VARCHAR(50)
+  tiempo_descanso : INT
+  musculos_principales : TEXT
+  musculos_secundarios : TEXT
+  video_url : VARCHAR(255)
+  imagen_url : VARCHAR(255)
+  dificultad : ENUM('bajo','medio','alto')
+}
+
+entity "entrenamiento_ejercicio" as entrenamiento_ejercicio {
+  primary_key(id_relacion) : INT AUTO_INCREMENT
+  foreign_key(id_entrenamiento) : INT NOT NULL
+  foreign_key(id_ejercicio) : INT NOT NULL
+  --
+  orden : INT NOT NULL
+  series_especificas : INT
+  repeticiones_especificas : VARCHAR(50)
+  --
+  UNIQUE KEY uk_entrenamiento_ejercicio (id_entrenamiento, id_ejercicio)
+  FOREIGN KEY (id_entrenamiento) REFERENCES entrenamiento(id_entrenamiento)
+  FOREIGN KEY (id_ejercicio) REFERENCES ejercicio(id_ejercicio)
+}
+
+entity "usuario_rutina" as usuario_rutina {
+  primary_key(id_usuario_rutina) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  foreign_key(id_rutina) : INT NOT NULL
+  --
+  fecha_inicio : DATE NOT NULL
+  fecha_fin : DATE
+  activa : BOOLEAN DEFAULT TRUE
+  --
+  INDEX idx_usuario (id_usuario)
+  INDEX idx_rutina (id_rutina)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+  FOREIGN KEY (id_rutina) REFERENCES rutina(id_rutina)
+}
+
+entity "registro_entrenamiento" as registro_entrenamiento {
+  primary_key(id_registro) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  foreign_key(id_entrenamiento) : INT NOT NULL
+  --
+  fecha : DATE NOT NULL
+  hora_inicio : TIME
+  hora_fin : TIME
+  duracion_minutos : INT
+  calorias_estimadas : DECIMAL(6,2)
+  completado : BOOLEAN DEFAULT FALSE
+  notas : TEXT
+  --
+  INDEX idx_usuario_fecha (id_usuario, fecha)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+  FOREIGN KEY (id_entrenamiento) REFERENCES entrenamiento(id_entrenamiento)
+}
+
+entity "registro_agua" as registro_agua {
+  primary_key(id_registro_agua) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  --
+  fecha : DATE NOT NULL
+  cantidad_ml : INT DEFAULT 0
+  objetivo_diario : INT DEFAULT 2000
+  --
+  UNIQUE KEY uk_usuario_fecha (id_usuario, fecha)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+}
+
+entity "objetivo" as objetivo {
+  primary_key(id_objetivo) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  --
+  tipo : ENUM('ejercicio','alimentacion','hidratacion') NOT NULL
+  descripcion : VARCHAR(255) NOT NULL
+  valor_objetivo : VARCHAR(100)
+  fecha_inicio : DATE NOT NULL
+  fecha_fin : DATE
+  completado : BOOLEAN DEFAULT FALSE
+  --
+  INDEX idx_usuario_tipo (id_usuario, tipo)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+}
+
+entity "progreso_semanal" as progreso_semanal {
+  primary_key(id_progreso) : INT AUTO_INCREMENT
+  foreign_key(id_usuario) : INT NOT NULL
+  --
+  semana : INT NOT NULL
+  año : INT NOT NULL
+  entrenamientos_completados : INT DEFAULT 0
+  tiempo_total_minutos : INT DEFAULT 0
+  calorias_quemadas : DECIMAL(8,2) DEFAULT 0
+  dias_activos : INT DEFAULT 0
+  --
+  UNIQUE KEY uk_usuario_semana (id_usuario, año, semana)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+}
+
+' ========== RELACIONES ==========
+
+usuario ||--o{ receta_favorita
+receta_favorita }o--|| receta
+
+categoria_receta ||--o{ receta
+
+nivel ||--o{ rutina
+
+rutina ||--o{ entrenamiento
+rutina ||--o{ usuario_rutina
+
+entrenamiento ||--o{ entrenamiento_ejercicio
+entrenamiento_ejercicio }o--|| ejercicio
+
+entrenamiento ||--o{ registro_entrenamiento
+
+usuario ||--o{ usuario_rutina
+usuario ||--o{ registro_entrenamiento
+usuario ||--o{ registro_agua
+usuario ||--o{ objetivo
+usuario ||--o{ progreso_semanal
+
+note top of usuario
+  **Tabla Principal de Usuarios**
+  - Contraseñas cifradas (Base64)
+  - Email con índice único
+  - Sesión expira tras 2h inactividad
+end note
+
+note bottom of nivel
+  **Valores:**
+  1: Principiante
+  2: Intermedio
+  3: Avanzado
+end note
+
+note right of registro_entrenamiento
+  **Tracking de Entrenamientos**
+  Permite generar:
+  - Historial semanal
+  - Métricas de progreso
+  - Gráficas históricas
+end note
+
+note left of entrenamiento_ejercicio
+  **Tabla Intermedia**
+  Permite configurar series y
+  repeticiones específicas por
+  entrenamiento
+end note
+
+@enduml
