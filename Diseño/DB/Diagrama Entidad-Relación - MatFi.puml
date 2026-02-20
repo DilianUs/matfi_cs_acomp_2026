@@ -1,0 +1,117 @@
+@startuml DiagramaER_MatFi_Radial
+
+!define ENTITY entity
+!define ATTR(x) (x)
+
+skinparam backgroundColor #FFFFFF
+skinparam DefaultFontSize 10
+
+skinparam entity {
+    BackgroundColor #E8F4F8
+    BorderColor #2C5F77
+    BorderThickness 2
+    FontSize 11
+    FontStyle bold
+}
+
+skinparam circle {
+    BackgroundColor #FFFFFF
+    BorderColor #2C5F77
+    FontSize 9
+}
+
+title Diagrama Entidad-Relación - MatFi\n
+
+' ====== CENTRO: Usuario ======
+ENTITY Usuario
+ATTR(<u>id_usuario</u>) -- Usuario
+ATTR(nombre) -up- Usuario
+ATTR(email) -down- Usuario
+ATTR(telefono) -left- Usuario
+ATTR(contraseña) -right- Usuario
+
+' ====== ARRIBA: Registro Agua ======
+ENTITY "Registro\nAgua" as RegAgua
+ATTR(<u>id_registro</u>) -- RegAgua
+ATTR(fecha) -- RegAgua
+ATTR(cantidad_ml) -- RegAgua
+
+Usuario }o--|| RegAgua : "Registra"
+
+' ====== ARRIBA IZQUIERDA: Objetivo ======
+ENTITY Objetivo
+ATTR(<u>id_objetivo</u>) -- Objetivo
+ATTR(tipo) -- Objetivo
+ATTR(descripcion) -- Objetivo
+ATTR(valor) -- Objetivo
+
+Usuario }o--o{ Objetivo : "Define"
+
+' ====== DERECHA: Sistema de Entrenamiento ======
+ENTITY "Nivel\nEntrenamiento" as Nivel
+ATTR(<u>id_nivel</u>) -- Nivel
+ATTR(nombre) -- Nivel
+
+ENTITY Rutina
+ATTR(<u>id_rutina</u>) -- Rutina
+ATTR(nombre) -- Rutina
+ATTR(duracion) -- Rutina
+
+ENTITY Entrenamiento
+ATTR(<u>id_entrenamiento</u>) -- Entrenamiento
+ATTR(nombre) -- Entrenamiento
+ATTR(orden) -- Entrenamiento
+
+ENTITY Ejercicio
+ATTR(<u>id_ejercicio</u>) -- Ejercicio
+ATTR(nombre) -- Ejercicio
+ATTR(series) -- Ejercicio
+ATTR(repeticiones) -- Ejercicio
+
+' Relaciones de entrenamiento
+Nivel ||--o{ Rutina : "Clasifica"
+Rutina ||--o{ Entrenamiento : "Compone"
+Entrenamiento }o--o{ Ejercicio : "Incluye"
+
+Usuario }o--o{ Rutina : "Sigue"
+Usuario }o--o{ Entrenamiento : "Realiza"
+
+' ====== IZQUIERDA: Sistema de Recetas ======
+ENTITY "Categoria\nReceta" as CatReceta
+ATTR(<u>id_categoria</u>) -- CatReceta
+ATTR(nombre) -- CatReceta
+
+ENTITY Receta
+ATTR(<u>id_receta</u>) -- Receta
+ATTR(titulo) -- Receta
+ATTR(ingredientes) -- Receta
+ATTR(preparacion) -- Receta
+ATTR(proteinas) -- Receta
+ATTR(calorias) -- Receta
+
+' Relaciones de recetas
+CatReceta ||--o{ Receta : "Contiene"
+Usuario }o--o{ Receta : "Guarda\nFavorita"
+
+' ====== Layout Control ======
+Usuario -[hidden]up- RegAgua
+Usuario -[hidden]right- Rutina
+Usuario -[hidden]down- Entrenamiento  
+Usuario -[hidden]left- Receta
+
+Objetivo -[hidden]right- RegAgua
+Nivel -[hidden]down- Rutina
+Rutina -[hidden]down- Entrenamiento
+Entrenamiento -[hidden]down- Ejercicio
+
+CatReceta -[hidden]right- Receta
+Receta -[hidden]up- Objetivo
+
+legend bottom right
+**Leyenda**
+||--o{ = Uno a muchos (1:N)
+}o--o{ = Muchos a muchos (N:M)
+<u>id</u> = Clave primaria
+end legend
+
+@enduml
