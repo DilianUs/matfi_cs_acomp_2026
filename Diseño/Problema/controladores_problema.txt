@@ -1,0 +1,90 @@
+@startuml MatFi_Controladores
+
+top to bottom direction
+
+skinparam packageStyle rectangle
+
+title MatFi - Controladores
+
+class BaseController
+
+class AuthController {
+- authService
+- usuarioDAO
++ registrar(datos)
++ login(email, password)
++ logout()
++ validarSesion()
+}
+
+class DashboardController {
+- progresoDAO
+- registroDAO
+- usuarioActual
++ cargarDashboard()
++ obtenerProgreso()
++ obtenerHistorial()
++ obtenerObjetivos()
+}
+
+class AlimentacionController {
+- recetaDAO
+- registroDAO
++ cargarRecetas(categoria)
++ obtenerDetalleReceta(id)
++ agregarFavorita(idReceta)
++ registrarAgua(cantidad)
++ obtenerConsumoAgua(fecha)
+}
+
+class RutinaController {
+- rutinaDAO
+- ejercicioDAO
++ cargarRutinas(nivel)
++ obtenerDetalleRutina(id)
++ obtenerEntrenamientos(id)
++ obtenerEjercicios(id)
++ asignarRutina(idRutina)
+}
+
+class RegistroController {
+- registroDAO
++ registrarEntrenamiento(datos)
++ obtenerHistorial(fechas)
++ marcarCompletado(id)
+}
+
+class PerfilController {
+- usuarioDAO
++ cargarPerfil()
++ actualizarDatos(datos)
++ cambiarPassword(actual,nueva)
++ actualizarFotoPerfil(img)
+}
+
+class ProgresoController {
+- progresoDAO
++ obtenerProgresoSemanal(sem,año)
++ crearObjetivo(objetivo)
++ obtenerObjetivos()
++ actualizarObjetivo(id,estado)
+}
+
+class NavegacionController {
+- vistaActual
+- historial: string[]
++ navegarA(vista)
++ volver()
++ obtenerVistaActual()
+}
+
+BaseController <|-- AuthController
+BaseController <|-- DashboardController
+BaseController <|-- AlimentacionController
+BaseController <|-- RutinaController
+BaseController <|-- RegistroController
+BaseController <|-- PerfilController
+BaseController <|-- ProgresoController
+BaseController <|-- NavegacionController
+
+@enduml

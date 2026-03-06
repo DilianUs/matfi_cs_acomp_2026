@@ -1,0 +1,184 @@
+@startuml MatFi_Modelo
+
+top to bottom direction
+
+skinparam packageStyle rectangle
+
+title MatFi - Modelo de Datos
+
+class BaseDAO
+
+package DAO {
+
+class UsuarioDAO {
++ registrar(usuario)
++ login(email,password)
++ obtenerPorId(id)
++ actualizar(usuario)
++ cambiarPassword(id,pass)
+}
+
+class RutinaDAO {
++ obtenerTodas()
++ obtenerPorNivel(nivel)
++ obtenerPorId(id)
++ obtenerEntrenamientos(id)
++ asignarAUsuario(idUser,idRut)
+}
+
+class EjercicioDAO {
++ obtenerTodos()
++ obtenerPorMusculo(musculo)
++ obtenerPorId(id)
+}
+
+class RecetaDAO {
++ obtenerTodas()
++ obtenerPorCategoria(cat)
++ obtenerPorId(id)
++ agregarFavorita(idUser,idRec)
++ obtenerFavoritas(idUser)
+}
+
+class RegistroDAO {
++ registrarEntrenamiento(reg)
++ obtenerHistorial(idUser)
++ registrarAgua(reg)
++ obtenerConsumoAgua(idUser,fecha)
+}
+
+class ProgresoDAO {
++ obtenerProgresoSemanal(id,sem)
++ crearObjetivo(objetivo)
++ obtenerObjetivos(idUser)
+}
+
+}
+
+package API {
+
+class APIService {
+- baseURL: string
+- token: string
++ get(endpoint)
++ post(endpoint,data)
++ put(endpoint,data)
++ delete(endpoint)
+}
+
+class AuthService {
++ login(email,password)
++ register(userData)
++ logout()
++ isAuthenticated()
++ getToken()
++ saveToken(token)
+}
+
+}
+
+package ENTIDADES {
+
+class Usuario {
+- id_usuario: int
+- nombre: string
+- telefono: string
+- email: string
+- contraseña: string
+- fecha_registro: datetime
+}
+
+class Rutina {
+- id_rutina: int
+- id_nivel: int
+- nombre: string
+- descripcion: string
+- duracion_estimada: int
+- grupos_musculares: string
+- objetivo: string
+}
+
+class Ejercicio {
+- id_ejercicio: int
+- nombre: string
+- descripcion_ejecucion: string
+- series: int
+- repeticiones: string
+- musculos_principales: string
+- video_url: string
+}
+
+class Receta {
+- id_receta: int
+- id_categoria: int
+- titulo: string
+- ingredientes: string
+- preparacion: string
+- proteinas: decimal
+- carbohidratos: decimal
+- grasas: decimal
+- calorias_totales: int
+}
+
+class RegistroEntrenamiento {
+- id_registro: int
+- id_usuario: int
+- id_entrenamiento: int
+- fecha: date
+- duracion_minutos: int
+- completado: boolean
+}
+
+class RegistroAgua {
+- id_registro_agua: int
+- id_usuario: int
+- fecha: date
+- cantidad_ml: int
+- objetivo_diario: int
+}
+
+class Objetivo {
+- id_objetivo: int
+- id_usuario: int
+- tipo: string
+- descripcion: string
+- valor_objetivo: string
+- completado: boolean
+}
+
+class ProgresoSemanal {
+- id_progreso: int
+- id_usuario: int
+- semana: int
+- año: int
+- entrenamientos_completados: int
+- tiempo_total_minutos: int
+- dias_activos: int
+}
+
+}
+
+BaseDAO <|-- UsuarioDAO
+BaseDAO <|-- RutinaDAO
+BaseDAO <|-- EjercicioDAO
+BaseDAO <|-- RecetaDAO
+BaseDAO <|-- RegistroDAO
+BaseDAO <|-- ProgresoDAO
+
+UsuarioDAO ..> Usuario
+RutinaDAO ..> Rutina
+EjercicioDAO ..> Ejercicio
+RecetaDAO ..> Receta
+RegistroDAO ..> RegistroEntrenamiento
+RegistroDAO ..> RegistroAgua
+ProgresoDAO ..> Objetivo
+ProgresoDAO ..> ProgresoSemanal
+
+UsuarioDAO --> APIService
+RutinaDAO --> APIService
+EjercicioDAO --> APIService
+RecetaDAO --> APIService
+RegistroDAO --> APIService
+ProgresoDAO --> APIService
+
+@enduml

@@ -1,0 +1,215 @@
+@startuml MatFi_Vistas
+
+top to bottom direction
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 40
+skinparam ranksep 70
+
+title MatFi - Diagrama de Vistas
+
+class BaseView
+
+package "VIEW" {
+
+class VistaBienvenida {
++ btnComenzar: Button
++ logo: Image
++ mostrar()
++ navegarARegistro()
+}
+
+class VistaRegistro {
++ txtNombre: Input
++ txtTelefono: Input
++ txtEmail: Input
++ txtPassword: Input
++ btnRegistrar: Button
++ mostrar()
++ validarFormulario()
++ enviarRegistro()
+}
+
+class VistaLogin {
++ txtEmail: Input
++ txtPassword: Input
++ btnLogin: Button
++ mostrar()
++ validarFormulario()
++ enviarLogin()
+}
+
+class VistaConfirmacion {
++ iconoCheck: Icon
++ txtMensaje: Text
++ btnCerrar: Button
++ mostrar(mensaje)
++ cerrar()
+}
+
+class VistaDashboard {
++ txtSaludo: Text
++ historialEntrenamientos
++ listaObjetivos
++ diasActivos: Number
++ duracionTotal: Number
++ mostrar()
++ cargarDatos(usuario)
++ actualizarProgreso()
+}
+
+class VistaAlimentacion {
++ graficoAgua: Chart
++ btnRegistrarBebida: Button
++ panelBeneficios: Panel
++ btnRecetas: Button
++ btnNutricion: Button
++ mostrar()
++ cargarConsumoAgua()
++ registrarAgua(cantidad)
+}
+
+class VistaRecetas {
++ filtroCategoria: Dropdown
++ barraBusqueda: SearchBar
++ gridDesayunos: Grid
++ gridAlmuerzos: Grid
++ gridCenas: Grid
++ mostrar()
++ cargarRecetas()
++ filtrarPorCategoria(cat)
++ buscarReceta(termino)
+}
+
+class VistaDetalleReceta {
++ imgReceta: Image
++ txtTitulo: Text
++ txtIngredientes: Text
++ txtPreparacion: Text
++ panelMacros: Panel
++ btnFavorito: Button
++ btnCompartir: Button
++ mostrar(receta)
++ agregarAFavoritas()
+}
+
+class VistaRutinas {
++ filtroNivel: Dropdown
++ filtroCategoria: Dropdown
++ gridRutinas: Grid
++ mostrar()
++ cargarRutinas()
++ filtrarPorNivel(nivel)
++ verDetalle(idRutina)
+}
+
+class VistaDetalleRutina {
++ txtNombre: Text
++ txtDescripcion: Text
++ panelEjercicios: Panel
++ diagramaMusculos: Image
++ btnComenzar: Button
++ toggleGenero: Toggle
++ mostrar(rutina)
++ cargarEntrenamientos()
++ iniciarEntrenamiento()
+}
+
+class VistaPerfil {
++ imgPerfil: Image
++ txtNombre: Text
++ txtID: Text
++ txtGenero: Text
++ txtFechaNacimiento: Text
++ txtAltura: Text
++ txtPeso: Text
++ btnCambiarFoto: Button
++ btnObjetivos: Button
++ mostrar(usuario)
++ cambiarFotoPerfil()
++ editarDatos()
+}
+
+class VistaAjustes {
++ listOpciones: List
++ btnCerrarSesion: Button
++ mostrar()
++ navegarAOpcion(opcion)
++ cerrarSesion()
+}
+
+class VistaHerramientas {
++ panelProgreso: Panel
++ panelMetricas: Panel
++ graficos: Chart[]
++ mostrar()
++ cargarHerramientas()
++ verAnalisis()
+}
+
+class Navbar {
++ items: MenuItem[]
++ itemActivo: string
++ mostrar()
++ navegarA(item)
+}
+
+class TarjetaRutina {
++ imagen: Image
++ titulo: Text
++ nivel: Text
++ duracion: Text
++ render(rutina)
++ onClick()
+}
+
+class TarjetaReceta {
++ imagen: Image
++ titulo: Text
++ calorias: Text
++ render(receta)
++ onClick()
+}
+
+class Calendario {
++ fechaSeleccionada: Date
++ diasConActividad: Date[]
++ mostrar()
++ marcarDia(fecha)
+}
+
+class GraficoProgreso {
++ tipo: string
++ datos: number[]
++ render()
++ actualizar(datos)
+}
+
+}
+
+BaseView <|-- VistaBienvenida
+BaseView <|-- VistaRegistro
+BaseView <|-- VistaLogin
+BaseView <|-- VistaConfirmacion
+BaseView <|-- VistaDashboard
+BaseView <|-- VistaAlimentacion
+BaseView <|-- VistaRecetas
+BaseView <|-- VistaDetalleReceta
+BaseView <|-- VistaRutinas
+BaseView <|-- VistaDetalleRutina
+BaseView <|-- VistaPerfil
+BaseView <|-- VistaAjustes
+BaseView <|-- VistaHerramientas
+
+VistaDashboard *-- Calendario
+VistaDashboard *-- GraficoProgreso
+VistaRutinas *-- TarjetaRutina
+VistaRecetas *-- TarjetaReceta
+
+VistaDashboard o-- Navbar
+VistaPerfil o-- Navbar
+VistaRutinas o-- Navbar
+VistaRecetas o-- Navbar
+
+@enduml

@@ -1,0 +1,252 @@
+@startuml MatFi_MVC_General
+
+top to bottom direction
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam nodesep 40
+skinparam ranksep 80
+
+title MatFi - Arquitectura MVC (Vista General sin Atributos)
+
+' =========================
+' CLASES BASE
+' =========================
+
+class BaseView
+class BaseController
+class BaseDAO
+
+' =========================
+' CAPA VISTA
+' =========================
+
+package "VIEW" {
+
+together {
+class VistaBienvenida
+class VistaRegistro
+class VistaLogin
+class VistaConfirmacion
+}
+
+together {
+class VistaDashboard
+class VistaAlimentacion
+}
+
+together {
+class VistaRecetas
+class VistaDetalleReceta
+}
+
+together {
+class VistaRutinas
+class VistaDetalleRutina
+}
+
+together {
+class VistaPerfil
+class VistaAjustes
+class VistaHerramientas
+}
+
+together {
+class Navbar
+class TarjetaRutina
+class TarjetaReceta
+class Calendario
+class GraficoProgreso
+}
+
+}
+
+' =========================
+' CAPA CONTROLADOR
+' =========================
+
+package "CONTROLLER" {
+
+together {
+class AuthController
+class DashboardController
+class AlimentacionController
+class RutinaController
+}
+
+together {
+class RegistroController
+class PerfilController
+class ProgresoController
+class NavegacionController
+}
+
+}
+
+' =========================
+' CAPA MODELO
+' =========================
+
+package "MODEL" {
+
+package DAO {
+
+together {
+class UsuarioDAO
+class RutinaDAO
+class EjercicioDAO
+}
+
+together {
+class RecetaDAO
+class RegistroDAO
+class ProgresoDAO
+}
+
+}
+
+package API {
+class APIService
+class AuthService
+}
+
+package ENTITIES {
+
+together {
+class Usuario
+class Rutina
+class Ejercicio
+class Receta
+}
+
+together {
+class RegistroEntrenamiento
+class RegistroAgua
+class Objetivo
+class ProgresoSemanal
+}
+
+}
+
+}
+
+' =========================
+' HERENCIA BASE
+' =========================
+
+BaseView <|-- VistaBienvenida
+BaseView <|-- VistaRegistro
+BaseView <|-- VistaLogin
+BaseView <|-- VistaConfirmacion
+BaseView <|-- VistaDashboard
+BaseView <|-- VistaAlimentacion
+BaseView <|-- VistaRecetas
+BaseView <|-- VistaDetalleReceta
+BaseView <|-- VistaRutinas
+BaseView <|-- VistaDetalleRutina
+BaseView <|-- VistaPerfil
+BaseView <|-- VistaAjustes
+BaseView <|-- VistaHerramientas
+
+BaseController <|-- AuthController
+BaseController <|-- DashboardController
+BaseController <|-- AlimentacionController
+BaseController <|-- RutinaController
+BaseController <|-- RegistroController
+BaseController <|-- PerfilController
+BaseController <|-- ProgresoController
+BaseController <|-- NavegacionController
+
+BaseDAO <|-- UsuarioDAO
+BaseDAO <|-- RutinaDAO
+BaseDAO <|-- EjercicioDAO
+BaseDAO <|-- RecetaDAO
+BaseDAO <|-- RegistroDAO
+BaseDAO <|-- ProgresoDAO
+
+' =========================
+' VISTA -> CONTROLADOR
+' =========================
+
+VistaBienvenida -down-> AuthController
+VistaRegistro -down-> AuthController
+VistaLogin -down-> AuthController
+VistaConfirmacion -down-> AuthController
+
+VistaDashboard -down-> DashboardController
+
+VistaAlimentacion -down-> AlimentacionController
+VistaRecetas -down-> AlimentacionController
+VistaDetalleReceta -down-> AlimentacionController
+
+VistaRutinas -down-> RutinaController
+VistaDetalleRutina -down-> RutinaController
+
+VistaPerfil -down-> PerfilController
+VistaAjustes -down-> NavegacionController
+VistaHerramientas -down-> ProgresoController
+
+' =========================
+' CONTROLADOR -> DAO
+' =========================
+
+AuthController -down-> UsuarioDAO
+AuthController -down-> AuthService
+
+DashboardController -down-> ProgresoDAO
+DashboardController -down-> RegistroDAO
+
+AlimentacionController -down-> RecetaDAO
+AlimentacionController -down-> RegistroDAO
+
+RutinaController -down-> RutinaDAO
+RutinaController -down-> EjercicioDAO
+
+RegistroController -down-> RegistroDAO
+
+PerfilController -down-> UsuarioDAO
+
+ProgresoController -down-> ProgresoDAO
+
+' =========================
+' DAO -> API
+' =========================
+
+UsuarioDAO -down-> APIService
+RutinaDAO -down-> APIService
+EjercicioDAO -down-> APIService
+RecetaDAO -down-> APIService
+RegistroDAO -down-> APIService
+ProgresoDAO -down-> APIService
+
+' =========================
+' DAO -> ENTIDADES
+' =========================
+
+UsuarioDAO ..> Usuario
+RutinaDAO ..> Rutina
+EjercicioDAO ..> Ejercicio
+RecetaDAO ..> Receta
+
+RegistroDAO ..> RegistroEntrenamiento
+RegistroDAO ..> RegistroAgua
+
+ProgresoDAO ..> Objetivo
+ProgresoDAO ..> ProgresoSemanal
+
+' =========================
+' COMPOSICIONES
+' =========================
+
+VistaDashboard *-- Calendario
+VistaDashboard *-- GraficoProgreso
+
+VistaRutinas *-- TarjetaRutina
+VistaRecetas *-- TarjetaReceta
+
+VistaDashboard o-- Navbar
+VistaPerfil o-- Navbar
+VistaRutinas o-- Navbar
+VistaRecetas o-- Navbar
+
+@enduml
