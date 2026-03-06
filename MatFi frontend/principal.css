@@ -1,0 +1,109 @@
+:root{
+    --colorSecundario: #D5F420; 
+    --colorTerciario: #eff0e3;
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem; /*1 rem = 10px*/
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.titulo {
+    
+}
+
+
+.container{
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+/* .hero::before{
+    opacity: 0.2;
+    background-color: black;
+} */
+
+.hero {
+    background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)), url(asserts/Fondo1Bueno.jpg);
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    flex-direction: column;
+
+}
+
+.hero__content h2{
+    color: var(--colorTerciario);
+    font-size: 5rem;
+}
+
+.hero__content h2 span{
+    color: var(--colorSecundario);
+}
+
+
+/* esta parte lo que hace es alinear el contenedor de flex que tiene la imagen del logo al finalk */
+#hero__logo {
+    padding-top: 4rem;
+    align-self: flex-end;
+    height: 70%;
+    max-width: 20%;
+    /* align-content: center; */
+}
+
+/* max width 40% del cotenedor flex "hero__logo" */
+#hero__logo img{
+    max-width: 60%;
+}
+
+.hero__content{
+   padding: 5rem;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 30%;
+    margin: 0rem 4rem 3.5rem 4rem;
+}
+
+.button{
+    margin-top: 6rem;
+    /* size: 50px; */
+    background-color: var(--colorSecundario);
+    border: none;
+    width: 10rem;
+    height: 4rem;
+    border-radius: 45%;
+    cursor: pointer;
+    
+    
+
+}
+
+.button img{
+    width: 40%;
+}
+
+
+
+/* CSS PARA CELULAR Y TABLET */

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="Ingreso.css" as="style">
+    <link rel="stylesheet" href="Ingreso.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <title>MatFi</title>
+</head>
+<body>
+    <div class="contenedor grid">
+
+        <div class="contenedor__iconos flex">
+            <div class="iconos__logo">
+                <img src="asserts/logoMatFi.png" alt="Logo Matfi">
+            </div>
+            <br>
+            <br>  
+            <div class="iconos__redes">
+                <a href="" class="iconos__redes__logo"><img src="asserts/GoogleIcono.png"></a>
+                <a href="" class="iconos__redes__logo"><img src="asserts/InstagramIcono.png" ></a>
+                <a href="" class="iconos__redes__logo"><img src="asserts/FacebookIcono.png" ></a>
+            </div>
+        </div>
+
+        <!-- <div class="registro"> -->
+        <div class="contenedor__formulario contenedor__formulario--registro">
+            <h2>Registrarse</h2>
+            <div class="formulario">
+                <form>
+                    <div class="contenedor__datos">
+                        <img class="formulario__icono" src="asserts/usuarioIcono.png" alt="usuario">
+                        <input type="text" name="Nombre" placeholder="Nombre completo" required>
+                    </div>
+
+                    <div class="contenedor__datos">
+                        <img class="formulario__icono" src="asserts/celularIcono.png" alt="usuario">
+                        <input type="tel" name="Telefono" placeholder="Número telefónico" required>
+                    </div>
+
+                    <div class="contenedor__datos">
+                        <img  class="formulario__icono" src="asserts/correoIcono.png" alt="usuario">
+                        <input type="email" name="Correo" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="contenedor__datos">
+                        <img class="formulario__icono" src="asserts/llaveIcono.png" alt="usuario">
+                        <input type="password" name="Contraseña" placeholder="Contraseña" required>
+                        <img class="formulario__icono" src="asserts/verContraseñaIcono.png" alt="">
+                    </div>
+
+                    <button class="formulario__button flex">
+                        <p>Comenzar</p>
+                        <img src="asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
+
+            <p class="formulario__pregunta">Ya tienes cuenta? <a href="#" id="mostrarIngreso">Inicia sesión</a></p>
+
+                <!-- <div>
+                    <p>Ya tienes cuenta? 
+                        <a href="#">Inicia sesión</a>
+                    </p>
+                </div> -->
+        </div>
+
+        <!-- <div class="inicio sesi{on}"> -->
+        <div class="contenedor__formulario contenedor__formulario--ingreso contenedor--oculto">
+            <h2>Iniciar sesión</h2>
+            <div class="formulario">
+                <form>
+                    <div class="contenedor__datos">
+                        <img  class="formulario__icono" src="asserts/correoIcono.png" alt="usuario">
+                        <input type="email" name="Correo" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="contenedor__datos">
+                        <img class="formulario__icono" src="asserts/llaveIcono.png" alt="usuario">
+                        <input type="password" name="Contraseña" placeholder="Contraseña" required>
+                        <img class="formulario__icono" src="asserts/verContraseñaIcono.png" alt="">
+                    </div>
+
+                    <button class="formulario__button flex">
+                        <p>Comenzar</p>
+                        <img src="asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
+
+            <p class="formulario__pregunta">No tienes una tienes cuenta? <a href="#" id="mostrarRegistro">Regístrate</a></p>
+
+                <!-- <div>
+                    <p>Ya tienes cuenta? 
+                        <a href="#">Inicia sesión</a>
+                    </p>
+                </div> -->
+        </div>
+    </div>
+        
+    <script src="AccesoControlador.js"></script>
+</body>
+</html>

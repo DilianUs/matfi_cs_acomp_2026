@@ -1,0 +1,193 @@
+:root{
+    --colorPrimario: #221b19;
+    --colorSecundario: #D5F420; 
+    --colorTerciario: #eff0e3;
+    --colorCuarto : #737373;
+    --colorSombreado: #2d2d2d;
+    --colorCampoFormulario: #2d2d2d;
+    --colorFondoAplicacion: #ebe8e0;
+    --colorBlanco: #ffffff;
+    --fuenteTextoTitulos: "Alexandria", sans-serif;
+    --fuenteTextoElementos: "Inter", sans-serif;
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--colorFondoAplicacion);
+    font-size: 1.6rem; /*1 rem = 10px*/
+    /* overflow: hidden; esto quita el scroll */
+}
+
+* {
+  border: 1px dashed rgba(0,0,0,0.3);
+}
+
+p {
+    font-family: var(--fuenteTextoElementos);
+}
+
+.responsivo {
+    display: flex;
+}
+
+.cuadricula {
+    display: grid;
+}
+
+.barraLateral{
+    max-width: 15%;
+    min-height: 100vh;
+    background-color: var(--colorPrimario);
+    
+}
+
+.barraLateral__logo {
+    align-content: center;
+    justify-content: center;
+    /* margin: 5rem auto; */
+    padding: 5rem;
+}
+
+/* margin: arriba, derecha, abajo, izquierda ( */
+
+.barraLateral__logo img{
+    max-width: 100%;
+}
+
+.barraLateral__navegacion{
+    margin: 0 auto;
+}
+
+.barraLateral__listaOpciones {
+    list-style: none;
+    margin: 0;
+    padding: 2rem;
+}
+.barraLateral__icono {
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1rem;
+}
+
+.barraLateral__icono img {
+    width: 3rem;
+    /* height: 2rem; */
+}
+
+.barraLateral__elementoFAQ {
+    margin-top: 12rem;
+}
+
+.barraLateral__enlace {
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.2s ease,
+                border-radius 0.3s ease;
+
+} .barraLateral__enlace:hover {
+    background-color: var(--colorSombreado);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 3rem;
+    transform: translateX(2rem);
+
+}
+
+.barraLateral__texto {
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+}
+
+/* PANEL DE TARJETAS */
+
+.panelPrincipal {
+    min-width: 80%;
+    margin: auto 4rem; /*antes era 2rem 4rem*/
+    min-height: 100vh;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 11.5rem 1fr 1fr;
+    /* grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento" "tarjeta-Progreso" "tarjeta-Calendario"
+        "tarjeta-Objetivos" "tarjeta-Objetivos" "tarjeta-Calendario"; */
+    /* Estructura de la cuadricula (grid) es el padre */
+    grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento tarjeta-Progreso tarjeta-Calendario"
+        "tarjeta-Objetivos tarjeta-Objetivos tarjeta-Calendario";
+        gap: 2.5rem;
+}
+
+/* .panelPrincipal-tarjeta{
+    width: 50rem;
+    height: 50rem;
+} */
+
+/* CSS hijos el grid area */
+.panelPrincipal section.tarjetaBienvenida {
+    grid-area: tarjeta-Bienvenida;
+}
+
+.panelPrincipal section.tarjetaEntrenamiento {
+    grid-area: tarjeta-Entrenamiento;
+}
+
+.panelPrincipal section.tarjetaProgreso {
+    grid-area: tarjeta-Progreso;
+}
+
+.panelPrincipal section.tarjetaObjetivos {
+    grid-area: tarjeta-Objetivos;
+}
+
+.panelPrincipal section.tarjetaCalendario {
+    grid-area: tarjeta-Calendario;
+}
+
+/* CSS de cada tarjeta */
+.tarjeta {
+    background-color: var(--colorPrimario);
+    border-radius: 4rem;
+
+}
+
+.tarjeta__titulo{
+    font-family: var(--fuenteTextoTitulos);
+    color: var(--colorBlanco);
+    font-size: 2.1rem;
+}
+
+.tarjetaBienvenida {
+    /* max-height: 15rem;
+    max-width: 100%; */
+}
+.tarjetaBienvenida__contenido {
+    flex-direction: row;
+    align-items: center;
+    /* max-width:; */
+    justify-content: space-between;
+    padding: 4rem;
+    max-height: 11rem;
+}
+
+.tarjetaBienvenida__saludo {
+    margin: 0;
+    padding: 0;
+}
+
+
+
