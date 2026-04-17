@@ -1,0 +1,218 @@
+@startuml MatFi_DiagramaRelacional
+skinparam linetype ortho
+skinparam backgroundColor #FFFFFF
+skinparam entity {
+  BackgroundColor #EEF4FF
+  BorderColor #4A6FA5
+  FontSize 12
+  FontName Arial
+  HeaderBackgroundColor #C5D8F5
+}
+skinparam ArrowColor #4A6FA5
+skinparam ArrowFontSize 11
+skinparam ArrowFontColor #555555
+
+' ===========================
+' ENTIDADES DE USUARIO
+' ===========================
+
+entity "Usuario" as USUARIO {
+  * id_usuario : INT <<PK>>
+  --
+  nombre_usuario   : VARCHAR(100)
+  edad_usuario     : INT
+  genero_usuario   : VARCHAR(20)
+  estatura_usuario : FLOAT
+  peso_usuario     : FLOAT
+}
+
+entity "CuentaDeUsuario" as CUENTA {
+  * id_cuenta : INT <<PK>>
+  --
+  correo_usuario       : VARCHAR(150)
+  contrasenia_usuario  : VARCHAR(255)
+  # id_usuario         : INT <<FK>>
+}
+
+entity "MetaFisica" as META {
+  * id_meta : INT <<PK>>
+  --
+  # id_usuario       : INT <<FK>>
+  tipo_de_meta       : ENUM('perdida','ganancia','mantenimiento')
+  calorias_objetivo  : FLOAT
+  fecha_inicio       : DATE
+  fecha_fin          : DATE
+}
+
+' ===========================
+' CATALOGO DE RUTINAS
+' ===========================
+
+entity "Rutina" as RUTINA {
+  * id_rutina : INT <<PK>>
+  --
+  nombre_rutina              : VARCHAR(100)
+  descripcion_rutina         : TEXT
+  imagen_musculos_trabajados : VARCHAR(255)
+}
+
+entity "Ejercicio" as EJERCICIO {
+  * id_ejercicio : INT <<PK>>
+  --
+  nombre_ejercicio       : VARCHAR(100)
+  cantidad_series        : INT
+  cantidad_repeticiones  : INT
+  descripcion_ejercicio  : TEXT
+  video_ejercicio        : VARCHAR(255)
+}
+
+entity "RutinaEjercicio" as RUTINA_EJERCICIO {
+  * id_rutina_ejercicio : INT <<PK>>
+  --
+  # id_rutina    : INT <<FK>>
+  # id_ejercicio : INT <<FK>>
+  orden          : INT
+}
+
+note right of RUTINA_EJERCICIO
+  Tabla intermedia N:M
+  Un ejercicio puede aparecer
+  en muchas rutinas y viceversa.
+end note
+
+' ===========================
+' CATALOGO DE RECETAS
+' ===========================
+
+entity "Receta" as RECETA {
+  * id_receta : INT <<PK>>
+  --
+  nombre_receta         : VARCHAR(150)
+  imagen_alusiva        : VARCHAR(255)
+  descripcion_general   : TEXT
+  pasos_preparacion     : TEXT
+  calorias_aproximadas  : FLOAT
+}
+
+entity "Ingrediente" as INGREDIENTE {
+  * id_ingrediente : INT <<PK>>
+  --
+  nombre_ingrediente : VARCHAR(100)
+  unidad             : VARCHAR(30)
+}
+
+entity "RecetaIngrediente" as RECETA_INGREDIENTE {
+  * id_receta_ingrediente : INT <<PK>>
+  --
+  # id_receta      : INT <<FK>>
+  # id_ingrediente : INT <<FK>>
+  cantidad         : FLOAT
+}
+
+note right of RECETA_INGREDIENTE
+  Tabla intermedia N:M
+  Un ingrediente puede estar en
+  muchas recetas. La cantidad
+  es atributo de la relacion.
+end note
+
+' ===========================
+' REGISTROS DIARIOS
+' ===========================
+
+entity "RegistroActividadFisicaDiaria" as REG_ACTIVIDAD {
+  * id_registro_actividad : INT <<PK>>
+  --
+  # id_usuario         : INT <<FK>>
+  fecha                : DATE
+  calorias_quemadas    : INT
+  tiempo_invertido     : FLOAT
+  nivel_de_intensidad  : ENUM('baja','media','alta')
+}
+
+entity "RegistroActividadRutina" as REG_ACT_RUTINA {
+  * id : INT <<PK>>
+  --
+  # id_registro_actividad : INT <<FK>>
+  # id_rutina             : INT <<FK>>
+}
+
+note right of REG_ACT_RUTINA
+  Tabla intermedia N:M
+  Un registro diario puede incluir
+  varias rutinas realizadas.
+end note
+
+entity "RegistroIngestaAlimenticiaDiaria" as REG_INGESTA {
+  * id_registro_ingesta : INT <<PK>>
+  --
+  # id_usuario               : INT <<FK>>
+  fecha                      : DATE
+  calorias_totales_consumidas: INT
+}
+
+entity "RegistroIngestaReceta" as REG_ING_RECETA {
+  * id : INT <<PK>>
+  --
+  # id_registro_ingesta : INT <<FK>>
+  # id_receta           : INT <<FK>>
+}
+
+note right of REG_ING_RECETA
+  Tabla intermedia N:M
+  Un registro diario puede incluir
+  varias recetas consumidas.
+end note
+
+' ===========================
+' HISTORIAL INTEGRAL
+' ===========================
+
+entity "HistorialIntegral" as HISTORIAL {
+  * id_historial : INT <<PK>>
+  --
+  # id_usuario              : INT <<FK>>
+  fecha                     : DATE
+  # id_registro_actividad   : INT <<FK, NULLABLE>>
+  # id_registro_ingesta     : INT <<FK, NULLABLE>>
+}
+
+note bottom of HISTORIAL
+  Una entrada por usuario por dia.
+  Agrupa el registro de actividad
+  y el de ingesta de ese dia.
+  FKs nullables: un usuario puede
+  registrar solo actividad, solo
+  comida, o ambas en un dia.
+  Para obtener historial completo:
+  SELECT * FROM HistorialIntegral
+  WHERE id_usuario = ?
+  ORDER BY fecha DESC
+end note
+
+' ===========================
+' RELACIONES Y CARDINALIDAD
+' ===========================
+
+USUARIO        ||--||  CUENTA              : "tiene (1:1)"
+USUARIO        ||--o{  META                : "posee (1:N)"
+
+RUTINA         ||--o{  RUTINA_EJERCICIO    : "se compone de (1:N)"
+EJERCICIO      ||--o{  RUTINA_EJERCICIO    : "aparece en (1:N)"
+
+RECETA         ||--o{  RECETA_INGREDIENTE  : "contiene (1:N)"
+INGREDIENTE    ||--o{  RECETA_INGREDIENTE  : "es parte de (1:N)"
+
+USUARIO        ||--o{  REG_ACTIVIDAD       : "realiza (1:N)"
+REG_ACTIVIDAD  ||--o{  REG_ACT_RUTINA      : "incluye (1:N)"
+RUTINA         ||--o{  REG_ACT_RUTINA      : "es usada en (1:N)"
+
+USUARIO        ||--o{  REG_INGESTA         : "consume (1:N)"
+REG_INGESTA    ||--o{  REG_ING_RECETA      : "incluye (1:N)"
+RECETA         ||--o{  REG_ING_RECETA      : "es consumida en (1:N)"
+
+USUARIO        ||--o{  HISTORIAL           : "tiene (1:N)"
+REG_ACTIVIDAD  |o--o|  HISTORIAL           : "agrupa en (0/1:0/1)"
+REG_INGESTA    |o--o|  HISTORIAL           : "agrupa en (0/1:0/1)"
+
+@enduml
