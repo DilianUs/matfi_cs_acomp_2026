@@ -1,0 +1,535 @@
+:root{
+    --colorPrimario: #221b19;
+    --colorSecundario: #D5F420; 
+    --colorTerciario: #eff0e3;
+    --colorCuarto : #737373;
+    --colorSombreado: #2d2d2d;
+    --colorCampoFormulario: #2d2d2d;
+    --colorFondoAplicacion: #ebe8e0;
+    --colorBlanco: #ffffff;
+    --fuenteTextoTitulos: "Alexandria", sans-serif;
+    --fuenteTextoElementos: "Inter", sans-serif;
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--colorFondoAplicacion);
+    font-size: 1.6rem; /*1 rem = 10px*/
+    /* overflow: hidden; esto quita el scroll */
+}
+
+* {
+  border: 1px dashed rgba(0,0,0,0.3);
+}
+
+p {
+    font-family: var(--fuenteTextoElementos);
+}
+
+.responsivo {
+    display: flex;
+}
+
+.cuadricula {
+    display: grid;
+}
+
+/* ANIMACIONES */
+@keyframes movimiento_lateral { /*Notificacion del cursor del usuario de la aplicacion*/
+    0% {
+        transform: translateX(0);
+        content: url("asserts/paginaPrincipal_iconos/sinNotificacionIcono.png");
+    }
+
+    50% {
+        transform: translateX(4px);
+        content: url("asserts/paginaPrincipal_iconos/notificacionIcono.png");
+    }
+
+    100% {
+        transform: translateX(0);
+        content: url("asserts/paginaPrincipal_iconos/sinNotificacionIcono.png");
+    }
+}
+
+@keyframes nuevaNotificacion { /*Notificacion real de la aplicacion*/
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(-18deg); }
+    40%  { transform: rotate(15deg); }
+    60%  { transform: rotate(-10deg); }
+    80%  { transform: rotate(6deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.barraLateral{
+    max-width: 15%;
+    min-height: 100vh;
+    background-color: var(--colorPrimario);
+    
+}
+
+.barraLateral__logo {
+    align-content: center;
+    justify-content: center;
+    /* margin: 5rem auto; */
+    padding: 5rem;
+}
+
+/* margin: arriba, derecha, abajo, izquierda ( */
+
+.barraLateral__logo img{
+    max-width: 100%;
+}
+
+.barraLateral__navegacion{
+    margin: 0 auto;
+}
+
+.barraLateral__listaOpciones {
+    list-style: none;
+    margin: 0;
+    padding: 2rem;
+}
+.barraLateral__icono {
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1rem;
+}
+
+.barraLateral__icono img {
+    width: 3rem;
+    /* height: 2rem; */
+}
+
+.barraLateral__elementoFAQ {
+    margin-top: 12rem;
+}
+
+.barraLateral__enlace {
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.2s ease,
+                border-radius 0.3s ease;
+
+} .barraLateral__enlace:hover {
+    background-color: var(--colorSombreado);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 3rem;
+    transform: translateX(2rem);
+
+}
+
+.barraLateral__texto {
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+}
+
+/* PANEL DE TARJETAS */
+
+.panelPrincipal-general {
+    min-width: 80%;
+    margin: auto 4rem; /*antes era 2rem 4rem*/
+    min-height: 100vh;  /*ESTA ES LA PROPIEDAD CORRECTA, QUITARLE EL COMENTARIO CUANDO SE TENGAN LAS FUNCIONES*/
+    /* max-height: 200rem; */
+}
+.panelPrincipal-inicio {
+    /* max-height: 20rem; */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 11.5rem 1fr 1fr;
+    /* grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento" "tarjeta-Progreso" "tarjeta-Calendario"
+        "tarjeta-Objetivos" "tarjeta-Objetivos" "tarjeta-Calendario"; */
+    /* Estructura de la cuadricula (grid) es el padre */
+    grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento tarjeta-Progreso tarjeta-Calendario"
+        "tarjeta-Objetivos tarjeta-Objetivos tarjeta-Calendario";
+        gap: 2.5rem;
+}
+
+/* .panelPrincipal-tarjeta{
+    width: 50rem;
+    height: 50rem;
+} */
+
+/* CSS hijos el grid area */
+.panelPrincipal-inicio section.tarjetaBienvenida {
+    grid-area: tarjeta-Bienvenida;
+}
+
+.panelPrincipal-inicio section.tarjetaEntrenamiento {
+    grid-area: tarjeta-Entrenamiento;
+}
+
+.panelPrincipal-inicio section.tarjetaProgreso {
+    grid-area: tarjeta-Progreso;
+}
+
+.panelPrincipal-inicio section.tarjetaObjetivos {
+    grid-area: tarjeta-Objetivos;
+}
+
+.panelPrincipal-inicio section.tarjetaCalendario {
+    grid-area: tarjeta-Calendario;
+}
+
+/* CSS de cada tarjeta */
+.tarjeta {
+    background-color: var(--colorPrimario);
+    border-radius: 4rem;
+    /* margin-bottom: 2rem; */
+
+}
+
+.tarjetaPieDePagina {
+    margin-bottom: 2rem;
+}
+
+.tarjeta__titulo{
+    font-family: var(--fuenteTextoTitulos);
+    color: var(--colorBlanco);
+    font-size: 2.1rem;
+    text-align: center;
+}
+
+
+.tarjetaBienvenida {
+    /* max-height: 15rem;
+    max-width: 100%; */
+}
+.tarjetaBienvenida__contenido {
+    flex-direction: row;
+    align-items: center;
+    /* max-width:; */
+    justify-content: space-between;
+    padding: 5rem;
+    max-height: 11rem;
+}
+
+.tarjetaBienvenida__saludo {
+    /* margin: 0;
+    padding: 0; */
+    cursor: default;
+    
+}
+
+.tarjetaBienvenida__saludo .tarjeta__titulo {
+    padding: 0;
+    margin: 0;
+}
+
+.tarjetaBienvenida__saludo .tarjeta__texto {
+    padding: 0;
+    margin: 0;
+    color: var(--colorBlanco);
+    font-size: small;
+
+}
+
+
+.tarjetaBienvenida__busqueda, .tarjetaConsultas__busqueda{
+    gap: 2rem;
+    align-content: center;
+    align-items: center;
+}
+
+.tarjetaBienvenida__busqueda input{
+    width: 40rem;
+    height: 5rem;
+    background: var(--colorSombreado);
+    border-radius: 3rem;
+
+}
+
+.tarjetaBienvenida__busqueda img, .tarjetaConsultas__busqueda img {
+    width: 3rem;
+    max-height: 3rem;
+}
+
+.tarjetaBienvenida__iconoNotificacion:hover{
+    cursor: pointer;
+    animation: movimiento_lateral 0.6s infinite;;
+    
+}
+
+/*  -----------------------------  CSS del apartado de "ALIMENTACION"  -----------------------------  */
+
+.panelPrincipal-alimentacion {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 0.8fr;
+
+    grid-template-areas: 
+        "tarjeta-Consultas tarjeta-Consultas tarjeta-Consultas"
+        "tarjeta-Desayuno tarjeta-Almuerzo tarjeta-Cena";
+        gap: 2.5rem;
+}
+
+/* CSS hijos el grid area */
+.panelPrincipal-alimentacion section.tarjetaConsultas {
+    grid-area: tarjeta-Consultas;
+}
+
+.panelPrincipal-alimentacion section.tarjetaDesayuno {
+    grid-area: tarjeta-Desayuno;
+}
+
+.panelPrincipal-alimentacion section.tarjetaAlmuerzo {
+    grid-area: tarjeta-Almuerzo;
+}
+
+.panelPrincipal-alimentacion section.tarjetaCena {
+    grid-area: tarjeta-Cena;
+}
+
+.panelPrincipal-alimentacion__iconos img{
+    width: 15rem;
+    border-radius: 2rem;
+    
+}
+
+/* CSS de cada tarjeta */
+.tarjetaConsultas {
+    width: 100%;
+    height: 6rem;
+    /* margin: 0 0.5rem 2rem 0.5rem; */
+    margin-bottom: 2rem;
+}
+
+.tarjetaConsultas__contenido {
+    flex-direction: row;
+    align-items: center;
+    /* max-width:; */
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0 0.5rem 2rem 0.5rem;
+    /* max-height: 11rem; */
+}
+
+.tarjetaConsultas__busqueda input {
+    width: 40rem;
+    height: 3rem;
+    background: var(--colorSombreado);
+    border-radius: 3rem;
+}
+/* --------------------------------------------------------- revisar y cambiar nombre */
+.filtrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    color: white;
+    /* font-size: 16px; */
+    cursor: pointer;
+    height: 2rem;
+}
+
+.flecha {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg); /* crea la flecha hacia abajo */
+    padding: 0;
+}
+
+/* --------------------------------------------------------- */
+
+.tarjetaDesayuno__iconos, .tarjetaAlmuerzo__iconos, .tarjetaCena__iconos {
+    /* width: 80%; */
+    margin: 5rem 1.2rem 0 1.2rem; /*Arriba, Derecha, Abajo, Izquierda*/
+}
+
+
+/* CSS PARA LA TARJETA DESAYUNO */
+.tarjetaDesayuno__iconos {
+    grid-template-columns: 10rem auto;
+    grid-template-rows: 20rem 19rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion3"
+        "iconoPosicion2 iconoPosicion3";
+    gap: 0.5rem;
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono1 {
+    grid-area: iconoPosicion1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono2 {
+    grid-area: iconoPosicion2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono3 {
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* //css para almuerzo */
+
+/* REVISAR ESTA CLASE .tarjetaAlmuerzo__iconos */
+.tarjetaAlmuerzo__iconos {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 25rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion2 iconoPosicion3"
+        "iconoPosicion4 iconoPosicion4 iconoPosicion4";
+    gap: 0.5rem;
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono1{
+    grid-area: iconoPosicion1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono2{
+    grid-area: iconoPosicion2;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono3{
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono4{
+    grid-area: iconoPosicion4;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 10rem 10rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion1"
+        "iconoPosicion2 iconoPosicion4"
+        "iconoPosicion3 iconoPosicion4";
+    gap: 0.5rem;
+
+    /* height: 80%; */
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono1{
+    grid-area: iconoPosicion1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono2{
+    grid-area: iconoPosicion2;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono3{
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono4{
+    grid-area: iconoPosicion4;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* CSS PARA LA VISTA DE PERFIL perfilVista.html */
+.panelPrincipal-perfil{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10rem;
+    
+}
+
+.panelPrincipal-perfil p {
+    color: var(--colorBlanco);
+}
+
+.tarjetaInformacionUsuario__datosGenerales{
+    margin: 2rem; /*Arriba, Derecha, Abajo, Izquierda*/
+}
+
+.tarjetaInformacionUsuario__dato{
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.tarjetaInformacionUsuario__dato p {
+    color: var(--colorBlanco);
+}
+
+.tarjetaInformacionUsuario__valor{
+    width: 20rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tarjetaInformacionUsuario__valor img{
+    width: 2rem;
+    height: 100%;
+}
+
+.tarjetaInformacionDeUsuario__icono {
+    /* width: 15%; */
+
+}
+
+/* css tarjeta de ajustes de usuario */
+.tarjetaAjustesUsuario__contenido {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tarjetaAjustesUsuario__campo {
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem;
+    width: 40rem;
+
+}
+
+.tarjetaAjustesUsuario__campo img{
+    width: 4rem;
+}
+
+
+
+
+
