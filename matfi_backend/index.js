@@ -24,10 +24,29 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Swagger: servir UI que carga el spec desde /swagger.json dinámico
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, { swaggerUrl: '/swagger.json' }));
 app.get('/swagger.json', (req, res) => {
-  res.json(swaggerSpec);
+  // Determinar URL base en tiempo de ejecución:
+  // 1) usar process.env.SWAGGER_BASE_URL si está definida (útil en hosting)
+  // 2) si no, construir a partir de la request (protocol + host)
+  const configured = process.env.SWAGGER_BASE_URL || process.env.API_URL;
+  const protocol = req.protocol;
+  const host = req.get('host');
+  const baseUrl = configured || `${protocol}://${host}`;
+
+  // Clonar el spec para no mutar el objeto importado
+  const spec = JSON.parse(JSON.stringify(swaggerSpec));
+  spec.servers = [
+    { url: baseUrl, description: 'Auto-detected server' }
+  ];
+
+  // Mantener localhost como opción si no se configuró explicitamente
+  if (!configured) {
+    spec.servers.push({ url: 'http://localhost:3000', description: 'Local development' });
+  }
+
+  res.json(spec);
 });
 
 // Definir rutas
