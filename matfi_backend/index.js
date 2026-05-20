@@ -40,7 +40,7 @@ app.get('/api/swagger.json', (req, res) => {
   // 1) usar process.env.SWAGGER_BASE_URL si está definida (útil en hosting)
   // 2) si no, construir a partir de la request (protocol + host)
   const configured = process.env.SWAGGER_BASE_URL || process.env.API_URL;
-  const protocol = req.protocol;
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.get('host');
   const baseUrl = configured || `${protocol}://${host}`;
 
