@@ -21,6 +21,16 @@ class ValidationUtils {
     const num = parseFloat(value);
     return !isNaN(num) && num > 0;
   }
+
+  // Validar fecha en formato YYYY-MM-DD
+  static isValidDate(dateString) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateString)) {
+      return false;
+    }
+    const date = new Date(dateString);
+    return date instanceof Date && !isNaN(date.getTime());
+  }
 }
 
 export default ValidationUtils;

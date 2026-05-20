@@ -130,6 +130,51 @@ class AuthController {
       res.status(500).json({ error: 'Error interno del servidor' });
     }
   }
+
+  // Actualizar perfil del usuario autenticado
+  static async updateProfile(req, res) {
+    try {
+      const { nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario } = req.body;
+      
+      // Validación básica si se envían los datos
+      if (edadUsuario && !ValidationUtils.isPositiveNumber(edadUsuario)) {
+        return res.status(400).json({ error: 'Edad debe ser un número positivo' });
+      }
+      if (estaturaUsuario && !ValidationUtils.isPositiveNumber(estaturaUsuario)) {
+        return res.status(400).json({ error: 'Estatura debe ser un número positivo' });
+      }
+      if (pesoUsuario && !ValidationUtils.isPositiveNumber(pesoUsuario)) {
+        return res.status(400).json({ error: 'Peso debe ser un número positivo' });
+      }
+
+      const updatedUser = await UserModel.updateProfile(req.user.idUsuario, {
+        nombreUsuario,
+        edadUsuario,
+        generoUsuario,
+        estaturaUsuario,
+        pesoUsuario
+      });
+
+      if (!updatedUser) {
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+
+      res.json({
+        message: 'Perfil actualizado exitosamente',
+        user: {
+          idUsuario: updatedUser.id_usuario,
+          nombreUsuario: updatedUser.nombre_usuario,
+          edadUsuario: updatedUser.edad_usuario,
+          generoUsuario: updatedUser.genero_usuario,
+          estaturaUsuario: updatedUser.estatura_usuario,
+          pesoUsuario: updatedUser.peso_usuario
+        }
+      });
+    } catch (error) {
+      console.error('Error al actualizar perfil:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  }
 }
 
 export default AuthController;

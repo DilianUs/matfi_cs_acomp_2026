@@ -74,6 +74,27 @@ class UserModel {
   static async verifyPassword(plainPassword, hashedPassword) {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
+
+  // Actualizar perfil de usuario
+  static async updateProfile(idUsuario, userData) {
+    const { nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario } = userData;
+    try {
+      const query = `
+        UPDATE Usuario
+        SET nombre_usuario = COALESCE($1, nombre_usuario),
+            edad_usuario = COALESCE($2, edad_usuario),
+            genero_usuario = COALESCE($3, genero_usuario),
+            estatura_usuario = COALESCE($4, estatura_usuario),
+            peso_usuario = COALESCE($5, peso_usuario)
+        WHERE id_usuario = $6
+        RETURNING id_usuario, nombre_usuario, edad_usuario, genero_usuario, estatura_usuario, peso_usuario
+      `;
+      const result = await pool.query(query, [nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario, idUsuario]);
+      return result.rows[0] || null;
+    } catch (error) {
+      throw new Error('Error al actualizar perfil de usuario');
+    }
+  }
 }
 
 export default UserModel;
