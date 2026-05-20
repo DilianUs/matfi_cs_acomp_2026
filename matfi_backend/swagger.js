@@ -1,4 +1,9 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const options = {
   definition: {
@@ -153,10 +158,16 @@ const options = {
             caloriasQuemadas: { type: 'integer' },
             tiempoInvertido: { type: 'number' },
             nivelDeIntensidad: { type: 'string' },
-            rutinas: { type: 'array' },
+            rutinas: { 
+              type: 'array',
+              items: { type: 'object' }
+            },
             idRegistroIngesta: { type: 'integer' },
             caloriasConsumidas: { type: 'integer' },
-            recetas: { type: 'array' }
+            recetas: { 
+              type: 'array',
+              items: { type: 'object' }
+            }
           }
         },
         Estadisticas: {
@@ -185,15 +196,15 @@ const options = {
     }
   },
   apis: [
-    './src/routes/authRoutes.js',
-    './src/routes/metaFisicaRoutes.js',
-    './src/routes/registroActividadFisicaRoutes.js',
-    './src/routes/registroIngestaAlimenticiRoutes.js',
-    './src/routes/estadisticasRoutes.js',
-    './src/routes/ingredienteRoutes.js',
-    './src/routes/ejercicioRoutes.js',
-    './src/routes/recetaRoutes.js',
-    './src/routes/rutinaRoutes.js'
+    path.join(__dirname, './src/routes/authRoutes.js'),
+    path.join(__dirname, './src/routes/metaFisicaRoutes.js'),
+    path.join(__dirname, './src/routes/registroActividadFisicaRoutes.js'),
+    path.join(__dirname, './src/routes/registroIngestaAlimenticiRoutes.js'),
+    path.join(__dirname, './src/routes/estadisticasRoutes.js'),
+    path.join(__dirname, './src/routes/ingredienteRoutes.js'),
+    path.join(__dirname, './src/routes/ejercicioRoutes.js'),
+    path.join(__dirname, './src/routes/recetaRoutes.js'),
+    path.join(__dirname, './src/routes/rutinaRoutes.js')
   ]
 };
 
