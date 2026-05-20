@@ -24,9 +24,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Swagger: servir UI que carga el spec desde /swagger.json dinámico
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, { swaggerUrl: '/swagger.json' }));
-app.get('/swagger.json', (req, res) => {
+// Swagger: servir UI que carga el spec desde /api/swagger.json dinámico
+// Montar bajo /api/* ayuda en hosting como Vercel donde las rutas raíz pueden servir HTML estático
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(null, { swaggerUrl: '/api/swagger.json' }));
+app.get('/api/swagger.json', (req, res) => {
   // Determinar URL base en tiempo de ejecución:
   // 1) usar process.env.SWAGGER_BASE_URL si está definida (útil en hosting)
   // 2) si no, construir a partir de la request (protocol + host)
@@ -37,8 +38,11 @@ app.get('/swagger.json', (req, res) => {
 
   // Clonar el spec para no mutar el objeto importado
   const spec = JSON.parse(JSON.stringify(swaggerSpec));
+  // Ajustar base para rutas montadas bajo /api en Vercel: si el spec se sirve en /api,
+  // y la URL base detectada apunta al host raíz, dejar la URL de la API como `${baseUrl}/api`.
+  const apiBase = configured || `${protocol}://${host}`;
   spec.servers = [
-    { url: baseUrl, description: 'Auto-detected server' }
+    { url: apiBase, description: 'Auto-detected server' }
   ];
 
   // Mantener localhost como opción si no se configuró explicitamente
