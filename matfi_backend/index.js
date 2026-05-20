@@ -26,7 +26,15 @@ app.use(express.json());
 
 // Swagger: servir UI que carga el spec desde /api/swagger.json dinámico
 // Montar bajo /api/* ayuda en hosting como Vercel donde las rutas raíz pueden servir HTML estático
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(null, { swaggerUrl: '/api/swagger.json' }));
+const swaggerUiOptions = {
+  swaggerUrl: '/api/swagger.json',
+  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui.min.css',
+  customJs: [
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui-bundle.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui-standalone-preset.js'
+  ]
+};
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerUiOptions));
 app.get('/api/swagger.json', (req, res) => {
   // Determinar URL base en tiempo de ejecución:
   // 1) usar process.env.SWAGGER_BASE_URL si está definida (útil en hosting)
