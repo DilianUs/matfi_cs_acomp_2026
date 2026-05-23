@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="inicioMatfi.css" as="style">
+    <link rel="stylesheet" href="inicioMatfi.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"> Eliminar este enlace-->
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <title>Calculadora</title>
+</head>
+<body class="responsivo fondoCalculadora">
+    <!-- Barra de navegacion -->
+    <!-- <aside class="barraLateral">
+        <div class="barraLateral__logo responsivo">
+            <img src="asserts/logoMatFi.png">
+        </div>
+
+        <nav class="barraLateral__navegacion">
+            <ul class="barraLateral__listaOpciones">
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/inicioIcono.png"></div>
+                        <p class="barraLateral__texto">Inicio</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/alimentacionIcono.png"></div>
+                        <p class="barraLateral__texto">Alimentación</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/herramientasIcono.png"></div>
+                        <p class="barraLateral__texto">Herramientas</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/rutinaIcono.png"></div>
+                        <p class="barraLateral__texto">Rutinas</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/perfilIcono.png"></div>
+                        <p class="barraLateral__texto">Perfil</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/configuracionIcono.png"></div>
+                        <p class="barraLateral__texto">Ajustes</p>
+                    </a>
+                </li>
+
+                <li class="barraLateral__elemento barraLateral__elementoFAQ">
+                    <a class="barraLateral__enlace responsivo">
+                        <div class="barraLateral__icono"><img src="asserts/paginaPrincipal_iconos/FAQIcono.png"></div>
+                        <p class="barraLateral__texto">Ayuda</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside> -->
+
+    <!-- Contenido de tarjetas -->
+    <main class="panelPrincipal-general panelPrincipal-calculadora cuadricula" id="panelPrincipal-calculadora">
+        <section class="tarjetaDescripcion">
+            <div class="tarjetaDescripcion__contenido responsivo">
+                <div class="tarjetaDescripcion__contenedorTitulo"><h2 class="tarjeta__titulo">Calculadora de Calorías</h2></div>
+                <p>Calcula tus necesidades calóricas diarias y obtén una recomendacion
+                    personalizada<br> según tu objetivo
+                </p>
+            </div>
+        </section>
+
+        <section class="tarjeta tarjetaCalculadora">
+            <div class="tarjetaCalculadora__contenido">
+                <div class="tarjetaVistaCalculadora__encabezado responsivo">
+                    <img src="../../asserts/paginaCalculadora_iconos/datosIcono.png">
+                    <h2 class="tarjeta__titulo">Tus datos</h2>
+                </div>
+
+                <form class="formularioCalculadora" id="formularioCalculadoraCals">
+                    <div class="formularioCalculadora__apartado cuadricula">
+                        <div  class="formularioCalculadora__campo datoEdad">
+                            <h3 class="tarjeta__subtituloContenido">Edad</h3>
+                            <div class="formularioCalculadora__valor">
+                                <input type="number" id="edad">
+                                <p>años</p>
+                            </div>
+                        </div>
+
+                        <div  class="formularioCalculadora__campo datoGenero">
+                            <h3 class="tarjeta__subtituloContenido">Género</h3>
+                            <div class="formularioCalculadora__contenedorOpciones responsivo">
+                                <div class="formularioCalculadora__botonEleccion">
+                                    <input type="radio" name="genero" value="H" id="hombre">
+                                    <label for="hombre">Hombre</label>
+                                </div>
+                                
+                                <div class="formularioCalculadora__botonEleccion">
+                                   <input type="radio" name="genero" value="M" id="mujer">
+                                   <label for="mujer">Mujer</label> 
+                                </div>
+                            </div>     
+                        </div>
+
+                        <div  class="formularioCalculadora__campo datoPeso">
+                            <h3 class="tarjeta__subtituloContenido">Peso</h3>
+                            <div class="formularioCalculadora__valor">
+                                <input type="number" id="peso">
+                                <p>kg</p>
+                            </div>
+                        </div>
+
+                        <div  class="formularioCalculadora__campo datoEstatura">
+                            <h3 class="tarjeta__subtituloContenido">Estatura</h3>
+                            <div class="formularioCalculadora__valor">
+                                <input type="number" id="estaturaUsuario" name="estatura" placeholder="estatura" required>
+                                <p>cm</p>
+                            </div>
+                            
+                        </div>
+
+                        <div class="formularioCalculadora__campo datoActFisica">
+                            <h3 class="tarjeta__subtituloContenido">Nivel de actividad física</h3>
+                            <select class="formularioCalculadora__select" name="nivelActividad" id="nivelActividadFisica" class="formularioCalculadora__valor">
+                                <option value="sedentario">Sedentario (sin ejercicio)</option>
+                                <option value="ligero">Ligero: ejercicio 1–3 días por semana</option>
+                                <option value="moderado">Moderado: ejercicio 3–5 días por semana</option>
+                                <option value="activo">Activo: ejercicio 6-7 días por semana</option>
+                                <!-- <option value="muy_activo">Muy activo: entrenamiento intenso o doble sesión)</option> -->
+                            </select>
+                        </div>
+
+                        <div  class="formularioCalculadora__campo datObjetivo">
+                            <h3 class="tarjeta__subtituloContenido">Objetivo</h3>
+
+                            <div class="formularioCalculadora__contenedorOpciones responsivo">
+                                <div class="formularioCalculadora__botonEleccion">
+                                    <input type="radio" name="objetivo" id="perdidaGrasa" value="perdidaGrasa">
+                                    <label for="perdidaGrasa">Perder peso</label>
+                                </div>
+                                
+                                <div class="formularioCalculadora__botonEleccion">
+                                    <input type="radio" name="objetivo" id="mantenimiento" value="mantenimiento">
+                                    <label for="mantenimiento">Mantener peso</label>
+                                </div>
+                                    
+                                <div class="formularioCalculadora__botonEleccion">
+                                    <input type="radio" name="objetivo" id="aumentoMasaMuscular" value="aumentoMasaMuscular">
+                                    <label for="aumentoMasaMuscular">Ganar músculo</label> 
+                                </div> 
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+                    <button class="formularioCalculadora__botonEnviar" type="submit" id="">
+                        <p class="tarjeta__subtituloContenido tarjeta_textobtnEnviar">Calcular mis calorías</p>
+                    </button> 
+                </form>
+
+                
+            </div>
+        </section>
+
+        <section class="tarjeta tarjetaResultados">
+            <div class="tarjetaResultados__contenido">
+                <div  class="tarjetaVistaCalculadora__encabezado responsivo">
+                    <img src="../../asserts/paginaCalculadora_iconos/resultadoIcono.png">
+                    <h2 class="tarjeta__titulo">Tu resultado</h2>
+                </div>
+
+                <div class="tarjetaResultados_contenedorTexto">
+                    <p class="tarjeta__subtituloContenido tarjetaResultados__textoCals">Tu gasto calórico diario estimado fue de (TDEE):</p>
+                    <p class="tarjeta__subtituloContenido "> <span class="tarjeta_textoResultado" id="caloriasNecesarias">0</span> kcal</p>
+                </div>
+                
+                <div>
+                    <p class="tarjeta__subtituloContenido tarjetaResultados__textoCals" id="caloriasNecesarias">Calorías recomendadas para:</p>
+                    <div class="contenedorObjetivoFisico">
+                        <p id="objetivoCalculadora">Objetivo a lograr</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tarjeta tarjetaConsejo">
+            <div class="tarjetaConsejo__contenio">
+                <div class="tarjetaVistaCalculadora__encabezado responsivo">
+                    <img src="../../asserts/paginaCalculadora_iconos/consejosIcono.png">
+                    <h2 class="tarjeta__titulo">Distribucion de macros</h2>
+                </div>
+
+                <div>
+                    <p>noc</p>
+                </div>
+
+            </div>
+        </section>
+
+        
+    </main>
+
+    <script type="module" src="controlador/CalculadoraControlador.js"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="../styles/inicioMatfi.css" as="style">
+    <link rel="stylesheet" href="../styles/inicioMatfi.css">
+
+    <link rel="preload" href="../styles/configuracionInicial.css" as="style">
+    <link rel="stylesheet" href="../styles/configuracionInicial.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <title>Rutinas</title>
+</head>
+<body class="responsivo">
+    <!-- Barra de navegacion -->
+    <!-- Contenido de tarjetas -->
+    <main class="panelPrincipal-general panelPrincipal-rutina cuadricula" id="panelPrincipal-rutinas">
+        <section class="tarjeta tarjetaConsultas">
+            <div class="tarjetaConsultas__contenido responsivo">
+                <div class="filtrar">
+                    <p>Filtrar</p>
+                    <span class="flecha"></span>
+                </div>
+
+                <div class="tarjetaConsultas__busqueda responsivo">
+                    <input type="text" placeholder="   ¿Qué quieres buscar?">
+                    <img  class="tarjetaBienvenida__iconoBusqueda" src="../../asserts/paginaPrincipal_iconos/busquedaIcono.png">
+                </div>
+            </div>
+        </section>
+
+        <nav class="tipoRutinas__contenedor responsivo tipoRutinas">
+            <button class="tipoRutinas__apartado tipoRutinas__apartadoPrincipiante responsivo">
+                <svg class="tipoRutinas__iconoSVG" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+
+                <h3 class="tarjeta__subtituloContenido">Principiante</h3>
+            </button>
+
+            <button class="tipoRutinas__apartado tipoRutinas__apartadoIntermedio responsivo">
+                <svg class="tipoRutinas__iconoSVG" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                </svg>
+
+                <h3 class="tarjeta__subtituloContenido">Intermedio</h3>
+            </button>
+        </nav>
+
+        <aside class="gruposMusculares__apartado gruposMusculares">
+            <h2 class="tarjeta__titulo gruposMusculares__titulo">Grupos musculares</h2>
+
+            <ul class="gruposMusculares__contenedor">
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo" data-grupo="pierna">
+                        <div class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <img  class="grupoMuscular__icono" width="50" height="50" src="https://img.icons8.com/ios-filled/50/leg-massage-area.png" alt="leg-massage-area"/>
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Pierna
+                            </span>
+                        </div>
+                        
+
+                        <svg class="grupoMuscular__icono" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo"  data-grupo="push">
+                        <div class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <img  class="grupoMuscular__icono" width="96" height="96" src="https://img.icons8.com/ink/96/bench-press.png" alt="bench-press"/>
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Push (pecho, hombros y tríceps)
+                            </span>
+                        </div>
+                        
+
+                        <svg class="grupoMuscular__icono" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo" data-grupo="pull">
+                        <div class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <img class="grupoMuscular__icono" src="../../asserts/paginaRutinas_iconos/espaldaGymIcono.png">
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Pull (espalda y bíceps)
+                            </span>
+                        </div>
+                        
+
+                        <svg class="grupoMuscular__icono" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo" data-grupo="fullbody">
+                        <div class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <svg  class="grupoMuscular__icono" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="87px" height="87px" viewBox="0 0 208.081 208.081" xml:space="preserve">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier"> 
+                                    <g> <path d="M140.457,0.394c0,0,7.837-2.476,10.869,4.987c0,0,11.624,12.909,12.891,22.213c0,0,0.481,2.841-2.283,4.375 c-2.064,1.124-4.872,3.922-6.723,6.187c0,0-6.235,7.843-17.537,7.843c0,0-1.498-0.161-4.664,7.17 c-1.607,3.742-5.998,9.378-9.219,13.713c-1.955,2.618-4.592,9.578-5.304,11.661c-1.565,4.494-2.027,15.637-0.384,18.803 c0,0,5.176,12.243,6.576,17.674c0.092,0.329,2.497,7.447,1.285,17.708c-0.116,0.998-0.786,4.896-1.041,7.203 c-0.372,3.301-0.25,10.133,1.017,13.25c1.212,2.983,4.853,5.742,5.87,13.506c1.028,7.581-1.157,18.541-0.311,25.13 c0.475,3.684,2.137,8.951,9.225,12.337c0,0,6.729,1.631,3.708,3.908c0,0-7.757,0.293-12.306-1.382c0,0-7.752,0.615-8.763-2.259 c0,0,0.019-2.253,0.847-4.08c0,0-1.705-11.277-7.258-18.693c-4.007-5.353-4.875-7.575-2.838-26.762c0,0-6.327-4.001-10.068-18.444 c-1.096-4.25-2.786-11.575-4.141-17.019c0,0-9.715,20.386-8.884,30.634c0,0,4.625,10.504,5.237,14.499 c0.518,3.416,0.411,8.926-1.023,13.755c-1.483,4.993,1.696,16.604,2.707,20.538c0,0,2.512,6.79-2.356,6.632 c0,0-8.424-1.06-11.125,0.913c0,0-9.608,1.182-11.615,0.293c0,0-3.206-1.2,2.189-3.617c0,0,5.736-0.152,7.742-3.77 c0,0,2.533-3.026,3.367-3.489c0,0-3.528-8.823-6.938-21.586c-1.303-4.914-2.177-16.246-2.975-21.251 c-0.505-3.117,1.148-10.443,0.149-13.481c-2.625-8.05-6.677-14.176-0.351-33.521c0,0,3.438-8.12,5.396-12.69 c2.667-6.235,2.862-17.527,0-26.731c0,0-5.718-8.162-6.056-15.999c0,0,0.682-5.124-7.587-4.98c0,0-6.223,1.363-16.499-8.175 l-6.068-4.521c0,0-3.212-1.589,0.149-10.425c0,0,5.83-11.094,8.948-14.34l2.183-4.549c0,0,1.939-5.054,10.282-2.855 c0,0,4.795,0.682,4.034,3.538c0,0,1.178,8.972-1.677,7.849c0,0-1.358-0.743-1.684-2.563c0,0-4.214-0.204-5.148-1.428 c0,0-2.189,6.865-3.273,8.077c0,0,1.083,9.8,0.155,11.776c0,0,8.765-4.533,14.333,3.404c0,0,10.781-3.246,15.077,2.563 c0,0,7.334,5.532,8.494-1.132l-0.158-4.01c0,0-1.023-2.415-1.264-4.153c0,0-1.854,1.133-2.451-3.86c0,0-1.087-3.248,1.184-2.719 c0,0-3.796-9.883,6.564-12.602c0,0,13.472-3.081,12.291,11.627c0,0,4.89-1.145,0,7.395c0,0-1.452-0.329-1.179,0.32 c0.174,0.38,0.436,4.458,0.436,4.458s0.329,6.418,5.889,5.355c0,0,9.931-6.957,14.735-3.023c0,0,6.32-8.007,14.833-3.766 c0,0,2.691,0.441,3.459-1.888c0,0-5.316-4.311-4.037-16.087c0,0-0.414-4.153-2.29-3.182l-1.863,0.356c0,0-0.407,3.047-5.888,2.755 c0,0,0.194,1.054-0.067,1.272c-0.858,0.731-3.744,0.579-4.725,0c-2.247-1.315-2.479-7.8,2.697-9.292L140.457,0.394z"></path> </g> 
+                                </g>
+                            </svg>
+                            <!-- <img class="grupoMuscular__icono" src="../asserts/iconos/fullbody.png"> -->
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Fullbody
+                            </span>
+                        </div>
+                        
+
+                        <svg class="grupoMuscular__icono" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo" data-grupo="brazos">
+                        <div  class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <svg  class="grupoMuscular__icono" width="115px" height="115px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill="#000000" d="M211.832 39.06c-15.022 15.31-15.894 22.83-23.473 43.903 2.69 9.14 5.154 16.927 9.148 25.117 5.158.283 10.765.47 15.342.43-6.11-10.208-8.276-19.32-4.733-35.274 4.3 19.05 12.847 29.993 21.203 34.332 3.032-.334 5.957-.714 8.776-1.146-6.255-10.337-8.494-19.47-4.914-35.588 3.897 17.27 11.287 27.876 18.86 32.94 4.658-1.043 9.283-2.243 13.927-3.534-5.517-9.69-7.36-18.692-3.97-33.957 3.357 14.876 9.307 24.81 15.732 30.516 5.095-1.57 9.296-2.898 13.852-4.347-.685-5.782-.416-12.187 1.064-19.115l1.883-8.8 17.603 3.76-1.88 8.804c-3.636 17.008 1.324 24.42 7.306 28.666 5.98 4.244 14.69 3.46 16.03 2.6l7.576-4.86 9.72 15.15c-3.857 2.34-7.9 5.44-11.822 7.06 18.65 27.678 32.183 61.465 24.756 93.55-2.365 9.474-6.03 18.243-11.715 24.986 12.725 12.13 21.215 22.026 31.032 34.5-3.713-2.387-7.586-4.844-11.692-7.37-11.397-7.01-23.832-14.214-34.98-19.802-16.012-7.8-31.367-18.205-47.73-20.523-22.552-2.967-46.27 4.797-73.32 21.06 7.872 8.72 13.282 15.474 20.312 24.288-6.98-4.338-14.652-9.07-23.16-14.23-32.554-17.48-65.39-48.227-100.438-49.99-30.56-1.092-59.952 14.955-89.677 38.568L18 254.293V494h31.963c45.184-17.437 80.287-57.654 97.03-94.52l.25-.564.325-.52c9.463-15.252 11.148-29.688 16.79-44.732 5.645-15.044 16.907-29.718 41.884-38.756 4.353-2.16 5.07-1.415 8.633 1.395 30.468 24.01 57.29 32.02 83.24 32.35 32.61-1.557 58.442-9.882 85.682-19.38-3.966 3.528-8.77 7.21-13.986 10.762-15.323 10.436-34.217 19.928-46.304 24.8-14.716 2.006-28.36 2.416-41.967.616-9.96 12.09-25.574 20.358-37.35 26.673 63.92 14.023 115.88.91 167.386-22.896-9.522-1.817-19.008-3.692-27.994-5.42 31.634-4.422 64.984-3.766 94.705-3.53 4.084-.02 7.213-.453 8.7-.886 14.167-51.072-4.095-97.893-34.294-145.216-30.263-47.425-72.18-94.107-101.896-143.04-21.1-17.257-48.6-31.455-77.522-46.175-20.386 4.25-41.026 9.336-61.443 14.1zm85.385 70.49c-11.678 3.6-23.71 7.425-33.852 10.012 2.527 4.93 3.735 10.664 3.395 16.202 11.028.877 21.082-2.018 28.965-6.356 4.845-2.666 8.74-6.048 11.414-8.96-3.854-2.735-7.26-6.41-9.923-10.9zm-54.213 14.698c-11.76 1.143-24.59 2.362-35.06 2.236 2.39 4.772 3.78 12.067 8.51 14.84 11.18 1.164 20.6 1.997 29.91-1.746 5.435-3.214 1.818-15.058-3.36-15.33zm-34.98 209.332c-17.593 7.233-22.586 15.14-26.813 26.406-3.998 10.66-6.227 25.076-14.48 41.014 32.29-6.38 69.625-21.23 93.852-40.088-17.017-5.098-34.553-13.852-52.557-27.332zm9.318 71.385c-18.723 7.237-40.836 16.144-59.696 14.062C143.774 446.68 124.012 474.03 91.762 494h84.68c21.564-29.798 38.067-56.575 40.9-89.035z"></path></g>
+                            </svg>
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Brazos (bíceps, tríceps y hombros)
+                            </span>
+                        </div>
+                        
+
+                        <svg class="grupoMuscular__icono" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+                <li class="grupoMuscular__apartado">
+                    <button class="grupoMuscular__btnContenido responsivo" data-grupo="abdomen">
+                        <div class="grupoMuscular__btnContenido-subcontenido responsivo">
+                            <svg  class="grupoMuscular__icono" width="117px" height="117px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill="#000000" d="M162 35.75l-94.49 27.1c-12.05 6.3-23.47 23.9-31.01 46.35-6.07 18.2-9.62 38.9-10.93 58.3L136.7 112zm188 .1L375.4 112l111 55.6c-1.3-19.3-4.9-40.2-10.9-58.3-5.7-17.05-13.6-31.35-22.5-40.05-2.7-2.8-5.5-4.9-8.4-6.4zm-172.9 11.5l-25.7 77.45-92.9 46.4 14.08 53.5 88.82 44.4 94.6-15.9 94.6 15.9 88.8-44.4 14.1-53.5-92.8-46.4-25.8-77.35h-10.5l-59.3 73.95-.1 61.1h-18.1l.1-61-59.3-74.15zM78.65 247.7l22.05 83.9 146.2-43.8v-14.7l-88.4 14.7zm354.75 0l-80 40.1-88.4-14.7v14.7l146.3 43.8zm-186.5 58.7l-31.6 9.6-35.1 70.2 66.7-33.3zm18.1 0v46.5l66.9 33.4-35.2-70.3zM191.7 323l-86.4 26 25.3 96.3zm128.6.1l61.1 122.1 25.3-96.2zm-55.3 50l.1 43.2 100.7 37.8-20.4-40.8zm-18.1 0l-80.2 40.1-20.5 40.9L247 416.3zm.1 62.4l-81.6 30.6 81.6 10.2zm18.1 0v40.7l81.7-10.2z"></path></g>
+                            </svg>
+                            <span class="tarjeta__texto grupoMuscular__texto">
+                                Abdomen
+                            </span>
+                        </div>
+                        
+                        <svg class="grupoMuscular__icono grupoMuscular__icono-flecha" width="77px" height="77px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 7L15 12L10 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </button>
+                </li>
+
+            </ul>
+
+        </aside>
+
+        <section class="rutinasPorNivel__contenedor rutinasPorNivel">
+            <div class="rutinasPorNivel__encabezado responsivo">
+                <h2 style="color: black;" class="tarjeta__titulo">Rutina de pierna</h2>
+                <p class="tarjeta__texto"># rutinas encontradas</p>
+            </div>
+
+            <div class="listaRutinas__contenedor cuadricula" id="listaRutinas">
+                <article class="tarjetaRutina">
+        
+                    <div class="tarjetaRutina__nivel">
+                        <div class="tarjetaRutina__encabezadoNivel">
+                            <h3 class="nivelRutina__subtitulo">Intermedio</h3>
+                        </div>
+
+                        <img class="tarjetaRutina_icono" src="../../asserts/imagenesPrueba/rutinaPierna.jpg">
+                    </div>
+
+                    <div class="tarjetaRutina__contenedorInformacion">
+                        <h3 class="tarjeta__subtituloContenido tarjetaRutina__nombre">Piernas Fuertes</h3>
+
+                        <p class="tarjeta__texto tarjetaRutina__descripcion">
+                            Rutina enfocada en fuerza y volumen para piernas.
+                        </p>
+                    </div>
+
+                    <div class="tarjetaRutina__estadisticas responsivo">
+                        <button>Ver rutina</button>
+                        <div>🏋 5 ejercicios</div>
+                        <div>🔥 450 cal</div>
+                    </div>
+
+                </article>
+
+                <article class="tarjetaRutina">
+        
+                    <div class="tarjetaRutina__nivel">
+                        <div class="tarjetaRutina__encabezadoNivel">
+                            <h3 class="nivelRutina__subtitulo">Intermedio</h3>
+                        </div>
+
+                        <img class="tarjetaRutina_icono" src="../../asserts/imagenesPrueba/rutinaPierna.jpg">
+                    </div>
+
+                    <div class="tarjetaRutina__contenedorInformacion">
+                        <h3 class="tarjeta__subtituloContenido tarjetaRutina__nombre">Piernas Fuertes</h3>
+
+                        <p class="tarjeta__texto tarjetaRutina__descripcion">
+                            Rutina enfocada en fuerza y volumen para piernas.
+                        </p>
+                    </div>
+
+                    <div class="tarjetaRutina__estadisticas responsivo">
+                        <button>Ver rutina</button>
+                        <div>🏋 5 ejercicios</div>
+                        <div>🔥 450 cal</div>
+                    </div>
+
+                </article>
+            </div>
+        </section>
+
+
+
+
+
+
+    </main>
+
+    <!-- modal para la informacion del ejercicio -->
+     <div class=" modalInfoReceta contenedorGeneralModal responsivo" id="modalAlimentacion">
+        <div class=" modalInfoReceta__contenido">
+            <div class="contenedorCerrarModal"><span class="iconoCerrar posicionIcono" id="btnCerrarModal"></span></div>
+
+            <div class="modalContenedorEncabezado responsivo">
+                
+
+                <img id="imagenReceta" class="modalReceta_imagen" src="">
+                <div class="modalContenedorTitulo">
+                    <div class="modalTitulo__contenido responsivo">
+                        <h2 class="tarjeta__titulo" id="tituloReceta"></h2>
+                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/nombreRecetaIcono.png">
+                    </div>
+                    <p id="descripcionReceta">Una opción saludable, balanceada y deliciosa que combina posho y demas cosas</p>
+                </div>
+
+                <div class="modalCaloriasAprox__contenedor responsivo">
+                    <div class="modalCaloriasAprox__Contenido responsivo formularioModal__labelContenedor">
+                        <div class="contenedorCalorias responsivo">
+                            <img class="iconoModal" src="../asserts/paginaCalculadora_iconos/resultadoIcono.png">
+                            <span class="textoCaloriasAproximadas" id="caloriasReceta"></span>
+                        </div>
+                        
+                        <p class="tarjeta_texto">kcal aprox</p>
+                    </div>
+                </div>
+                
+                <!-- <span class="iconoCerrar" id="cerrarModal"></span> -->
+            </div>
+
+            <div class="modalReceta_ContenedorInformacion responsivo">
+                <div class="modalReceta_ingredientesContenido">
+                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
+                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/ingredientesIcono.png">
+                        <h3 class="tarjeta__titulo">Ingredientes</h3>
+                    </div>
+
+                    <!-- <div>
+                        <li id="ingredientesReceta">
+                            
+                        </li>
+                    </div> -->
+                    <ul class="listaIngredientes responsivo" id="ingredientesReceta">
+
+                    </ul>
+                </div>
+
+                <div class="modalReceta_preparacionContenido">
+                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
+                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/preparacionIcono.png">
+                        <h3 class="tarjeta__titulo">Preparación</h3>
+                    </div>
+
+                    <ol class="listaPreparacion responsivo" id="preparacionReceta">
+
+                    </ol>
+
+                    <!-- <div>
+                        <li id="preparacionReceta">
+                            
+                        </li>
+                        
+                    </div> -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>

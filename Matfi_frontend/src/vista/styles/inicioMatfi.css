@@ -1,0 +1,1188 @@
+:root{
+    --colorPrimario: #221b19;
+    --colorSecundario: #d5f420; 
+    --colorTerciario: #eff0e3;
+    --colorCuarto : #737373;
+    --colorSombreado: #2d2d2d;
+    --colorCampoFormulario: #2d2d2d;
+    --colorFondoAplicacion: #ebe8e0;
+    --colorBlanco: #ffffff;
+    --fuenteTextoTitulos: "Alexandria", sans-serif;
+    --fuenteTextoTitulosTerciarios: "Elms Sans", sans-serif;
+    --fuenteTextoElementos: "Inter", sans-serif;
+}
+
+html{
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /* zoom: 0.95; */
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--colorFondoAplicacion);
+    font-size: 1.6rem; /*1 rem = 10px*/
+    /* overflow: hidden; esto quita el scroll */
+    /* overflow: hidden; */
+    
+}
+
+
+
+* {
+  border: 1px dashed rgba(0,0,0,0.3);
+}
+
+p {
+    font-family: var(--fuenteTextoElementos);
+}
+
+.responsivo {
+    display: flex;
+}
+
+.cuadricula {
+    display: grid;
+}
+
+/* ANIMACIONES */
+@keyframes movimiento_lateral { /*Notificacion del cursor del usuario de la aplicacion*/
+    0% {
+        transform: translateX(0);
+        content: url("../asserts/paginaPrincipal_iconos/sinNotificacionIcono.png");
+    }
+
+    50% {
+        transform: translateX(4px);
+        content: url("../asserts/paginaPrincipal_iconos/notificacionIcono.png");
+    }
+
+    100% {
+        transform: translateX(0);
+        content: url("../asserts/paginaPrincipal_iconos/sinNotificacionIcono.png");
+    }
+}
+
+@keyframes nuevaNotificacion { /*Notificacion real de la aplicacion*/
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(-18deg); }
+    40%  { transform: rotate(15deg); }
+    60%  { transform: rotate(-10deg); }
+    80%  { transform: rotate(6deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.barraLateral{
+    /* overflow: hidden; */
+    max-width: 15%;
+    /* width: 20rem;  */
+    /* width: 15%; */
+    max-height: 100vh;
+    /* position: fixed; */
+    background-color: var(--colorPrimario);
+    
+}
+
+.barraLateral__logo {
+    align-content: center;
+    justify-content: center;
+    /* margin: 5rem auto; */
+    padding: 5rem;
+}
+
+/* margin: arriba, derecha, abajo, izquierda ( */
+
+.barraLateral__logo img{
+    max-width: 100%;
+}
+
+.barraLateral__navegacion{
+    margin: 0 auto;
+}
+
+.barraLateral__listaOpciones {
+    list-style: none;
+    margin: 0;
+    padding: 2rem;
+}
+.barraLateral__icono {
+    align-items: center;
+    justify-content: flex-start;
+    margin: 1rem;
+}
+
+.barraLateral__icono img {
+    width: 3rem;
+    /* height: 2rem; */
+}
+
+.barraLateral__elementoFAQ {
+    margin-top: 12rem;
+}
+
+.barraLateral__enlace {
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.2s ease,
+                border-radius 0.3s ease;
+
+} .barraLateral__enlace:hover {
+    background-color: var(--colorSombreado);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 3rem;
+    transform: translateX(2rem);
+
+}
+
+.barraLateral__texto {
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+}
+
+/* .panelPrincipalDefault es un parche que a futuro debe ser corregido */
+.panelPrincipalDefault {
+    min-width: 85%;
+    /* height: 90vh; */
+}
+/* PANEL DE TARJETAS */
+
+.panelPrincipal-general {
+    min-width: 80%;
+    /* width: calc(100% - 15rem);; */
+    margin: auto 4rem; /*antes era 2rem 4rem*/
+    min-height: 100vh;  /*ESTA ES LA PROPIEDAD CORRECTA, QUITARLE EL COMENTARIO CUANDO SE TENGAN LAS FUNCIONES*/
+    /* max-height: 200rem; */
+}
+
+.panelPrincipal-inicio {
+    /* max-height: 20rem; */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 11.5rem 1fr 1fr;
+    /* grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento" "tarjeta-Progreso" "tarjeta-Calendario"
+        "tarjeta-Objetivos" "tarjeta-Objetivos" "tarjeta-Calendario"; */
+    /* Estructura de la cuadricula (grid) es el padre */
+    grid-template-areas: 
+        "tarjeta-Bienvenida tarjeta-Bienvenida tarjeta-Bienvenida"
+        "tarjeta-Entrenamiento tarjeta-Progreso tarjeta-Calendario"
+        "tarjeta-Objetivos tarjeta-Objetivos tarjeta-Calendario";
+        gap: 2.5rem;
+}
+
+/* .panelPrincipal-tarjeta{
+    width: 50rem;
+    height: 50rem;
+} */
+
+/* CSS hijos el grid area */
+.panelPrincipal-inicio section.tarjetaBienvenida {
+    grid-area: tarjeta-Bienvenida;
+}
+
+.panelPrincipal-inicio section.tarjetaEntrenamiento {
+    grid-area: tarjeta-Entrenamiento;
+}
+
+.panelPrincipal-inicio section.tarjetaProgreso {
+    grid-area: tarjeta-Progreso;
+}
+
+.panelPrincipal-inicio section.tarjetaObjetivos {
+    grid-area: tarjeta-Objetivos;
+}
+
+.panelPrincipal-inicio section.tarjetaCalendario {
+    grid-area: tarjeta-Calendario;
+}
+
+/* CSS de cada tarjeta */
+.tarjeta {
+    background-color: var(--colorPrimario);
+    border-radius: 4rem;
+    /* margin-bottom: 2rem; */
+
+}
+
+.tarjetaPieDePagina {
+    margin-bottom: 2rem;
+}
+
+.tarjeta__titulo{
+    font-family: var(--fuenteTextoTitulos);
+    color: var(--colorBlanco);
+    font-size: 2.1rem;
+    text-align: center;
+}
+
+
+.tarjetaBienvenida {
+    /* max-height: 15rem;
+    max-width: 100%; */
+}
+.tarjetaBienvenida__contenido {
+    flex-direction: row;
+    align-items: center;
+    /* max-width:; */
+    justify-content: space-between;
+    padding: 5rem;
+    max-height: 11rem;
+}
+
+.tarjetaBienvenida__saludo {
+    /* margin: 0;
+    padding: 0; */
+    cursor: default;
+    
+}
+
+.tarjetaBienvenida__saludo .tarjeta__titulo {
+    padding: 0;
+    margin: 0;
+}
+
+.tarjetaBienvenida__saludo .tarjeta__texto {
+    padding: 0;
+    margin: 0;
+    color: var(--colorBlanco);
+    font-size: small;
+
+}
+
+
+.tarjetaBienvenida__busqueda, .tarjetaConsultas__busqueda{
+    gap: 2rem;
+    align-content: center;
+    align-items: center;
+}
+
+.tarjetaBienvenida__busqueda input{
+    width: 40rem;
+    height: 5rem;
+    background: var(--colorSombreado);
+    border-radius: 3rem;
+
+}
+
+.tarjetaBienvenida__busqueda img, .tarjetaConsultas__busqueda img {
+    width: 3rem;
+    max-height: 3rem;
+}
+
+.tarjetaBienvenida__iconoNotificacion:hover{
+    cursor: pointer;
+    animation: movimiento_lateral 0.6s infinite;;
+    
+}
+
+/*  -----------------------------  CSS del apartado de "ALIMENTACION"  -----------------------------  */
+
+.panelPrincipal-alimentacion {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 0.8fr;
+
+    grid-template-areas: 
+        "tarjeta-Consultas tarjeta-Consultas tarjeta-Consultas"
+        "tarjeta-Desayuno tarjeta-Almuerzo tarjeta-Cena";
+        gap: 2.5rem;
+}
+
+/* CSS hijos el grid area */
+.panelPrincipal-alimentacion section.tarjetaConsultas {
+    grid-area: tarjeta-Consultas;
+}
+
+.panelPrincipal-alimentacion section.tarjetaDesayuno {
+    grid-area: tarjeta-Desayuno;
+}
+
+.panelPrincipal-alimentacion section.tarjetaAlmuerzo {
+    grid-area: tarjeta-Almuerzo;
+}
+
+.panelPrincipal-alimentacion section.tarjetaCena {
+    grid-area: tarjeta-Cena;
+}
+
+.tarjetaDesayuno, .tarjetaCena, .tarjetaAlmuerzo {
+    margin-top: 2rem;
+    max-height: 100%;
+    
+}
+
+.panelPrincipal-alimentacion__iconos {
+    /* width: 15rem; */
+    width: 100%;
+    /* border-radius: 2reçm; */
+    
+}
+
+.panelPrincipal-alimentacion__iconos img{
+    /* max-width: 80%; */
+    border-radius: 2rem;
+    
+}
+
+/* CSS de cada tarjeta */
+.tarjetaConsultas {
+    width: 100%;
+    height: 6rem;
+    /* margin: 0 0.5rem 2rem 0.5rem; */
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.tarjetaConsultas__contenido {
+    flex-direction: row;
+    align-items: center;
+    /* max-width:; */
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0 0.5rem 2rem 0.5rem;
+    /* max-height: 11rem; */
+}
+
+.tarjetaConsultas__busqueda input {
+    width: 40rem;
+    height: 3rem;
+    background: var(--colorSombreado);
+    border-radius: 3rem;
+}
+/* --------------------------------------------------------- revisar y cambiar nombre */
+.filtrar {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    color: white;
+    /* font-size: 16px; */
+    cursor: pointer;
+    height: 2rem;
+}
+
+.flecha {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg); /* crea la flecha hacia abajo */
+    padding: 0;
+}
+
+/* --------------------------------------------------------- */
+
+.tarjetaDesayuno__iconos, .tarjetaAlmuerzo__iconos, .tarjetaCena__iconos {
+    /* width: 80%; */
+    margin: 5rem 1.2rem 0 1.2rem; /*Arriba, Derecha, Abajo, Izquierda*/
+}
+
+.tarjetaDesayuno__contenido, .tarjetaAlmuerzo__contenido, .tarjetaCena__contenido {
+    margin: 1rem;
+    max-width: 90%;
+}
+
+.tarjetaDesayuno:hover, .tarjetaAlmuerzo:hover, .tarjetaCena:hover {
+    cursor: pointer;
+    border: 0.3rem solid var(--colorSecundario);
+    box-shadow:
+        0 0 1.2rem rgba(75, 76, 70, 0.245);
+    box-shadow:
+        0 0 20px rgba(217,255,0,0.18);
+
+    transform: translateY(-5px);
+}
+
+.tarjetaDesayuno, .tarjetaAlmuerzo, .tarjetaCena {
+    transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* CSS PARA LA TARJETA DESAYUNO */
+.tarjetaDesayuno__iconos {
+    grid-template-columns: 10rem auto;
+    grid-template-rows: 20rem 20rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion3"
+        "iconoPosicion2 iconoPosicion3";
+    gap: 0.5rem;
+    width: 90%;
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono1 {
+    grid-area: iconoPosicion1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono2 {
+    grid-area: iconoPosicion2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tarjetaDesayuno__iconos .tarjetaDesayuno__icono3 {
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* //css para almuerzo */
+
+/* REVISAR ESTA CLASE .tarjetaAlmuerzo__iconos */
+.tarjetaAlmuerzo__iconos {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 10rem 30rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion2 iconoPosicion3"
+        "iconoPosicion4 iconoPosicion4 iconoPosicion4";
+    gap: 0.5rem;
+    width: 90%;
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono1{
+    grid-area: iconoPosicion1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono2{
+    grid-area: iconoPosicion2;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono3{
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+
+.tarjetaAlmuerzo__iconos .tarjetaAlmuerzo__icono4{
+    grid-area: iconoPosicion4;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tarjetaCena__iconos {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 16rem 12rem 12rem;
+    grid-template-areas: 
+        "iconoPosicion1 iconoPosicion1"
+        "iconoPosicion2 iconoPosicion4"
+        "iconoPosicion3 iconoPosicion4";
+    gap: 0.5rem;
+    
+    width: 90%;
+    /* height: 80%; */
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono1{
+    grid-area: iconoPosicion1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono2{
+    grid-area: iconoPosicion2;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono3{
+    grid-area: iconoPosicion3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.tarjetaCena__iconos .tarjetaCena__icono4{
+    grid-area: iconoPosicion4;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* -------------------------------------------------------------------------------------- */
+/* CSS PARA EL INNER HTML PARA LAS RECETAS */
+.contenedorTitulo__alimentacion{
+    align-items: center;
+    margin: 1.2rem 0 1rem 1.5rem;
+    gap: 1rem;
+    text-align: center;
+}
+
+.contenedorTitulo__alimentacion img{
+    width: 5rem;
+    /* height: 3rem; */
+}
+
+.contenedorListaRecetas {
+    /* width: 100%; */
+    margin: 0.2rem 1rem 0.5rem 0.5rem;
+    background-color: var(--colorCampoFormulario);
+    border-radius: 1rem;
+}
+
+
+.listaRecetas_contenidoReceta{
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+}
+
+.listaRecetas_contenidoReceta img{
+    width: 4rem;
+    height: 4rem;
+
+    object-fit: cover;
+
+    border-radius: 1rem;
+}
+
+.listaRecetas_contenidoReceta p{
+    flex: 1;
+    color: white;
+
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.listaRecetas_contenidoReceta span{
+    color: var(--colorSecundario);
+    font-family: var(--fuenteTextoTitulosTerciarios);
+
+    font-weight: bold;
+
+    min-width: 6rem;
+    margin-right: 1rem;
+    text-align: right;
+}
+
+.btnRecetas{
+    margin-top: 2rem;
+
+    width: 100%;
+
+    padding: 1rem;
+
+    border: none;
+
+    border-radius: 1rem;
+
+    background: #D9FF00;
+
+    color: black;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btnRecetas:hover{
+    transform: scale(1.02);
+}
+
+
+/* FIN DEL CSS PARA LAS RECETAS */
+/* -------------------------------------------------------------------------------------- */
+
+/* CSS PARA LA VISTA DE PERFIL perfilVista.html */
+.panelPrincipal-perfil{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10rem;
+    
+}
+
+.panelPrincipal-perfil p {
+    color: var(--colorBlanco);
+}
+
+.tarjetaInformacionUsuario__datosGenerales{
+    margin: 2rem; /*Arriba, Derecha, Abajo, Izquierda*/
+}
+
+.tarjetaInformacionUsuario__dato{
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.tarjetaInformacionUsuario__dato p {
+    color: var(--colorBlanco);
+}
+
+.tarjetaInformacionUsuario__valor{
+    width: 20rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tarjetaInformacionUsuario__valor img{
+    width: 2rem;
+    height: 100%;
+}
+
+.tarjetaInformacionDeUsuario__icono {
+    /* width: 15%; */
+
+}
+
+/* css tarjeta de ajustes de usuario */
+.tarjetaAjustesUsuario__contenido {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tarjetaAjustesUsuario__campo {
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem;
+    width: 40rem;
+
+}
+
+.tarjetaAjustesUsuario__campo:hover {
+    cursor: pointer;
+}
+
+.tarjetaAjustesUsuario__campo img{
+    width: 4rem;
+}
+
+
+/* CSS  para  la CALCULADORA DE CALORIAS*/
+body.fondoCalculadora {
+    background-color: var(--colorCampoFormulario);
+}
+.panelPrincipal-calculadora {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+
+    grid-template-areas: 
+    "tarjetaPosicion1 tarjetaPosicion1"
+    "tarjetaPosicion2 tarjetaPosicion3"
+    "tarjetaPosicion2 tarjetaPosicion4";
+    gap:1.5rem;
+    /* height: 120vh; */
+    /* overflow-y: auto; */
+
+    /* modificaciones de scroll 23/05/26 */
+}
+
+.tarjetaDescripcion {
+    margin: 2rem;
+}
+
+.panelPrincipal-calculadora .tarjetaDescripcion {
+    grid-area: tarjetaPosicion1;
+}
+.panelPrincipal-calculadora .tarjetaCalculadora {
+    grid-area: tarjetaPosicion2;
+}
+
+.panelPrincipal-calculadora .tarjetaResultados {
+    grid-area: tarjetaPosicion3;
+}
+
+.panelPrincipal-calculadora .tarjetaConsejo {
+    grid-area: tarjetaPosicion4;
+}
+
+        /* CSS para cada tarjeta */
+.tarjetaDescripcion__contenido {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tarjetaCalculadora{
+    /* overflow-y: auto; */
+    /* height: 110vh; */
+}
+.tarjetaVistaCalculadora__encabezado {
+    flex-direction: row;
+    align-items: center;
+    margin: 1.5rem 0 1.5rem 1rem;
+}
+
+.formularioCalculadora__apartado {
+     grid-template-columns: 1fr 1fr;
+     grid-template-rows: 1fr 1fr 1fr 1fr;
+     grid-template-areas: 
+     "campoPosicion1 campoPosicion2"
+     "campoPosicion3 campoPosicion4"
+     "campoPosicion5 campoPosicion5"
+     "campoPosicion6 campoPosicion6";
+
+    gap: 1.2rem;
+    /* width: 100%; */
+}
+
+.formularioCalculadora__apartado .datoEdad {
+    grid-area: campoPosicion1;
+}
+
+.formularioCalculadora__apartado .datoGenero {
+    grid-area: campoPosicion2;
+}
+
+.formularioCalculadora__apartado .datoPeso {
+    grid-area: campoPosicion3;
+}
+
+.formularioCalculadora__apartado .datoEstatura {
+    grid-area: campoPosicion4;
+}
+
+.formularioCalculadora__apartado .datoActFisica {
+    grid-area: campoPosicion5;
+}
+
+.formularioCalculadora__apartado .datObjetivo {
+    grid-area: campoPosicion6;
+}
+
+.tarjetaCalculadora__contenido, .tarjetaResultados__contenido, .tarjetaConsejo__contenio {
+    margin: 1rem;
+}
+
+.tarjetaVistaCalculadora__encabezado img {
+    width: 5rem;
+    /* margin: 0;
+    padding: 0; */
+}
+
+.tarjetaDescripcion__contenido {
+    color: var(--colorBlanco);
+    text-align: center;
+    align-items: center;
+}
+
+.tarjetaDescripcion__contenedorTitulo {
+    border-radius: 4rem;
+    height: 5rem;
+    width: 40%;
+    background-color: var(--colorSecundario);
+    /* text-align: center; */
+
+}
+.tarjetaDescripcion__contenedorTitulo h2{
+    color: var(--colorCampoFormulario);
+    /* padding: 0; */
+    margin: 1rem;
+}
+
+.tarjetaDescripcion__contenido p {
+    font-size: 1.5rem;
+}
+
+.tarjeta__subtituloContenido {
+    font-family: var(--fuenteTextoTitulosTerciarios);
+    font-size: 1.5rem;
+    color: var(--colorBlanco);
+}
+
+.formularioCalculadora__valor {
+    display: flex;
+    border-radius: 1.5rem;
+    background-color: var(--colorCampoFormulario);
+    /* text-align: center; */
+}
+
+/* .formularioCalculadora__valor p{
+    width: 1rem;
+} */
+
+.formularioCalculadora__valor input {
+    background: none;
+    width: 90%;
+}
+
+.formularioCalculadora__valor p {
+    color: var(--colorCuarto);
+    margin: 1.5rem 1rem 1.5rem 1rem;
+    font-size: 1.2rem;
+    /* text-align: center; */
+}
+
+/* css del select */
+.formularioCalculadora__select {
+    background-color: var(--colorCampoFormulario); 
+    /* display: block; */
+    width: 100%;
+    height: 5rem;  
+    border-radius: 1rem;
+    color: var(--colorBlanco);
+    font-size: 1.5rem;
+}
+
+
+/* */
+.formularioCalculadora__contenedorOpciones {
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    /* height: 100%; */
+}
+
+.formularioCalculadora__botonEnviar{
+    margin-top: 2rem;
+    width: 100%;
+    background-color: var(--colorSecundario);
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.tarjeta_textobtnEnviar {
+    color: var(--colorCampoFormulario);
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.formularioCalculadora__botonEleccion {
+    border-radius: 2rem;
+    /* background-color: var(--colorCuarto); */
+    width: 50%;
+}
+
+.formularioCalculadora__botonEleccion input {
+    display: none; /* ocultamos el radio */
+}
+
+.formularioCalculadora__botonEleccion label {
+    font-family: var(--fuenteTextoElementos);
+    display: block;
+    padding: 1.5rem 1.5rem;
+    border-radius: 1rem;
+    
+    background-color: var(--colorSombreado);
+    /* background-color: #1e1e1e; */
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--colorBlanco);
+    font-size: 1.5rem;
+    /* color: var(); */
+}
+
+.formularioCalculadora__botonEleccion label:hover {
+    background-color: var(--colorSecundario);
+    cursor: pointer;
+    color: var(--colorCampoFormulario);
+}
+
+.formularioCalculadora__botonEleccion input:checked + label {
+    background-color: var(--colorSecundario);
+    /* border-color: #ff7a00; */
+    color: var(--colorCampoFormulario);
+}
+
+/* .tarjetaResultados_contenedorTexto {
+    
+} */
+
+.contenedorObjetivoFisico {
+    text-align: center;
+    border-radius: 1.5rem;
+    background-color: var(--colorSecundario);
+}
+
+.contenedorObjetivoFisico p {
+    font-weight: bold;
+}
+
+.tarjetaResultados_contenedorTexto p{
+    margin: 0.5rem;
+}
+
+.tarjetaResultados__textoCals {
+    font-size: 2rem;
+}
+
+.tarjeta_textoResultado {
+    font-size: 5rem;
+    color: var(--colorSecundario);
+}
+
+.tarjeta_textoResultado span{
+    font-size: 2rem;
+}
+
+
+/* CSS para el apartado de rutinas */
+
+.panelPrincipal-rutina {
+    grid-template-columns: 25% auto;
+    grid-template-rows: 10% 10% 1fr;
+    grid-template-areas: 
+        "apartadoRutinas1 apartadoRutinas1"
+        "apartadoRutinas2 apartadoRutinas2"
+        "apartadoRutinas3 apartadoRutinas4";
+
+    gap: 1rem;
+}
+
+.panelPrincipal-rutina .tarjetaConsultas {
+    grid-area: apartadoRutinas1;
+}
+
+.panelPrincipal-rutina .tipoRutinas {
+    grid-area: apartadoRutinas2;
+}
+
+.panelPrincipal-rutina .gruposMusculares {
+    grid-area: apartadoRutinas3;
+}
+
+.panelPrincipal-rutina .rutinasPorNivel{
+    grid-area: apartadoRutinas4;
+}
+
+.tipoRutinas__contenedor {
+    justify-content: center;
+    align-items: center;
+    background-color: var(--colorSombreado);
+    border-radius: 4rem;
+    margin: 1rem 15% 1rem 15%;
+    max-width: 70%;
+    max-height: 4.5rem;
+    border-color: var(--colorSombreado);
+    border-width: 0.2rem;
+    border-style: solid;
+}
+
+.tipoRutinas__apartado {
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    /* background-color: var(--colorSecundario); */
+    height: 100%;
+    background: none;
+    border: none;
+    
+}
+
+.tipoRutinas__apartadoPrincipiante{
+     border-radius:
+        2rem 0 0 2rem;
+    /* border-left: 4px solid var(--colorPrimario); */
+}
+
+.tipoRutinas__apartadoIntermedio {
+    border-radius:
+        0 2rem 2rem 0;
+}
+
+.tipoRutinas__apartado:hover {
+    background-color: var(--colorSecundario);
+    /* color: var(--colorPrimario); */
+    cursor: pointer;
+    /* stroke: var(--colorPrimario); */
+}
+
+.tipoRutinas__apartado:hover h3, .tipoRutinas__apartado:hover svg{
+    color: var(--colorPrimario);
+}
+
+.tipoRutinas__apartado h3 {
+    text-transform: uppercase;
+}
+
+.tipoRutinas__iconoSVG {
+    width: 3rem;
+    color: var(--colorBlanco);
+}
+
+/* grupos musculares */
+.gruposMusculares__contenedor {
+    list-style: none;
+    padding: 0;
+}
+
+.grupoMuscular__apartado {
+    width: 100%;
+    border-color: var(--colorCuarto);
+    /* border-style: solid; */
+    border-radius: 1.5rem;
+    /* padding-left: 1rem; */
+    /* border-width: 0.05rem; */
+    margin: 1rem  0 1rem 0;
+    height: 5rem;
+    background-color: var(--colorFondoAplicacion);
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.10),
+        0 4px 10px rgba(0, 0, 0, 0.05);
+    /* list-style-position: outside; */
+
+    /* flex */
+
+}
+
+.grupoMuscular__icono{
+    width: 3rem;
+    height: auto;
+}
+
+.grupoMuscular__btnContenido {
+    align-items: center;
+    gap: 1.5rem;
+    background: none;
+    height: 100%;
+    border-radius: 1.5rem;
+    width: 100%;
+}
+
+.grupoMuscular__btnContenido:hover, .grupoMuscular__apartado:hover{
+    cursor: pointer;
+    background-color: var(--colorSecundario);
+    transition: 0.5s;
+}
+
+.grupoMuscular__texto {
+    text-align:left;
+    font-weight: bold;
+    font-size: 1.1rem;
+    width: auto;
+}
+
+.gruposMusculares__titulo{
+    color: var(--colorPrimario);
+    text-align: left;
+}
+
+.grupoMuscular__btnContenido-subcontenido {
+    align-items: center;
+    width: 80%;
+    gap: 1rem;
+    margin-left: 1rem;
+}
+.grupoMuscular__icono-flecha{
+    /* align-self: ; */
+
+}
+
+.rutinasPorNivel__contenedor {
+    margin-left: 2rem;
+}
+
+.rutinasPorNivel__encabezado {
+    flex-direction: column;
+    align-items: start;
+    padding: 1rem;
+    max-height: 20%;
+    /* background-color: #221b19; */
+}
+
+
+.rutinasPorNivel__encabezado h2, .rutinasPorNivel__encabezado p {
+    padding: 0;
+    margin: 0.2rem;
+}
+
+.listaRutinas__contenedor{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.tarjetaRutina {
+    width: 100%;
+    margin: 0.5rem;
+    /* margin: em; */
+    background-color: var(--colorSombreado);
+    border-radius: 2rem;
+    padding: 0.5rem;
+}
+
+.tarjetaRutina__nivel {
+    position: relative;
+    overflow: hidden;
+    height: 45%;
+    
+}
+
+.tarjetaRutina_icono {
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tarjetaRutina__encabezadoNivel {
+    border-radius: 4rem;
+    background-color: var(--colorSecundario);
+    width: 8rem;
+    position: absolute;
+
+
+}
+
+.nivelRutina__subtitulo{
+    padding: 0;
+    margin: 0.5rem;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: var(--fuenteTextoTitulosTerciarios);
+    color: var(--colorPrimario);
+}
+
+.tarjetaRutina__nombre {
+    margin: 0.5rem;
+}
+
+.tarjetaRutina__descripcion {
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+    margin: 0.5rem;
+}
+
+.tarjetaRutina__contenedorInformacion {
+    /* padding: 0; */
+}
+
+
+
+.tarjetaRutina__estadisticas {
+
+}
+
+
+
+
+
+/* ----------------------------------------------  */
+
+/* para el fondo de los input en formulario es background, no background-color */
+/* altas, bajas, cambios RS */
+
+
+
+
+

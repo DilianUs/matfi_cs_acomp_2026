@@ -1,0 +1,674 @@
+:root{
+    --colorPrimario: #221b19;
+    --colorSecundario: #d5f420; 
+    --colorTerciario: #eff0e3;
+    --colorCuarto : #737373;
+    --colorSombreado: #2d2d2d;
+    --colorCampoFormulario: #2d2d2d;
+    --colorFondoAplicacion: #ebe8e0;
+    --colorBlanco: #ffffff;
+    --fuenteTextoTitulos: "Alexandria", sans-serif;
+    --fuenteTextoTitulosTerciarios: "Elms Sans", sans-serif;
+    --fuenteTextoElementos: "Inter", sans-serif;
+}
+
+/* html{
+    box-sizing: border-box;
+    font-size: 62.5%; */
+    /* zoom: 0.95;*/
+/* } */
+
+.contenedorGeneralModal{
+    margin: 0;
+    padding: 0;
+    background-color: var(--colorPrimario);
+    font-size: 1.6rem; /*1 rem = 10px*/
+    /* overflow: hidden; esto quita el scroll */
+
+}
+
+/* .tarjeta__titulo{
+    font-family: var(--fuenteTextoTitulos);
+    color: var(--colorBlanco);
+    font-size: 2.1rem;
+    text-align: center;
+} */
+
+.iconoModal{
+    width: 5rem;
+}
+
+/* * {
+  border: 1px dashed rgba(0,0,0,0.3);
+}
+
+p {
+    font-family: var(--fuenteTextoElementos);
+}
+
+.responsivo {
+    display: flex;
+}
+
+.cuadricula {
+    display: grid;
+} */
+
+.modalDatos .tarjeta__titulo{
+    font-family: var(--fuenteTextoTitulos);
+    color: var(--colorBlanco);
+    font-size: 2.1rem;
+    text-align: center;
+    width: 90%;
+}
+
+
+/* CSS del modal */
+
+.contenedorGeneralModal.activo {
+    opacity: 1;
+    visibility: visible;
+     transform: translateY(0);
+    pointer-events: auto;
+    
+}
+
+.contenedorGeneralModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+    /* background-color: var(--colorPrimario); */
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* opacity: ; */
+
+    transition: 
+        opacity 0.3s ease, 
+        transform 0.3s ease; 
+}
+
+.modalDatos__contenido {
+    max-width: 100%;
+
+    background-color: var(--colorPrimario);
+    padding: 2rem;
+
+    border-radius: 1.5rem;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+.modalDatos__encabezadoTexto {
+    text-align: center;
+    color: var(--colorCuarto);
+    /* align-items: center; */
+    
+}
+
+.contenedorTitulo {
+    justify-content: center;
+}
+
+.iconoCerrarModal {
+    color: var(--colorBlanco);
+}
+.tarjeta__subtituloContenido {
+    font-family: var(--fuenteTextoTitulosTerciarios);
+    font-size: 1.5rem;
+    color: var(--colorBlanco);
+}
+
+.formularioDatosUsuario__encabezadoCampo {
+    align-items: center;
+}
+
+
+.formularioDatosUsuario__encabezadoIcono {
+    width: 3rem;
+    height: 3rem;
+    /* object-fit: cover; */
+}
+
+
+.modalDatos__formulario {
+    width: 100%;
+}
+
+.formularioDatosUsuario__campo {
+    margin: 1rem 0 1rem 0;
+}
+
+.formularioDatosUsuario__valor, .formularioDatosUsuario__select {
+    width: 100%;
+    border-color: var(--colorCuarto);
+    border-style: solid;
+    border-width: 0.02rem;
+    /* background-color: var(--colorPrimario); */
+}
+
+.formularioDatosUsuario__select, .formularioDatosUsuario__valor input {
+    border-radius:1rem;
+    height: 3.5rem;
+    background-color:transparent;
+}
+
+/* .formularioDatosUsuario__select {
+    height: 3.5rem;
+} */
+
+.formularioDatosUsuario__valor {
+    border-radius: 1rem;
+    /* padding: 0; */
+    /* margin: 0; */
+}
+.formularioDatosUsuario__valor input {
+    width: 90%;
+    /* border: 0; */
+
+}
+
+
+/* REVISAR QUE ES valor-Icono y que hace */
+.formularioDatosUsuario__valor-Icono {
+    /* justify-content: center; */
+    align-items: center;
+}
+/*  */
+
+.formularioDatosUsuario__textoReferencia {
+    max-width: 5%;
+    color: var(--colorCuarto);
+    margin: 0;
+    text-align: center;
+    padding: 0;
+}
+
+.formularioDatosUsuario__btnGuardarCambios {
+    margin: 2rem 0 2rem 0;
+    width: 100%;
+    font-weight: bold;
+    font-size: 2rem;
+    border-radius: 2rem;
+    background-color: var(--colorSecundario);
+}
+
+.formularioDatosUsuario__btnGuardarCambios:hover {
+    cursor: pointer;
+}
+
+
+/* Modal objetivo fisico */
+/* .modalMetaFisica {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+} */
+
+/* CSS para icono de cerrar modal */
+.contenedorCerrarModal{
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+}
+
+
+
+.iconoCerrar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    /* fondo oscuro */
+    background: rgba(255, 255, 255, 0.05);
+
+    /* borde suave */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    position: relative;
+
+    transition: all 0.25s ease;
+}
+
+.iconoCerrar::before,
+.iconoCerrar::after {
+    content: "";
+    position: absolute;
+
+    width: 14px;
+    height: 2px;
+
+    background: #b6ff00;
+    border-radius: 2px;
+}
+
+.iconoCerrar::before {
+    transform: rotate(45deg);
+}
+
+.iconoCerrar::after {
+    transform: rotate(-45deg);
+}
+
+/* HOVER bonito */
+.iconoCerrar:hover {
+    background: rgba(182, 255, 0, 0.1);
+
+    box-shadow:
+        0 0 10px rgba(182, 255, 0, 0.4),
+        inset 0 0 10px rgba(182, 255, 0, 0.2);
+
+    transform: scale(1.1);
+}
+
+/* CSS del contenido del modal */
+
+.modalMetaFisica__contenido{
+    max-width: 60%;
+    /* max-height: %; */
+}
+
+.modalMetaFisica__apartadoEncabezado {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.apartadoEncabezado__elemento {
+    margin: 0.5rem;
+    padding: 0;
+    color: var(--colorBlanco);
+}
+
+.apartadoEncabezado__texto{
+    color: var(--colorCuarto);
+    font-size: 1.3rem;
+}
+
+/* CSS del formulario */
+
+.formularioMetaFisica {
+    width: 100%;
+    margin: 0.05rem;
+    height: 90%;
+}
+
+.modal_apartadoContenido {
+    flex-direction: column;
+}
+
+.formulariObjetivo__encabezado {
+    width: 100%;
+}
+
+.contenedorOpciones__label {
+    justify-content: center;
+    gap: 1rem;
+}
+
+.label-objetivo{
+    width: 33%;
+    /* gap: 2rem; */
+    /* height: 50%; */
+    
+}
+
+.label-nivelActividad {
+    width: 25%;
+}
+
+.contenedorOpciones__label input{
+    display: none;
+}
+
+.selectorInput {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.formularioModal__labelContenedor {
+    position: relative;
+    background: var(--colorPrimario);
+    border: 0.1rem solid var(--colorSombreado);
+    border-radius: 2rem;
+    /* border-color: var(--colorCuarto);
+    border-style:solid;
+    border-radius: 2rem;
+    border-width: 0.1rem; */
+
+    /* sombras externas */
+    box-shadow: 
+        0 10px 25px rgba(0,0,0,0.6),
+        0 0 0 rgba(163, 255, 0, 0);
+
+    /* transition: all 0.3s ease; */
+
+    /* colocacion */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formularioModal__labelContenedor:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+}
+
+.label-contenido {
+    text-align: center;
+    margin: 2rem auto 0.5rem auto;
+}
+
+.label-contenido img {
+    margin-top: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.label-contenido h3 {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.label-contenido p{
+    /* text-align: center; */
+    font-size: 1.1rem;
+    color: var(--colorCuarto);
+    margin-top: 0.5rem;
+}
+
+/* CSS label seleccionado */
+.formularioModal__labelContenedor input:checked + .label-contenido .selectorInput {
+    background: #b6ff00;
+    border-color: #b6ff00;
+}
+
+.formularioModal__labelContenedor:hover .iconoModal {
+    transform: scale(1.1) rotate(3deg);
+}
+
+.contenedorBtn {
+    margin-top: 1rem;
+    width: 100%;
+    
+}
+
+.formularioObjetivo_btnGuardar{
+    width: 100%;
+    border-radius: 2rem;
+    background-color: var(--colorSecundario);
+    text-align: center;
+    font-weight: bold;
+}
+
+/* .formularioObjetivo_btnGuardar p{
+    padding: 0;
+    margin: 0;
+    
+} */
+
+.modalContenedorEncabezado {
+    margin: 1rem;
+    width: auto;
+    gap: 0.6rem;
+    max-height: 20rem;
+    /* background-color: #b6ff00; */
+}
+
+.modalTitulo__contenido {
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 1rem;
+    
+    /* text-align: center; */
+}
+
+.modalTitulo__contenido h2{
+    font-size: 2.5rem;
+    
+}
+/* modal apartado alimentacion CSS */ç
+.modalInfoReceta {
+    /* background-color: #2d2d2d; */
+}
+
+.modalCaloriasAprox__contenedor{
+    /* align-items: flex-end; */
+}
+
+/* .modalInfoReceta__contenido */
+.modalInfoReceta__contenido {
+    position: relative;
+    width: 70%;
+    background-color: var(--colorPrimario);
+    padding: 2rem;
+
+    border-radius: 1.5rem;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    border-color: var(--colorCuarto);
+    border-width: 0.1rem;
+    border-style: solid;
+}
+
+.modalInfoReceta__contenido p{
+    color: var(--colorCuarto);
+}
+
+.modalContenedorTitulo {
+    width: 45%;
+}
+.modalReceta_imagen {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 2rem;
+    /* height: auto; */
+
+}
+
+.modalCaloriasAprox__contenedor {
+    align-items: end;
+    width: 15%;
+}
+
+.modalCaloriasAprox__Contenido {
+    
+    width: 100%;
+    height: 12rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.modalCaloriasAprox__Contenido p{
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.textoCaloriasAproximadas {
+    font-family: var(--fuenteTextoTitulosTerciarios);
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--colorSecundario);
+}
+
+.contenedorCalorias {
+    flex-direction: column;
+    margin-top: 1.2rem;
+    margin-bottom: 0;
+    align-items: center;
+}
+
+.modalReceta_ContenedorInformacion {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+
+    grid-template-areas: 
+    "ingredientes pasosPreparacion"
+    "btnGuardar btnGuardar";
+    justify-content: center;
+    gap: 2rem;
+    width: 98%;
+    margin: 1rem;
+    /* margin-right: 4rem; */
+}
+
+.modalReceta_ContenedorInformacion .modalReceta_ingredientesContenido {
+    grid-area: ingredientes;
+}
+
+.modalReceta_ContenedorInformacion .modalReceta_preparacionContenido {
+    grid-area: pasosPreparacion;
+}
+
+.modalReceta_ContenedorInformacion .modalBotonConsumo__contenedor {
+    grid-area: btnGuardar;
+}
+
+
+.modalReceta_subtitulo {
+    gap:1rem;
+}
+
+.modalReceta_subtitulo h3{
+    font-size: 1.8rem;
+}
+
+.modalReceta_subtitulo img{
+    width: 2em;
+}
+
+.modalReceta_ingredientesContenido, .modalReceta_preparacionContenido{
+    width: 100%;
+    background: linear-gradient(
+        145deg,
+        #1b1817,
+        #282323
+    );
+
+    border-radius: 2rem;
+
+    border: 1px solid rgba(255,255,255,.04);
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.listaIngredientes, .listaPreparacion{
+    margin: 2rem;
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+    padding-left: 1rem;
+    font-family: var(--fuenteTextoElementos);
+    color: var(--colorBlanco);
+
+    line-height: 1.6;
+}
+
+.listaIngredientes li::marker{
+    /* margin-left: 1rem; */
+
+    color: var(--colorSecundario);
+    font-size: 1rem;
+}
+
+.listaPreparacion{
+    counter-reset: pasos;
+
+    list-style: none;
+
+    padding-left: 0;
+}
+
+.listaPreparacion li{
+    position: relative;
+
+    padding-left: 4rem;
+
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+}
+
+.listaPreparacion li::before{
+
+    counter-increment: pasos;
+
+    content: counter(pasos);
+
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    background: var(--colorSecundario);
+
+    color: #1B1412;
+
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalBotonConsumo__contenedor{
+    /* height: 5rem; */
+    width: 100%;
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+
+.botonAgregarConsumo{
+    width: 100%;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    height: 5rem;
+    border-radius: 1.2rem;
+    font-weight: bold;
+    /* font-size: 2rem; */
+    background-color: var(--colorCampoFormulario);
+    color: var(--colorBlanco);
+}
+
+.botonAgregarConsumo:hover{
+    background-color: var(--colorSecundario);
+    color: var(--colorPrimario);
+    cursor: pointer;
+    transition: 0.3s;
+}

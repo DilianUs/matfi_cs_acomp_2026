@@ -1,0 +1,196 @@
+<link rel="preload" href="styles/configuracionInicial.css" as="style">
+<link rel="stylesheet" href="styles/configuracionInicial.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+
+<body>
+    <div class=" modalMetaFisica contenedorGeneralModal responsivo" id="modalMetaFisica">
+        <div class="modalMetaFisica__contenido modalDatos__contenido">
+            <div class="modalMetaFisica__apartadoEncabezado responsivo">
+                <img class="apartadoEncabezado__elemento iconoEncabezado iconoModal" src="../asserts/modalsIconos/objetivoEncabezadoIcono.png">
+                <div class="contenedorCerrarModal" id="">
+                    <span class="iconoCerrar" id="btnCerrarModal"></span>
+                </div>
+                <h2 class=" apartadoEncabezado__elemento tarjeta__titulo">Define tu objetivo</h2>
+                <p class="apartadoEncabezado__elemento apartadoEncabezado__texto">Personaliza tu plan según tu meta y nivel de actividad</p>
+            </div>
+
+            <form class="formularioMetaFisica" id="formularioMetaFisica">
+                <div class="modal_apartadoContenido responsivo">
+                    <div class="formulariObjetivo__encabezado">
+                        <img class="" src="">
+                        <h3 class="tarjeta__subtituloContenido">Objetivo físico</h3>
+                    </div>
+
+                    <div class="contenedorOpciones__label responsivo">
+                        <label class="formularioModal__labelContenedor label-objetivo" for="perdidaGrasa">
+                            <input type="radio" name="objetivoFisico" value="perdidaGrasa" id="perdidaGrasa">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/perderGrasaIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Perder Grasa</h3>
+                                <p>Reducir el porcentaje de <br>grasa corporal</p>
+                            </div>
+                        </label>
+
+                        <label class="formularioModal__labelContenedor label-objetivo" for="mantenimiento">
+                            <input  type="radio" name="objetivoFisico" value="mantenimiento" id="mantenimiento">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/objetivoMantenimientoIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Mantener peso</h3>
+                                <p>Mantener mi peso actual</p>
+                            </div>
+                        </label>
+                        
+                        <label class="formularioModal__labelContenedor label-objetivo" for="aumentoMasaMuscular">
+                            <input type="radio" name="objetivoFisico" value="aumentoMasaMuscular" id="aumentoMasaMuscular">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/objetivoMasaMuscularIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Ganar músculo</h3>
+                                <p>Aumentar masa muscular</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                </div>
+                
+                <!-- segundo apartado -->
+                <div class="modal_apartadoContenido">
+                    <div class="formularioDatosUsuario__encabezadoCampo">
+                        <img>
+                        <h3 class="tarjeta__subtituloContenido">Nivel de actividad</h3>
+                    </div>
+
+                    <div class="contenedorOpciones__label responsivo">
+                        <label class="formularioModal__labelContenedor label-nivelActividad">
+                            <input type="radio" name="">
+                            
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/sedentarioIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Sedentario</h3>
+                                <p>Poco o ningún ejercicio</p>
+                            </div>
+                        </label>
+
+                        <label class="formularioModal__labelContenedor label-nivelActividad " for="">
+                            <input  type="radio">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/ejercicioLigeroIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Ligero</h3>
+                                <p>1-3 días por semana</p>
+                            </div>
+                        </label>
+                        
+                        <label class="formularioModal__labelContenedor label-nivelActividad " for="">
+                            <input type="radio">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/ejercicioModeradoIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Moderado</h3>
+                                <p>3-5 días por semana</p>
+                            </div>
+                        </label>
+
+                        <label class="formularioModal__labelContenedor label-nivelActividad " for="">
+                            <input type="radio">
+
+                            <div class="label-contenido">
+                                <span class="selectorInput"></span>
+                                <img class="iconoModal" src="../asserts/modalsIconos/ejercicioActivoIcono.png">
+                                <h3 class="tarjeta__subtituloContenido">Activo</h3>
+                                <p>6-7 días por semana</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                </div>
+
+                <div>
+                    <button class="formularioDatosUsuario__btnGuardarCambios">
+                        <img>
+                        <p>Guardar configuracion</p>
+                    </button>
+                </div>
+
+            </form>
+           
+        </div>
+    </div>
+</body>
+
+
+<div>
+    <div class="modalDatos__encabezado">
+            <div class="contenedorTitulo responsivo">
+                <h2 class="tarjeta__titulo">Actualizar datos</h2>
+                <span class="iconoCerrarModal" id="cerrarModal">X</span> 
+            </div>
+            <p class="modalDatos__encabezadoTexto">Mantén tu información actualizada para obtener resultados <br>más precisos.</p>
+        </div>
+
+        <div class="modalDatos__formulario">
+            <form class="formularioDatosUsuario">
+                <div class="formularioDatosUsuario__campo">
+                    <div  class="formularioDatosUsuario__encabezadoCampo responsivo">
+                        <img class="formularioDatosUsuario__encabezadoIcono" src="../asserts/modalsIconos/generoIcono.png">
+                        <h3 class="tarjeta__subtituloContenido">Género</h3>
+                    </div>
+
+                    <select class="formularioDatosUsuario__select" >
+                        <!-- <option>Selecciona tu género</option> -->
+                        <option value="M">Mujer</option>
+                        <option value="H">Hombre</option>
+                    </select>
+                </div>
+
+                <div class="formularioDatosUsuario__campo">
+                    <div class="formularioDatosUsuario__EncabezadoCampo responsivo">
+                        <img class="formularioDatosUsuario__encabezadoIcono" src="../asserts/modalsIconos/calendarioIcono.png">
+                        <h3  class="tarjeta__subtituloContenido">Edad</h3>
+                    </div>
+
+                    <div class="formularioDatosUsuario__valor responsivo"><input type="number" placeholder="ej: 22"></div>
+                </div>
+
+                <div class="formularioDatosUsuario__campo">
+                    <div class="formularioDatosUsuario__EncabezadoCampo responsivo">
+                        <img class="formularioDatosUsuario__encabezadoIcono" src="../asserts/modalsIconos/alturaIcono.png">
+                        <h3 class="tarjeta__subtituloContenido">Altura (cm)</h3>
+                    </div>
+
+                    <div class="formularioDatosUsuario__valor formularioDatosUsuario__valor-Icono responsivo">
+                        <input type="number">
+                        <p class="formularioDatosUsuario__textoReferencia">cm</p>
+                    </div>
+                </div>
+
+                <div class="formularioDatosUsuario__campo">
+                    <div class="formularioDatosUsuario__EncabezadoCampo responsivo">
+                        <img class="formularioDatosUsuario__encabezadoIcono" src="../asserts/modalsIconos/pesoIcono.png">
+                        <h3 class="tarjeta__subtituloContenido">Peso (kg)</h3>
+                    </div>
+
+                    <div class="formularioDatosUsuario__valor formularioDatosUsuario__valor-Icono responsivo">
+                        <input type="number">
+                        <p class="formularioDatosUsuario__textoReferencia">kg</p>
+                    </div>
+                </div>
+
+                <button class="formularioDatosUsuario__btnGuardarCambios" type="submit">
+                    <P>Guardar cambios</P>
+                </button>
+            </form>
+        </div>
+</div>

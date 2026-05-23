@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="inicioMatfi.css" as="style">
+    <link rel="stylesheet" href="inicioMatfi.css">
+
+    <link rel="preload" href="../styles/configuracionInicial.css" as="style">
+    <link rel="stylesheet" href="../styles/configuracionInicial.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <title>Alimentación</title>
+</head>
+<body class="responsivo">
+    <!-- Barra de navegacion -->
+    <!-- Contenido de tarjetas -->
+    <main class="panelPrincipal-general panelPrincipal-alimentacion cuadricula" id="panelPrincipal-alimentacion">
+
+        <section class="tarjeta tarjetaConsultas">
+            <div class="tarjetaConsultas__contenido responsivo">
+                <div class="filtrar">
+                    <p>Filtrar</p>
+                    <span class="flecha"></span>
+                </div>
+
+                <div class="tarjetaConsultas__busqueda responsivo">
+                    <input type="text" placeholder="   ¿Qué quieres buscar?">
+                    <img  class="tarjetaBienvenida__iconoBusqueda" src="../../asserts/paginaPrincipal_iconos/busquedaIcono.png">
+                </div>
+            </div>
+        </section>
+
+        <section class="tarjeta tarjetaPieDePagina tarjetaDesayuno">
+            <div class="tarjetaDesayuno__Contenido tarjetaRecetas" id="tarjetaDesayuno"> <!-- tarjetaRecetas-->
+                <div class="tarjetaDesayuno__iconos panelPrincipal-alimentacion__iconos cuadricula">
+                    <img class="tarjetaDesayuno__icono1" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno1.jpeg" alt="">
+                    <img class="tarjetaDesayuno__icono2" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno2.jpg" alt="">
+                    <img class="tarjetaDesayuno__icono3" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno3.jpg" alt="">
+
+                </div>
+                <h2 class="tarjeta__titulo">Desayunos</h2>
+            </div>
+            
+        </section>
+
+        <section class="tarjeta tarjetaPieDePagina tarjetaAlmuerzo" >
+            <div class="tarjetaAlmuerzo__Contenido tarjetaRecetas" id="tarjetaAlmuerzo"> <!-- tarjetaRecetas-->
+                <div class="tarjetaAlmuerzo__iconos panelPrincipal-alimentacion__iconos cuadricula">
+                    <img class="tarjetaAlmuerzo__icono1" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono1.jpg" alt="">
+                    <img class="tarjetaAlmuerzo__icono2" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono2.jpg" alt="">
+                    <img class="tarjetaAlmuerzo__icono3" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono3.jpg" alt="">
+                    <img class="tarjetaAlmuerzo__icono4" src="../../asserts/paginaAlimentacion_iconos/almuerzo/iconoAlmuerzo4.png" alt="">
+                </div>
+                <h2 class="tarjeta__titulo">Almuerzos</h2>
+            </div>
+            
+        </section>
+
+        <section class="tarjeta tarjetaPieDePagina tarjetaCena" >
+            <div class="tarjetaCena__Contenido tarjetaRecetas" id="tarjetaCena"> <!-- tarjetaRecetas-->
+               <div class="tarjetaCena__iconos panelPrincipal-alimentacion__iconos cuadricula">
+                    <img class="tarjetaCena__icono1" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono1.jpg" alt="imagenCena">
+                    <img class="tarjetaCena__icono2" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono2.jpg" alt="imagenCena">
+                    <img class="tarjetaCena__icono3" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono3.jpg" alt="imagenCena">
+                    <img class="tarjetaCena__icono4" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono4.jpg" alt="">
+                </div>
+                <h2 class="tarjeta__titulo">Cenas</h2> 
+            </div>
+            
+        </section>
+
+    </main>
+
+    <!-- modal para la informacion del ejercicio -->
+     <div class=" modalInfoReceta contenedorGeneralModal responsivo" id="modalAlimentacion">
+        <div class=" modalInfoReceta__contenido">
+            <div class="contenedorCerrarModal"><span class="iconoCerrar posicionIcono" id="btnCerrarModal"></span></div>
+
+            <div class="modalContenedorEncabezado responsivo">
+                
+
+                <img id="imagenReceta" class="modalReceta_imagen" src="">
+                <div class="modalContenedorTitulo">
+                    <div class="modalTitulo__contenido responsivo">
+                        <h2 class="tarjeta__titulo" id="tituloReceta"></h2>
+                        <img class="iconoModal" src="../../asserts/paginaAlimentacion_iconos/modalIconos/nombreRecetaIcono.png">
+                    </div>
+                    <p id="descripcionReceta">Una opción saludable, balanceada y deliciosa que combina posho y demas cosas</p>
+                </div>
+
+                <div class="modalCaloriasAprox__contenedor responsivo">
+                    <div class="modalCaloriasAprox__Contenido responsivo formularioModal__labelContenedor">
+                        <div class="contenedorCalorias responsivo">
+                            <img class="iconoModal" src="../../asserts/paginaCalculadora_iconos/resultadoIcono.png">
+                            <span class="textoCaloriasAproximadas" id="caloriasReceta"></span>
+                        </div>
+                        
+                        <p class="tarjeta_texto">kcal aprox</p>
+                    </div>
+                </div>
+                
+                <!-- <span class="iconoCerrar" id="cerrarModal"></span> -->
+            </div>
+
+            <div class="modalReceta_ContenedorInformacion cuadricula">
+                <div class="modalReceta_ingredientesContenido">
+                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
+                        <img class="iconoModal" src="../../asserts/paginaAlimentacion_iconos/modalIconos/ingredientesIcono.png">
+                        <h3 class="tarjeta__titulo">Ingredientes</h3>
+                    </div>
+
+                    <!-- <div>
+                        <li id="ingredientesReceta">
+                            
+                        </li>
+                    </div> -->
+                    <ul class="listaIngredientes responsivo" id="ingredientesReceta">
+
+                    </ul>
+                </div>
+
+                <div class="modalReceta_preparacionContenido">
+                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
+                        <img class="iconoModal" src="../../asserts/paginaAlimentacion_iconos/modalIconos/preparacionIcono.png">
+                        <h3 class="tarjeta__titulo">Preparación</h3>
+                    </div>
+
+                    <ol class="listaPreparacion responsivo" id="preparacionReceta">
+
+                    </ol>
+
+                    <!-- <div>
+                        <li id="preparacionReceta">
+                            
+                        </li>
+                        
+                    </div> -->
+                </div>
+
+                <div class="modalCaloriasAprox__contenedor modalBotonConsumo__contenedor responsivo">
+                    <button  class="botonAgregarConsumo" id="btnAgregarConsumo">Agregar consumo</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+</html>
