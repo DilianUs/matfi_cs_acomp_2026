@@ -1,9 +1,9 @@
 export default class CalculadoraCalorias {
     static intensidadDeActividad = {
-        sedentario: 1.2,
-        ligero: 1.375,
-        moderado: 1.55,
-        activo: 1.725
+        sedentario: 1.1,
+        ligero: 1.38,
+        moderado: 1.35,
+        activo: 1.50
     };
     #objetivoFisico;
     #nivelActividad;
@@ -36,11 +36,15 @@ export default class CalculadoraCalorias {
     }
 
     ajustarSegunObjetivo(caloriasMantenimiento) {
-        if (this.#objetivoFisico === "perdidaGrasa"){
-            return caloriasMantenimiento -300;
-        } else if(this.#objetivoFisico === "aumentoMasaMuscular"){
-            return caloriasMantenimiento -200;
+        if (this.#objetivoFisico === "perdida"){
+            return caloriasMantenimiento -220;
+        } else if(this.#objetivoFisico === "aumento" || this.#objetivoFisico === "ganancia"){
+            return caloriasMantenimiento +200;
         }
+        else{
+           return caloriasMantenimiento; 
+        }
+        
     }
 
     calcularCaloriasDiarias(datos) {

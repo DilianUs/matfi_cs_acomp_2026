@@ -45,15 +45,41 @@ export default class UsuarioService {
         return data;
     }
 
-    async actualizarPerfil(usuarioId, datos){
-        const res = await fetch(`http://localhost:3000/usuario/${usuarioId}`, {
+    async obtenerPerfil(token){
+
+        const res = await fetch(`${BASE_URL}/auth/profile`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await res.json();
+
+        if(!res.ok){
+            throw new Error(data.error || "Error al obtener perfil");
+        }
+
+        return data;
+    }
+
+    async actualizarPerfil(token, datos){
+        const res = await fetch(`${BASE_URL}/auth/profile`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(datos)
         });
 
-        return await res.json();
+        const data = await res.json();
+
+        if(!res.ok){
+            throw new Error(data.error || "Error al actualizar perfil");
+        }
+
+        return data;
     }
 }

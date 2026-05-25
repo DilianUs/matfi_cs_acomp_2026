@@ -56,4 +56,13 @@ document.addEventListener("click", (e) => {
     if (e.target.closest("#btnCerrarModal")) {
         document.getElementById("modalMetaFisica")?.classList.remove("activo");
     }
+
+    // if (e.target.closest("#btnAbrirModalRutina")) {
+    //     document.getElementById("modalRutina")?.classList.add("activo");
+    // }
+
+    // if (e.target.closest("#btnCerrarModal")) {
+    //     document.getElementById("modalRutina")?.classList.remove("activo");
+    // }
+
 });

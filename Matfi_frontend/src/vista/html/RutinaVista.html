@@ -166,7 +166,7 @@
             </div>
 
             <div class="listaRutinas__contenedor cuadricula" id="listaRutinas">
-                <article class="tarjetaRutina">
+                <!-- <article class="tarjetaRutina">
         
                     <div class="tarjetaRutina__nivel">
                         <div class="tarjetaRutina__encabezadoNivel">
@@ -211,12 +211,12 @@
                     </div>
 
                     <div class="tarjetaRutina__estadisticas responsivo">
-                        <button>Ver rutina</button>
+                        <button type="button" id="btnAbrirModalRutina">Ver rutina</button>
                         <div>🏋 5 ejercicios</div>
                         <div>🔥 450 cal</div>
                     </div>
 
-                </article>
+                </article> -->
             </div>
         </section>
 
@@ -228,74 +228,79 @@
     </main>
 
     <!-- modal para la informacion del ejercicio -->
-     <div class=" modalInfoReceta contenedorGeneralModal responsivo" id="modalAlimentacion">
-        <div class=" modalInfoReceta__contenido">
-            <div class="contenedorCerrarModal"><span class="iconoCerrar posicionIcono" id="btnCerrarModal"></span></div>
+    <div class="modalRutina contenedorGeneralModal responsivo" id="modalRutina">
+        <div class="modalRutina__contenido">
 
-            <div class="modalContenedorEncabezado responsivo">
-                
-
-                <img id="imagenReceta" class="modalReceta_imagen" src="">
-                <div class="modalContenedorTitulo">
-                    <div class="modalTitulo__contenido responsivo">
-                        <h2 class="tarjeta__titulo" id="tituloReceta"></h2>
-                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/nombreRecetaIcono.png">
-                    </div>
-                    <p id="descripcionReceta">Una opción saludable, balanceada y deliciosa que combina posho y demas cosas</p>
+            <!-- HEADER -->
+            <div class="modalRutina__header">
+                <div class="modalRutina__titulo">
+                    <h2 id="modalRutina__titulo">Rutina de pierna</h2>
+                    <p id="modalRutinaDescripcion">Personaliza tu entrenamiento</p>
                 </div>
 
-                <div class="modalCaloriasAprox__contenedor responsivo">
-                    <div class="modalCaloriasAprox__Contenido responsivo formularioModal__labelContenedor">
-                        <div class="contenedorCalorias responsivo">
-                            <img class="iconoModal" src="../asserts/paginaCalculadora_iconos/resultadoIcono.png">
-                            <span class="textoCaloriasAproximadas" id="caloriasReceta"></span>
-                        </div>
-                        
-                        <p class="tarjeta_texto">kcal aprox</p>
-                    </div>
-                </div>
-                
-                <!-- <span class="iconoCerrar" id="cerrarModal"></span> -->
-            </div>
-
-            <div class="modalReceta_ContenedorInformacion responsivo">
-                <div class="modalReceta_ingredientesContenido">
-                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
-                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/ingredientesIcono.png">
-                        <h3 class="tarjeta__titulo">Ingredientes</h3>
-                    </div>
-
-                    <!-- <div>
-                        <li id="ingredientesReceta">
-                            
-                        </li>
-                    </div> -->
-                    <ul class="listaIngredientes responsivo" id="ingredientesReceta">
-
-                    </ul>
-                </div>
-
-                <div class="modalReceta_preparacionContenido">
-                    <div  class="modalReceta_subtitulo tarjetaVistaCalculadora__encabezado responsivo">
-                        <img class="iconoModal" src="../asserts/paginaAlimentacion_iconos/modalIconos/preparacionIcono.png">
-                        <h3 class="tarjeta__titulo">Preparación</h3>
-                    </div>
-
-                    <ol class="listaPreparacion responsivo" id="preparacionReceta">
-
-                    </ol>
-
-                    <!-- <div>
-                        <li id="preparacionReceta">
-                            
-                        </li>
-                        
-                    </div> -->
+                <div class="modalRutina__cerrar">
+                    <span class="iconoCerrar" id="btnCerrarModal"></span>
                 </div>
             </div>
-            
+
+            <!-- STATS -->
+            <div class="modalRutina__stats">
+
+                <div class="statCard">
+                    <svg class="statCard__icon iconoModal" fill="#d5f420" width="123px" height="123px" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M 8.1836 37.3984 C 8.1836 47.1484 15.6367 53.6406 26.8164 53.6406 C 39.4023 53.6406 47.8164 45.1562 47.8164 32.3828 C 47.8164 11.1718 29.7227 2.3594 17.4180 2.3594 C 14.9570 2.3594 13.3633 3.2266 13.3633 4.9375 C 13.3633 5.5937 13.6445 6.2969 14.1602 6.8828 C 16.9023 10.1875 19.6914 14.0078 19.7617 18.4844 C 19.7617 18.9062 19.7617 19.3047 19.7149 19.7266 C 18.4023 17.2656 16.1992 15.5078 13.9492 15.5078 C 12.8242 15.5078 12.0273 16.3281 12.0273 17.5703 C 12.0273 18.1562 12.2149 19.6094 12.2149 20.6172 C 12.2149 25.5156 8.1836 28.8203 8.1836 37.3984 Z M 12.0742 37.3984 C 12.0742 30.1328 16.0820 27.1094 16.2695 20.3828 C 17.6054 22.0703 18.5664 24.1094 18.8945 27.0391 C 18.9414 27.5078 19.2227 27.6953 19.6445 27.6953 C 21.8711 27.6953 23.1602 22.0469 23.1602 18.4844 C 23.1602 13.9140 21.2149 9.1328 18.1914 6.0625 C 34.2227 7.3516 43.7852 18.2500 43.7852 32.2187 C 43.7852 42.7656 37.1054 49.7734 27.1211 49.7734 C 18.0742 49.7734 12.0742 44.8281 12.0742 37.3984 Z M 27.4492 47.0547 C 33.1914 47.0547 36.0039 42.8359 36.0039 38.0547 C 36.0039 33.3203 33.2852 28.0469 27.9414 25.5859 C 27.7305 25.4922 27.5898 25.6094 27.6133 25.8437 C 27.9180 29.8984 27.6836 33.1328 26.4649 35.2656 C 26.3242 35.4766 26.1602 35.4531 26.0664 35.2187 C 25.5039 33.8125 24.8008 32.6172 23.6992 31.6328 C 23.5117 31.4687 23.3711 31.5391 23.3476 31.7734 C 22.9492 34.4922 19.9258 36.0156 19.9258 40.2813 C 19.9258 44.3359 22.9258 47.0547 27.4492 47.0547 Z"></path></g>
+                    </svg>
+                    <div class="statCard__info">
+                    <p class="statCard__label">Calorías quemadas</p>
+                    <h3 class="statCard__value" id="modalCalorias">0 kcal</h3>
+                </div>
+            </div>
+
+            <div class="statCard">
+                <svg class="statCard__icon iconoModal" width="130px" height="130px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.06152 12C5.55362 8.05369 8.92001 5 12.9996 5C17.4179 5 20.9996 8.58172 20.9996 13C20.9996 17.4183 17.4179 21 12.9996 21H8M13 13V9M11 3H15M3 15H8M5 18H10" stroke="#2e89c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                </svg>
+                <div class="statCard__info">
+                <p class="statCard__label">Tiempo invertido</p>
+                <h3 class="statCard__value" id="modalTiempo">0 min</h3>
+                </div>
+            </div>
+
+            <div class="statCard">
+                <svg class="statCard__icon iconoModal" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier"> <title>gen-heart-rate</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="64px-Glyph" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="gen-heart-rate" fill="#d5f420"> <path d="M57,32 L54.979,32 C59.395,26.128 58.948,17.735 53.606,12.394 C47.759,6.546 38.242,6.545 32.43,12.359 L31,13.652 L29.606,12.394 C23.759,6.545 14.241,6.545 8.394,12.394 C2.545,18.242 2.545,27.758 8.391,33.603 L30.29,55.704 C30.291,55.705 30.292,55.705 30.293,55.706 C30.294,55.707 30.294,55.709 30.296,55.71 C30.367,55.781 30.452,55.824 30.536,55.869 C30.567,55.885 30.592,55.914 30.624,55.926 C30.744,55.975 30.872,56 31,56 C31.128,56 31.255,55.975 31.376,55.926 C31.413,55.911 31.443,55.879 31.478,55.859 C31.557,55.815 31.637,55.776 31.704,55.71 C31.706,55.709 31.706,55.707 31.707,55.706 C31.708,55.705 31.709,55.705 31.71,55.704 L51.235,36 L42,36 C41.621,36 41.275,35.786 41.105,35.447 L40.255,33.747 L36.962,45.275 C36.839,45.705 36.445,46 36,46 L35.973,46 C35.516,45.987 35.126,45.667 35.024,45.222 L30.954,27.308 L28.97,35.242 C28.858,35.688 28.459,36 28,36 L21,36 C20.447,36 20,35.552 20,35 C20,34.448 20.447,34 21,34 L27.219,34 L30.03,22.758 C30.142,22.312 30.542,22 31,22 L31.011,22 C31.474,22.005 31.872,22.327 31.976,22.778 L36.11,40.974 L39.038,30.725 C39.151,30.329 39.497,30.043 39.907,30.004 C40.322,29.966 40.71,30.185 40.894,30.553 L42.618,34 L51,34 L53.216,34 L57,34 C57.553,34 58,33.552 58,33 C58,32.448 57.553,32 57,32" id="Fill-192"> </path> </g> </g> </g>
+                </svg>
+                <div class="statCard__info">
+                    <p class="statCard__label">Intensidad</p>
+                    <h3 class="statCard__value alto" id="modalIntensidad"></h3>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- EJERCICIOS -->
+            <div class="modalRutina__body">
+
+                <h3 class="modalRutina__sectionTitle">Ejercicios</h3>
+
+                <div class="ejercicios" id="modalEjercicios">
+                    <!-- js dinamico -->
+                </div>
+
+                <div class="modalRutina__footer">
+                    <p style="text-align: center;" class="modalRutina__footer">
+                        Descansa 60–90 seg entre series para mejores resultados.
+                    </p>
+
+                    <button class="formularioObjetivo_btnGuardar btnRegistroActividad" type="button" id="btnGuardarRegistroEjercicio">Añadir al registro de actividad</button>
+                </div>
+                
+
+            </div>
+
         </div>
     </div>
 
+    <script src="../modalControlador.js"></script>
 </body>
 </html>

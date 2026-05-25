@@ -34,9 +34,9 @@ body{
 
 
 
-* {
+/* * {
   border: 1px dashed rgba(0,0,0,0.3);
-}
+} */
 
 p {
     font-family: var(--fuenteTextoElementos);
@@ -283,6 +283,212 @@ p {
     animation: movimiento_lateral 0.6s infinite;;
     
 }
+/*              css de la tarjeta progreso               */
+.tarjetaProgreso {
+    max-height: 100%;
+}
+.tarjetaProgreso__contenedor{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    /* padding-right: 2rem;
+    padding-left: 2rem; */
+    margin: 0.5rem 2rem auto 2rem;
+    padding-bottom: 1rem;
+}
+
+.tarjetaProgreso__estadistica{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    padding: 1rem;
+
+    border-radius: 20px;
+
+    background-color: rgba(255,255,255,0.03);
+}
+
+.tarjetaProgreso__icono{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    border: 2px solid #3a3a3a;
+
+    color: #d9ff00;
+    font-size: 1.8rem;
+}
+
+.tarjetaProgreso__info{
+    width: 100%;
+}
+
+.tarjetaProgreso__label{
+    margin-bottom: .3rem;
+
+    color: #bdbdbd;
+    font-size: .95rem;
+}
+
+.tarjetaProgreso__valor{
+    margin-bottom: .8rem;
+
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.tarjetaProgreso__valor span{
+    color: #7c7c7c;
+    font-size: 1.5rem;
+}
+
+.tarjetaProgreso__barra{
+    width: 100%;
+    height: 10px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background-color: #2f2f2f;
+}
+
+.tarjetaProgreso__barraRelleno{
+    height: 100%;
+
+    border-radius: 20px;
+
+    background-color: #d9ff00;
+}
+
+/*  -------------------------------- se debe darle mantenimiento a esta sección para limpieza y depuración*/
+/* tarjeta obtenidos panel principal */
+.tarjetaObjetivos__contenido{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tarjetaObjetivos__meta{
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.tarjetaObjetivos__bloque{
+    flex: 1;
+    background-color: var(--colorSombreado);
+    border-radius: 2rem;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.tarjetaObjetivos__bloque:hover{
+    transform: translateY(-3px);
+}
+
+.tarjetaObjetivos__label{
+    font-size: 1.2rem;
+    color: var(--colorCuarto);
+    margin: 0;
+}
+
+.tarjetaObjetivos__valor{
+    font-size: 2rem;
+    color: var(--colorBlanco);
+    font-weight: bold;
+    margin: 0.5rem 0 0 0;
+}
+
+/* PROGRESO */
+.tarjetaObjetivos__progreso{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.barraProgreso{
+    width: 100%;
+    height: 1rem;
+    background-color: var(--colorSombreado);
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.barraProgreso__relleno{
+    height: 100%;
+    background-color: var(--colorSecundario);
+    border-radius: 2rem;
+    transition: width 0.4s ease;
+}
+
+.tarjetaObjetivos__texto{
+    color: var(--colorBlanco);
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.tarjetaCalendario__contenido{
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tarjetaCalendario__header{
+    display: flex;
+    justify-content: center;
+}
+
+.tarjetaCalendario__mes{
+    color: var(--colorBlanco);
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.tarjetaCalendario__grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.8rem;
+    text-align: center;
+}
+
+.tarjetaCalendario__grid span{
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+}
+
+.tarjetaCalendario__grid .dia{
+    color: var(--colorBlanco);
+    background-color: var(--colorSombreado);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.tarjetaCalendario__grid .dia:hover{
+    transform: scale(1.05);
+    background-color: #3a3a3a;
+}
+
+.tarjetaCalendario__grid .activo{
+    background-color: var(--colorSecundario);
+    color: black;
+    font-weight: bold;
+}
+
+/* fin de la sección de depuración y limpieza */
 
 /*  -----------------------------  CSS del apartado de "ALIMENTACION"  -----------------------------  */
 
@@ -1111,11 +1317,144 @@ body.fondoCalculadora {
     gap: 1rem;
 }
 
+/* css apartado rutinas */
+.rutinasPorNivel__contenedor {
+    margin-left: 1rem;
+}
+
+.rutinasPorNivel__encabezado {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+}
+
+.rutinasPorNivel__encabezado h2,
+.rutinasPorNivel__encabezado p {
+    margin: 0.2rem 0;
+}
+
+.listaRutinas__contenedor {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+}
+
+/* CARD */
 .tarjetaRutina {
     width: 100%;
-    margin: 0.5rem;
-    /* margin: em; */
+    margin: 0;
     background-color: var(--colorSombreado);
+    border-radius: 1.2rem;
+    overflow: hidden;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.tarjetaRutina:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+}
+
+/* HEADER IMAGEN + NIVEL */
+.tarjetaRutina__nivel {
+    position: relative;
+    height: 120px;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.tarjetaRutina_icono {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75);
+}
+
+/* NIVEL LABEL */
+.nivelRutina__subtitulo {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+
+    margin: 0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+
+    background: var(--colorSecundario);
+    color: var(--colorPrimario);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* INFO */
+.tarjetaRutina__contenedorInformacion {
+    padding: 0 0.3rem;
+}
+
+.tarjetaRutina__nombre {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--colorBlanco);
+    font-family: var(--fuenteTextoTitulos);
+
+}
+
+.tarjetaRutina__descripcion {
+    margin: 0.2rem 0 0;
+    font-size: 0.85rem;
+    color: var(--colorCuarto);
+    line-height: 1.2;
+}
+
+/* STATS */
+.tarjetaRutina__estadisticas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 0.8rem;
+    color: var(--colorTerciario);
+    opacity: 0.9;
+
+    padding-top: 0.3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* BOTÓN */
+.btnAbrirRutina {
+    padding: 0.35rem 0.7rem;
+    border: none;
+    border-radius: 0.6rem;
+
+    background: var(--colorSecundario);
+    color: var(--colorPrimario);
+
+    font-weight: 700;
+    font-size: 0.75rem;
+
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.btnAbrirRutina:hover {
+    transform: scale(1.03);
+    filter: brightness(1.05);
+}
+
+/* .tarjetaRutina {
+    width: 100%;
+    margin: 0.5rem; */
+    /* margin: em; */
+    /* background-color: var(--colorSombreado);
     border-radius: 2rem;
     padding: 0.5rem;
 }
@@ -1125,9 +1464,9 @@ body.fondoCalculadora {
     overflow: hidden;
     height: 45%;
     
-}
+} */
 
-.tarjetaRutina_icono {
+/* .tarjetaRutina_icono {
     object-fit: cover;
     width: 100%;
     height: auto;
@@ -1165,13 +1504,9 @@ body.fondoCalculadora {
 
 .tarjetaRutina__contenedorInformacion {
     /* padding: 0; */
-}
+/* } */
 
 
-
-.tarjetaRutina__estadisticas {
-
-}
 
 
 

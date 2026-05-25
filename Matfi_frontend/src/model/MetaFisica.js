@@ -18,9 +18,18 @@ export default class MetaFisica {
 
     // }
     calcularFechaFinalizacion(){
+        // const fechaTemporal = new Date(this.#fechaInicio);
+        // fechaTemporal.setMonth(fechaTemporal.getMonth() + this.#tiempoDeMeta);
+        // this.#fechaFinalizacion = fechaTemporal;
         const fechaTemporal = new Date(this.#fechaInicio);
-        fechaTemporal.setMonth(fechaTemporal.getMonth() + this.#tiempoDeMeta);
+
+        fechaTemporal.setMonth(
+            fechaTemporal.getMonth() + this.#tiempoDeMeta
+        );
+
         this.#fechaFinalizacion = fechaTemporal;
+
+        return this.#fechaFinalizacion;
     }
 
     get objetivoActivo(){

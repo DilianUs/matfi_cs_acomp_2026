@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>Inicio</title>
 </head>
@@ -18,7 +20,7 @@
         <section class="tarjeta tarjetaBienvenida">
             <div class="tarjetaBienvenida__contenido responsivo">
                 <div class="tarjetaBienvenida__saludo">
-                    <h2 class="tarjeta__titulo">Buen día, Usuario</h2>
+                    <h2 class="tarjeta__titulo">Buen día, <span id="saludoNombreUsuarioTexto">Usuario</span></h2>
                     <p class="tarjeta__texto">¿Cómo te sientes hoy?</p>
                 </div>
 
@@ -38,25 +40,155 @@
         </section>
 
         <section class="tarjeta tarjetaProgreso">
-            <div>
+            
+            <div class="tarjetaProgreso__contenedor">
                 <h2 class="tarjeta__titulo">Progreso semanal</h2>
-                
+                <!-- calorias -->
+                <article class="tarjetaProgreso__estadistica">
+
+                    <div class="tarjetaProgreso__icono">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+
+                    <div class="tarjetaProgreso__info">
+                        <p class="tarjetaProgreso__label">
+                            Calorías consumidas
+                        </p>
+
+                        <h3 class="tarjetaProgreso__valor">
+                            0 / <span id="caloriasMetaFisica">1700</span>
+                        </h3>
+
+                        <div class="tarjetaProgreso__barra">
+                            <div 
+                                class="tarjetaProgreso__barraRelleno"
+                                style="width: 0%;">
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+                <!-- rutinas -->
+                <article class="tarjetaProgreso__estadistica">
+
+                    <div class="tarjetaProgreso__icono">
+                        <i class="fa-solid fa-dumbbell"></i>
+                    </div>
+
+                    <div class="tarjetaProgreso__info">
+                        <p class="tarjetaProgreso__label">
+                            Rutinas realizadas
+                        </p>
+
+                        <h3 class="tarjetaProgreso__valor">
+                            0 <span>/ 6</span>
+                        </h3>
+
+                        <div class="tarjetaProgreso__barra">
+                            <div 
+                                class="tarjetaProgreso__barraRelleno"
+                                style="width: 0%;">
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+                        
             </div>
         </section>
 
         <section class="tarjeta tarjetaPieDePagina tarjetaCalendario">
-            <div>
+            <div class="tarjetaCalendario__contenido">
                 <div>
                     <h2 class="tarjeta__titulo">Calendario</h2>
+                </div>
+
+                <div class="tarjetaCalendario__header">
+                    <p class="tarjetaCalendario__mes">Mayo 2026</p>
+                </div>
+
+                <div class="tarjetaCalendario__grid">
+                    <span>L</span>
+                    <span>M</span>
+                    <span>M</span>
+                    <span>J</span>
+                    <span>V</span>
+                    <span>S</span>
+                    <span>D</span>
+
+                    <!-- días (ejemplo estático) -->
+                    <span class="dia">1</span>
+                    <span class="dia">2</span>
+                    <span class="dia">3</span>
+                    <span class="dia">4</span>
+                    <span class="dia">5</span>
+                    <span class="dia">6</span>
+                    <span class="dia">7</span>
+
+                    <span class="dia">8</span>
+                    <span class="dia">9</span>
+                    <span class="dia">10</span>
+                    <span class="dia">11</span>
+                    <span class="dia">12</span>
+                    <span class="dia">13</span>
+                    <span class="dia">14</span>
+
+                    <span class="dia">15</span>
+                    <span class="dia">9</span>
+                    <span class="dia">16</span>
+                    <span class="dia">17</span>
+                    <span class="dia">18</span>
+                    <span class="dia">19</span>
+                    <span class="dia">20</span>
+
+                    <span class="dia activo">21</span>
+                    <span class="dia">22</span>
+                    <span class="dia">23</span>
+                    <span class="dia">24</span>
+                    <span class="dia">25</span>
+                    <span class="dia">26</span>
+                    <span class="dia">27</span>
+
+                    <span class="dia">28</span>
+                    <span class="dia">29</span>
+                    <span class="dia">30</span>
+                    <span class="dia">31</span>
+                    <!-- <span class="dia">25</span> -->
                 </div>
                 
             </div>
         </section>
 
         <section class="tarjeta tarjetaPieDePagina tarjetaObjetivos">
-            <div>
-                <h2 class="tarjeta__titulo">Objetivos</h2>
-                
+            <div class="tarjetaObjetivos__contenido">
+                <h2 class="tarjeta__titulo">Objetivo Físico</h2>
+
+                <div class="tarjetaObjetivos__meta">
+            
+                    <div class="tarjetaObjetivos__bloque">
+                        <p class="tarjetaObjetivos__label">Objetivo seguido</p>
+                        <p class="tarjetaObjetivos__valor" id="tipoObjetivoFisicoTexto">No especificado</p>
+                    </div>
+
+                    <div class="tarjetaObjetivos__bloque">
+                        <p class="tarjetaObjetivos__label" id="fechaInicioTexto">Fecha de inicio</p>
+                        <p class="tarjetaObjetivos__valor" id="fechaInicioTexto">No especificada</p>
+                    </div>
+
+                    <div class="tarjetaObjetivos__bloque">
+                        <p class="tarjetaObjetivos__label">Calorías meta</p>
+                        <p class="tarjetaObjetivos__valor" id="caloriasMetaFisicaTexto">No establecidas</p>
+                    </div>
+
+                </div>
+
+                <div class="tarjetaObjetivos__progreso">
+                    <div class="barraProgreso">
+                        <div class="barraProgreso__relleno" style="width: 70%"></div>
+                    </div>
+                    <p class="tarjetaObjetivos__texto">70% del objetivo semanal</p>
+                </div>
             </div>
         </section>
     </main>

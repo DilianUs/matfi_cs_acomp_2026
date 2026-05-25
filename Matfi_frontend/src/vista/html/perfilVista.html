@@ -24,8 +24,8 @@
             <div class="tarjetaInformacionUsuario__contenido">
                 <div  class="tarjetaInformacionUsuario__identificacion">
                     <img >
-                    <h2 class="tarjeta__titulo">Nombre de usuario</h2>
-                    <p class="tarjeta__texto">ID:___________</p>
+                    <h2 class="tarjeta__titulo" id="nombreUsuarioTexto">Nombre de usuario</h2>
+                    <p class="tarjeta__texto" style="text-align: center;" id="idUsuario">ID:___________</p>
                 </div>
 
                 <div class="tarjetaInformacionUsuario__datosGenerales">
@@ -34,8 +34,8 @@
                         <div class="tarjeta__texto tarjetaInformacionUsuario__campo responsivo"><p>Género: </p></div>
                         
                         <div class="tarjetaInformacionUsuario__valor responsivo">
-                            <p class="tarjeta__texto">Femenino</p>
-                            <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
+                            <p class="tarjeta__texto" id="generoUsuarioTexto">Femenino</p>
+                            <!-- <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png"> -->
                         </div>
                     </div>
 
@@ -43,23 +43,23 @@
                         <p  class="tarjeta__texto tarjetaInformacionUsuario__campo">Fecha de nacimiento:</p>
                         <div class="tarjetaInformacionUsuario__valor responsivo">
                             <p class="tarjeta__texto">14 Nov</p>
-                            <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
+                            <!-- <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png"> -->
                         </div>
                     </div>
 
                     <div class="tarjetaInformacionUsuario__dato responsivo">
                         <p  class="tarjeta__texto tarjetaInformacionUsuario__campo">Altura:</p>
                         <div class="tarjetaInformacionUsuario__valor responsivo">
-                            <p class="tarjeta__texto">160 cm</p>
-                            <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
+                            <p class="tarjeta__texto" id="alturaUsuarioTexto">160 cm</p>
+                            <!-- <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png"> -->
                         </div>
                     </div>
 
                     <div class="tarjetaInformacionUsuario__dato responsivo">
                         <p  class="tarjeta__texto tarjetaInformacionUsuario__campo">Peso:</p>
                         <div class="tarjetaInformacionUsuario__valor responsivo">
-                            <p class="tarjeta__texto">50 kg</p>
-                            <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
+                            <p class="tarjeta__texto" id="pesoUsuarioTexto">50 kg</p>
+                            <!-- <img class="tarjetaInformacionUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png"> -->
                         </div>
                     </div>
 
@@ -75,17 +75,17 @@
         <section class="tarjetaAjustesUsuario">
             <div class=" tarjetaAjustesUsuario__contenido responsivo">
                 <div class="tarjeta tarjetaAjustesUsuario__campo responsivo">
-                    <h2 class="tarjeta__titulo">Cambiar foto de perfil</h2>
+                    <h2 class="tarjeta__titulo">Actualizar objetivo físico</h2>
                     <img class="tarjetaAjustesUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
                 </div>
 
                 <div class="tarjeta tarjetaAjustesUsuario__campo responsivo" id="btnAbrirModalObjetivo">
-                    <h2 class="tarjeta__titulo">Establecer objetivos</h2>
+                    <h2 class="tarjeta__titulo">Establecer objetivo físico</h2>
                     <img class="tarjetaAjustesUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
                 </div>
 
                 <div class="tarjeta tarjetaAjustesUsuario__campo responsivo">
-                    <h2 class="tarjeta__titulo">análisis inteligente</h2>
+                    <h2 class="tarjeta__titulo">Eliminar objetivo físico</h2> <!--antes era análisis inteligente-->
                     <img class="tarjetaAjustesUsuario__icono" src="../../asserts/paginaPerfil_iconos/flechaIcono.png">
                 </div>
 
@@ -108,26 +108,37 @@
      <div class="contenedorGeneralModal modalDatos  responsivo" id="modalDatosUsuario">
         <div class="modalDatos__contenido">
             <div class="modalDatos__encabezado">
-                <div class="contenedorTitulo responsivo">
+                <div class="contenedorTitulo modalDatos_contenedorTitulo responsivo">
                     <h2 class="tarjeta__titulo">Actualizar datos</h2>
                     <!-- <span class="iconoCerrarModal" id="cerrarModal">X</span>  -->
                     <span class="iconoCerrar" id="cerrarModal"></span>
                 </div>
-                <p class="modalDatos__encabezadoTexto">Mantén tu información actualizada para obtener resultados <br>más precisos.</p>
+                <p class="modalDatos_contenedorTexto modalDatos__encabezadoTexto">Mantén tu información actualizada para obtener resultados <br>más precisos.</p>
             </div>
 
             <div class="modalDatos__formulario">
-                <form class="formularioDatosUsuario">
+                <form class="formularioDatosUsuario" id="formPerfil">
+                    <div class="formularioDatosUsuario__campo">
+                        <div class="formularioDatosUsuario__encabezadoCampo responsivo">
+                            <img class="formularioDatosUsuario__encabezadoIcono" src="../../asserts/modalsIconos/calendarioIcono.png">
+                            <h3  class="tarjeta__subtituloContenido">Nombre</h3>
+                        </div>
+
+                        <div class="formularioDatosUsuario__valor responsivo">
+                            <input type="text" id="nombreUsuario" placeholder="ej: David Canto">
+                        </div>
+                    </div>
+
                     <div class="formularioDatosUsuario__campo">
                         <div  class="formularioDatosUsuario__encabezadoCampo responsivo">
                             <img class="formularioDatosUsuario__encabezadoIcono" src="../../asserts/modalsIconos/generoIcono.png">
                             <h3 class="tarjeta__subtituloContenido">Género</h3>
                         </div>
 
-                        <select class="formularioDatosUsuario__select" id="generoUsuario" >
+                        <select style="background:#1a1212; color:white;" class="formularioDatosUsuario__select" id="generoUsuario" >
                             <!-- <option>Selecciona tu género</option> -->
-                            <option value="M">Mujer</option>
-                            <option value="H">Hombre</option>
+                            <option style="background:#1a1212; color:white;" value="M">Mujer</option>
+                            <option style="background:#1a1212; color:white;" value="H">Hombre</option>
                         </select>
                     </div>
 
@@ -149,7 +160,7 @@
                         </div>
 
                         <div class="formularioDatosUsuario__valor formularioDatosUsuario__valor-Icono responsivo">
-                            <input type="number" id="alturaUsuario">
+                            <input type="text" id="alturaUsuario">
                             <p class="formularioDatosUsuario__textoReferencia">cm</p>
                         </div>
                     </div>
@@ -196,8 +207,8 @@
                     </div>
 
                     <div class="contenedorOpciones__label responsivo">
-                        <label class="formularioModal__labelContenedor label-objetivo" for="perdidaGrasa">
-                            <input type="radio" name="objetivoFisico" value="perdidaGrasa" id="perdidaGrasa">
+                        <label class="formularioModal__labelContenedor label-objetivo" for="perdida">
+                            <input type="radio" name="objetivoFisico" value="perdida" id="perdida">
 
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -218,8 +229,8 @@
                             </div>
                         </label>
                         
-                        <label class="formularioModal__labelContenedor label-objetivo" for="aumentoMasaMuscular">
-                            <input type="radio" name="objetivoFisico" value="aumentoMasaMuscular" id="aumentoMasaMuscular">
+                        <label class="formularioModal__labelContenedor label-objetivo" for="ganancia">
+                            <input type="radio" name="objetivoFisico" value="ganancia" id="ganancia">
 
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -241,7 +252,7 @@
 
                     <div class="contenedorOpciones__label responsivo">
                         <label class="formularioModal__labelContenedor label-nivelActividad" for="sedentario">
-                            <input type="radio" name="objetivo" id="sedentario">
+                            <input type="radio" name="nivelActividad" value="sedentario" id="sedentario">
                             
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -252,7 +263,7 @@
                         </label>
 
                         <label class="formularioModal__labelContenedor label-nivelActividad " for="ligero">
-                            <input  type="radio" name="objetivo" id="ligero">
+                            <input type="radio" name="nivelActividad" value="ligero" id="ligero">
 
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -262,8 +273,8 @@
                             </div>
                         </label>
                         
-                        <label class="formularioModal__labelContenedor label-nivelActividad " for="">
-                            <input type="radio" name="objetivo">
+                        <label class="formularioModal__labelContenedor label-nivelActividad " for="moderado">
+                            <input type="radio" name="nivelActividad" value="moderado" id="moderado">
 
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -274,7 +285,7 @@
                         </label>
 
                         <label class="formularioModal__labelContenedor label-nivelActividad " for="activo">
-                            <input type="radio" name="objetivo" id="activo">
+                            <input type="radio" name="nivelActividad" value="activo" id="activo">
 
                             <div class="label-contenido">
                                 <span class="selectorInput"></span>
@@ -288,7 +299,7 @@
                 </div>
 
                 <div class="contenedorBtn">
-                    <button class="formularioObjetivo_btnGuardar">
+                    <button type="submit" class="formularioObjetivo_btnGuardar">
                         <!-- <img> -->
                         <p>Guardar configuracion</p>
                     </button>

@@ -1,40 +1,72 @@
 import CalculadoraControlador from "../controlador/CalculadoraControlador.js";
 // import CuentaUsuarioControlador from "../controlador/CuentaUsuarioControlador.js";
+import RutinaControlador from "../controlador/RutinaControlador.js";
 import MetaFisicaControlador from "../controlador/MetaFisicaControlador.js";
-// import PerfilControlador from "../controlador/PerfilControlador.js";
+import PerfilControlador from "../controlador/PerfilControlador.js";
 import RecetaControlador from "../controlador/RecetaControlador.js"
-
+import InicioDinamicoVista_Controlador from "../controlador/inicioDinamicoVista_Controlador.js";
 
 const contenidoPrincipal = document.getElementById("panelPrincipal");
-let controladorActivo = null;
+// let controladorActivo = null;
+let controladoresActivos = [];
 
 function cargarControlador(vista) {
 
-    if (controladorActivo?.destroy) {
-        controladorActivo.destroy();
+    destruirControladores();
+
+    // let controladoresActivos = [];
+
+    // if (vista.includes("perfil")) {
+    //     controladorActivo = new PerfilControlador();
+    //     controladorActivo = new MetaFisicaControlador();
+    // }
+
+    // if (vista.includes("calculadora")) {
+    //     controladorActivo = new CalculadoraControlador();
+    // }
+
+    // if(vista.includes("alimentacion")){
+    //     controladorActivo = new RecetaControlador();
+    // }
+
+     if(vista.includes("perfil")){
+        controladoresActivos.push(new PerfilControlador());
+
+        controladoresActivos.push(new MetaFisicaControlador());
     }
 
-    controladorActivo = null;
-
-    if (vista.includes("perfil")) {
-        controladorActivo = new PerfilControlador();
+    if(vista.includes("calculadora")){
+        controladoresActivos.push(new CalculadoraControlador());
     }
 
-    if (vista.includes("calculadora")) {
-        controladorActivo = new CalculadoraControlador();
+    if(vista.includes("Alimentacion")){
+
+        controladoresActivos.push(
+            new RecetaControlador()
+        );
     }
 
-    if(vista.includes("alimentacion")){
-        controladorActivo = new RecetaControlador();
+    if(vista.includes("Rutina")){
+
+        controladoresActivos.push(
+            new RutinaControlador()
+        );
     }
 
-    if (vista.includes("metafisica")) {
-        controladorActivo = new MetaFisicaControlador();
+    if(vista.includes("inicioApp")){
+        controladoresActivos.push(new InicioDinamicoVista_Controlador());
     }
 
-    if (controladorActivo?.init) {
-        controladorActivo.init();
-    }
+    controladoresActivos.forEach(controlador => {
+
+        if(controlador?.init){
+            controlador.init();
+        }
+    });
+
+    // if (controladorActivo?.init) {
+    //     controladorActivo.init();
+    // }
 }
 
 const fcnCargarVista = async (url) => {
@@ -52,6 +84,18 @@ const fcnCargarVista = async (url) => {
 
     cargarControlador(url);
 };
+
+function destruirControladores(){
+
+    controladoresActivos.forEach(controlador => {
+
+        if(controlador?.destroy){
+            controlador.destroy();
+        }
+    });
+
+    controladoresActivos = [];
+}
 
 document.addEventListener("click", (e) => {
 
@@ -79,6 +123,17 @@ document.addEventListener("click", (e) => {
 
     if(btn.id == "btnRutinasApp")
         fcnCargarVista("RutinaVista.html");
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const ultimaVista = localStorage.getItem("urlActual");
+
+    if(ultimaVista){
+        fcnCargarVista(ultimaVista);
+    }else{
+        fcnCargarVista("inicioApp-Prueba.html");
+    }
 });
 
 // const fcnCargarVista = async (urlArchivo) => {

@@ -61,7 +61,7 @@ export default class CalculadoraControlador {
 
     //Mostrar resultado en el HTML
     mostrarObjetivo() {
-        if(this.#objetivoEstablecido == "perdidaGrasa"){
+        if(this.#objetivoEstablecido == "perdida"){
             return "Perdida de grasa";
         }else if(this.#objetivoEstablecido == "mantenimiento"){
             return "Mantenimiento de peso corporal";
@@ -74,14 +74,6 @@ export default class CalculadoraControlador {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    // tu código aquínew 
-    new CalculadoraControlador();
-
-    // const nueva = new CalculadoraControlador();
-    // nueva.obtenerDatosFormulario();
-});
 
 
 // document.addEventListener("DOMContentLoaded", () => {

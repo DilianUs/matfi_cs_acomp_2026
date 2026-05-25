@@ -116,6 +116,10 @@ p {
     
 }
 
+.modalDatos_contenedorTexto, .modalDatos_contenedorTitulo{
+    margin: 0;
+}
+
 .contenedorTitulo {
     justify-content: center;
 }
@@ -149,6 +153,15 @@ p {
     margin: 1rem 0 1rem 0;
 }
 
+.formularioDatosUsuario__valor input {
+    border: none;
+    outline: none;
+    color: var(--colorBlanco);
+}
+
+
+
+
 .formularioDatosUsuario__valor, .formularioDatosUsuario__select {
     width: 100%;
     border-color: var(--colorCuarto);
@@ -174,6 +187,7 @@ p {
 }
 .formularioDatosUsuario__valor input {
     width: 90%;
+    color: var(--colorBlanco);
     /* border: 0; */
 
 }
@@ -671,4 +685,134 @@ p {
     color: var(--colorPrimario);
     cursor: pointer;
     transition: 0.3s;
+}
+
+
+/* CENTRADO REAL DEL MODAL */
+.modalRutina.contenedorGeneralModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CONTENIDO */
+.modalRutina__contenido {
+    width: 90%;
+    max-width: 900px;
+    background: var(--colorPrimario);
+    border-radius: 2rem;
+    padding: 2rem;
+    color: var(--colorBlanco);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* HEADER */
+.modalRutina__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalRutina__titulo h2 {
+    margin: 0;
+    font-family: var(--fuenteTextoTitulos);
+}
+
+.modalRutina__titulo p {
+    margin: 0;
+    color: var(--colorCuarto);
+}
+
+/* STATS */
+.modalRutina__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.statCard {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--colorSombreado);
+    border-radius: 1.5rem;
+    align-items: center;
+}
+
+.statCard__icon {
+    font-size: 2rem;
+}
+
+.statCard__label {
+    font-size: 1.2rem;
+    color: var(--colorCuarto);
+    margin: 0;
+}
+
+.statCard__value {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.alto {
+    color: var(--colorSecundario);
+}
+
+/* BODY */
+.modalRutina__body {
+    margin-top: 2rem;
+}
+
+.modalRutina__sectionTitle {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: var(--colorCuarto);
+}
+
+/* EJERCICIOS */
+.ejercicios {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ejercicioItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    background: var(--colorSombreado);
+    transition: 0.2s;
+}
+
+.ejercicioItem:hover {
+    transform: translateY(-3px);
+}
+
+.ejercicioItem__info h4 {
+    margin: 0;
+}
+
+.ejercicioItem__info p {
+    margin: 0;
+    color: var(--colorCuarto);
+}
+
+.ejercicioItem__arrow {
+    font-size: 2rem;
+    color: var(--colorSecundario);
+}
+
+/* FOOTER */
+.modalRutina__footer {
+    margin-top: 1.5rem;
+    color: var(--colorCuarto);
+    font-size: 1.2rem;
+}
+
+.btnRegistroActividad {
+    height: 4rem;
 }
