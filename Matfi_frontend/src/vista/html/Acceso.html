@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>MatFi</title>
 </head>
 <body>
@@ -38,11 +38,6 @@
                     </div>
 
                     <div class="contenedor__datos">
-                        <img class="formulario__icono" src="../../asserts/celularIcono.png" alt="usuario">
-                        <input type="tel" id="telefonoUsuario" name="Telefono" placeholder="Número telefónico" required>
-                    </div>
-
-                    <div class="contenedor__datos">
                         <img  class="formulario__icono" src="../../asserts/correoIcono.png" alt="usuario">
                         <input type="email" id="correoElectronicoRegistro" name="Correo" placeholder="Correo electrónico" required>
                     </div>
@@ -60,12 +55,6 @@
             </div>
 
             <p class="formulario__pregunta">Ya tienes cuenta? <a href="#" id="mostrarIngreso" class="formulario__pregunta--cambiarInformacion">Inicia sesión</a></p>
-
-                <!-- <div>
-                    <p>Ya tienes cuenta? 
-                        <a href="#">Inicia sesión</a>
-                    </p>
-                </div> -->
         </div>
 
         <!-- <div class="inicio sesi{on}"> -->
@@ -83,7 +72,7 @@
                         <img class="formulario__icono" src="../../asserts/verContraseñaIcono.png" alt="">
                     </div>
 
-                    <button id="btnGuardar" type="submit" class="formulario__button flex">
+                    <button id="btnGuardarInicio" type="submit" class="formulario__button flex">
                         <p>Comenzar</p>
                         <img src="../../asserts/vector.png"> 
                     </button>
@@ -91,12 +80,69 @@
             </div>
 
             <p class="formulario__pregunta">No tienes una tienes cuenta? <a href="#" id="mostrarRegistro" class="formulario__pregunta--cambiarInformacion">Regístrate</a></p>
+        </div>
 
-                <!-- <div>
-                    <p>Ya tienes cuenta? 
-                        <a href="#">Inicia sesión</a>
-                    </p>
-                </div> -->
+        <div class="contenedor__formulario contenedor__formulario--perfil contenedor--oculto">
+            <h2>Completar Perfil</h2>
+            <div class="formulario">
+                <form id="formularioPerfilSecuencia" method="POST">
+                    <div class="contenedor__datos">
+                        <select id="generoUsuarioPerfil" required style="width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #fff;">
+                            <option value="" disabled selected>Selecciona tu género</option>
+                            <option value="M" style="color: #000;">Mujer</option>
+                            <option value="H" style="color: #000;">Hombre</option>
+                        </select>
+                    </div>
+                    <div class="contenedor__datos">
+                        <input type="number" id="edadUsuarioPerfil" placeholder="Edad" required>
+                    </div>
+                    <div class="contenedor__datos">
+                        <input type="number" step="0.01" id="estaturaUsuarioPerfil" placeholder="Altura (m o cm)" required>
+                    </div>
+                    <div class="contenedor__datos">
+                        <input type="number" step="0.1" id="pesoUsuarioPerfil" placeholder="Peso (kg)" required>
+                    </div>
+                    <button type="submit" class="formulario__button flex">
+                        <p>Siguiente</p>
+                        <img src="../../asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="contenedor__formulario contenedor__formulario--meta contenedor--oculto">
+            <h2>Tu Meta Física</h2>
+            <div class="formulario">
+                <form id="formularioMetaSecuencia" method="POST">
+                    <div class="contenedor__datos">
+                        <select id="tipoMeta" required style="width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #fff;">
+                            <option value="" disabled selected>Selecciona tu objetivo</option>
+                            <option value="perdida" style="color: #000;">Perder Grasa</option>
+                            <option value="mantenimiento" style="color: #000;">Mantener Peso</option>
+                            <option value="ganancia" style="color: #000;">Ganar Músculo</option>
+                        </select>
+                    </div>
+                    <div class="contenedor__datos">
+                        <select id="nivelActividad" required style="width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #fff;">
+                            <option value="" disabled selected>Nivel de Actividad</option>
+                            <option value="1.2" style="color: #000;">Sedentario</option>
+                            <option value="1.375" style="color: #000;">Ligero</option>
+                            <option value="1.55" style="color: #000;">Moderado</option>
+                            <option value="1.725" style="color: #000;">Activo</option>
+                        </select>
+                    </div>
+                    <div class="contenedor__datos">
+                        <input type="date" id="fechaInicioMeta" required style="width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #fff;" title="Fecha de Inicio">
+                    </div>
+                    <div class="contenedor__datos">
+                        <input type="date" id="fechaFinMeta" required style="width: 100%; border: none; outline: none; background: transparent; font-size: 1rem; color: #fff;" title="Fecha de Fin">
+                    </div>
+                    <button type="submit" class="formulario__button flex">
+                        <p>Finalizar</p>
+                        <img src="../../asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
         
