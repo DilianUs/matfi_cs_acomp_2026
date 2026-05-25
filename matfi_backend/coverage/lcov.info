@@ -14,7 +14,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:src\app.js
+SF:src/app.js
 FN:34,(anonymous_0)
 FN:64,(anonymous_1)
 FNF:2
@@ -65,7 +65,7 @@ BRF:10
 BRH:9
 end_of_record
 TN:
-SF:src\config\database.js
+SF:src/config/database.js
 FN:15,(anonymous_0)
 FNF:1
 FNH:0
@@ -88,7 +88,7 @@ BRF:4
 BRH:1
 end_of_record
 TN:
-SF:src\controllers\authController.js
+SF:src/controllers/authController.js
 FN:7,(anonymous_0)
 FN:68,(anonymous_1)
 FN:112,(anonymous_2)
@@ -201,7 +201,7 @@ BRF:43
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\ejercicioController.js
+SF:src/controllers/ejercicioController.js
 FN:5,(anonymous_0)
 FN:15,(anonymous_1)
 FN:30,(anonymous_2)
@@ -259,7 +259,7 @@ BRF:8
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\estadisticasController.js
+SF:src/controllers/estadisticasController.js
 FN:6,(anonymous_0)
 FN:17,(anonymous_1)
 FN:46,(anonymous_2)
@@ -372,7 +372,7 @@ BRF:54
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\ingredienteController.js
+SF:src/controllers/ingredienteController.js
 FN:5,(anonymous_0)
 FN:15,(anonymous_1)
 FN:30,(anonymous_2)
@@ -430,7 +430,7 @@ BRF:8
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\metaFisicaController.js
+SF:src/controllers/metaFisicaController.js
 FN:6,(anonymous_0)
 FN:17,(anonymous_1)
 FN:63,(anonymous_2)
@@ -551,7 +551,7 @@ BRF:46
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\recetaController.js
+SF:src/controllers/recetaController.js
 FN:5,(anonymous_0)
 FN:15,(anonymous_1)
 FN:34,(anonymous_2)
@@ -621,7 +621,7 @@ BRF:16
 BRH:4
 end_of_record
 TN:
-SF:src\controllers\registroActividadFisicaController.js
+SF:src/controllers/registroActividadFisicaController.js
 FN:6,(anonymous_0)
 FN:17,(anonymous_1)
 FN:34,(anonymous_2)
@@ -777,7 +777,7 @@ BRF:50
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\registroIngestaAlimenticiController.js
+SF:src/controllers/registroIngestaAlimenticiController.js
 FN:6,(anonymous_0)
 FN:17,(anonymous_1)
 FN:34,(anonymous_2)
@@ -907,7 +907,7 @@ BRF:34
 BRH:0
 end_of_record
 TN:
-SF:src\controllers\rutinaController.js
+SF:src/controllers/rutinaController.js
 FN:5,(anonymous_0)
 FN:15,(anonymous_1)
 FN:34,(anonymous_2)
@@ -977,7 +977,7 @@ BRF:16
 BRH:0
 end_of_record
 TN:
-SF:src\middleware\authMiddleware.js
+SF:src/middleware/authMiddleware.js
 FN:3,(anonymous_0)
 FNF:1
 FNH:1
@@ -1002,7 +1002,7 @@ BRF:4
 BRH:4
 end_of_record
 TN:
-SF:src\models\ejercicioModel.js
+SF:src/models/ejercicioModel.js
 FN:4,(anonymous_0)
 FN:15,(anonymous_1)
 FN:26,(anonymous_2)
@@ -1041,7 +1041,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:src\models\historialIntegralModel.js
+SF:src/models/historialIntegralModel.js
 FN:5,(anonymous_0)
 FN:46,(anonymous_1)
 FN:87,(anonymous_2)
@@ -1089,7 +1089,7 @@ BRF:12
 BRH:0
 end_of_record
 TN:
-SF:src\models\ingredienteModel.js
+SF:src/models/ingredienteModel.js
 FN:4,(anonymous_0)
 FN:10,(anonymous_1)
 FN:16,(anonymous_2)
@@ -1126,7 +1126,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:src\models\metaFisicaModel.js
+SF:src/models/metaFisicaModel.js
 FN:5,(anonymous_0)
 FN:17,(anonymous_1)
 FN:28,(anonymous_2)
@@ -1175,7 +1175,7 @@ BRF:8
 BRH:0
 end_of_record
 TN:
-SF:src\models\recetaModel.js
+SF:src/models/recetaModel.js
 FN:4,(anonymous_0)
 FN:24,(anonymous_1)
 FN:44,(anonymous_2)
@@ -1244,7 +1244,7 @@ BRF:10
 BRH:0
 end_of_record
 TN:
-SF:src\models\registroActividadFisicaModel.js
+SF:src/models/registroActividadFisicaModel.js
 FN:5,(anonymous_0)
 FN:33,(anonymous_1)
 FN:59,(anonymous_2)
@@ -1309,7 +1309,7 @@ BRF:10
 BRH:0
 end_of_record
 TN:
-SF:src\models\registroIngestaAlimenticiModel.js
+SF:src/models/registroIngestaAlimenticiModel.js
 FN:5,(anonymous_0)
 FN:31,(anonymous_1)
 FN:56,(anonymous_2)
@@ -1374,7 +1374,7 @@ BRF:10
 BRH:0
 end_of_record
 TN:
-SF:src\models\rutinaModel.js
+SF:src/models/rutinaModel.js
 FN:4,(anonymous_0)
 FN:26,(anonymous_1)
 FN:48,(anonymous_2)
@@ -1447,7 +1447,7 @@ BRF:14
 BRH:0
 end_of_record
 TN:
-SF:src\models\userModel.js
+SF:src/models/userModel.js
 FN:6,(anonymous_0)
 FN:24,(anonymous_1)
 FN:74,(anonymous_2)
@@ -1498,7 +1498,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:src\routes\authRoutes.js
+SF:src/routes/authRoutes.js
 FNF:0
 FNH:0
 DA:5,1
@@ -1512,7 +1512,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\ejercicioRoutes.js
+SF:src/routes/ejercicioRoutes.js
 FNF:0
 FNH:0
 DA:112,1
@@ -1527,7 +1527,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\estadisticasRoutes.js
+SF:src/routes/estadisticasRoutes.js
 FNF:0
 FNH:0
 DA:5,1
@@ -1542,7 +1542,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\ingredienteRoutes.js
+SF:src/routes/ingredienteRoutes.js
 FNF:0
 FNH:0
 DA:100,1
@@ -1557,7 +1557,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\metaFisicaRoutes.js
+SF:src/routes/metaFisicaRoutes.js
 FNF:0
 FNH:0
 DA:5,1
@@ -1572,7 +1572,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\recetaRoutes.js
+SF:src/routes/recetaRoutes.js
 FNF:0
 FNH:0
 DA:154,1
@@ -1587,7 +1587,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\registroActividadFisicaRoutes.js
+SF:src/routes/registroActividadFisicaRoutes.js
 FNF:0
 FNH:0
 DA:5,1
@@ -1605,7 +1605,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\registroIngestaAlimenticiRoutes.js
+SF:src/routes/registroIngestaAlimenticiRoutes.js
 FNF:0
 FNH:0
 DA:5,1
@@ -1623,7 +1623,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\routes\rutinaRoutes.js
+SF:src/routes/rutinaRoutes.js
 FNF:0
 FNH:0
 DA:122,1
@@ -1638,7 +1638,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src\services\authService.js
+SF:src/services/authService.js
 FN:10,(anonymous_0)
 FN:15,(anonymous_1)
 FNF:2
@@ -1659,7 +1659,7 @@ BRF:2
 BRH:1
 end_of_record
 TN:
-SF:src\utils\validation.js
+SF:src/utils/validation.js
 FN:4,(anonymous_0)
 FN:10,(anonymous_1)
 FN:15,(anonymous_2)

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1779703249330" clover="3.2.0">
-  <project timestamp="1779703249330" name="All files">
+<coverage generated="1779733899957" clover="3.2.0">
+  <project timestamp="1779733899957" name="All files">
     <metrics statements="810" coveredstatements="130" conditionals="384" coveredconditionals="32" methods="105" coveredmethods="12" elements="1299" coveredelements="174" complexity="0" loc="810" ncloc="810" packages="9" files="33" classes="33"/>
     <package name="matfi_backend">
       <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
-      <file name="swagger.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\swagger.js">
+      <file name="swagger.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/swagger.js">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -14,7 +14,7 @@
     </package>
     <package name="matfi_backend.src">
       <metrics statements="28" coveredstatements="28" conditionals="10" coveredconditionals="9" methods="2" coveredmethods="2"/>
-      <file name="app.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\app.js">
+      <file name="app.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/app.js">
         <metrics statements="28" coveredstatements="28" conditionals="10" coveredconditionals="9" methods="2" coveredmethods="2"/>
         <line num="18" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
@@ -48,7 +48,7 @@
     </package>
     <package name="matfi_backend.src.config">
       <metrics statements="8" coveredstatements="3" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="0"/>
-      <file name="database.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\config\database.js">
+      <file name="database.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/config/database.js">
         <metrics statements="8" coveredstatements="3" conditionals="4" coveredconditionals="1" methods="1" coveredmethods="0"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -62,7 +62,7 @@
     </package>
     <package name="matfi_backend.src.controllers">
       <metrics statements="449" coveredstatements="9" conditionals="275" coveredconditionals="4" methods="42" coveredmethods="2"/>
-      <file name="authController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\authController.js">
+      <file name="authController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/authController.js">
         <metrics statements="53" coveredstatements="0" conditionals="43" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
@@ -118,7 +118,7 @@
         <line num="174" count="0" type="stmt"/>
         <line num="175" count="0" type="stmt"/>
       </file>
-      <file name="ejercicioController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\ejercicioController.js">
+      <file name="ejercicioController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/ejercicioController.js">
         <metrics statements="33" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
@@ -154,7 +154,7 @@
         <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
       </file>
-      <file name="estadisticasController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\estadisticasController.js">
+      <file name="estadisticasController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/estadisticasController.js">
         <metrics statements="42" coveredstatements="0" conditionals="54" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -199,7 +199,7 @@
         <line num="121" count="0" type="stmt"/>
         <line num="122" count="0" type="stmt"/>
       </file>
-      <file name="ingredienteController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\ingredienteController.js">
+      <file name="ingredienteController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/ingredienteController.js">
         <metrics statements="33" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
@@ -235,7 +235,7 @@
         <line num="62" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
       </file>
-      <file name="metaFisicaController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\metaFisicaController.js">
+      <file name="metaFisicaController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/metaFisicaController.js">
         <metrics statements="58" coveredstatements="0" conditionals="46" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -296,7 +296,7 @@
         <line num="141" count="0" type="stmt"/>
         <line num="142" count="0" type="stmt"/>
       </file>
-      <file name="recetaController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\recetaController.js">
+      <file name="recetaController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/recetaController.js">
         <metrics statements="37" coveredstatements="9" conditionals="16" coveredconditionals="4" methods="4" coveredmethods="2"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
@@ -336,7 +336,7 @@
         <line num="69" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
       </file>
-      <file name="registroActividadFisicaController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\registroActividadFisicaController.js">
+      <file name="registroActividadFisicaController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/registroActividadFisicaController.js">
         <metrics statements="83" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -422,7 +422,7 @@
         <line num="198" count="0" type="stmt"/>
         <line num="199" count="0" type="stmt"/>
       </file>
-      <file name="registroIngestaAlimenticiController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\registroIngestaAlimenticiController.js">
+      <file name="registroIngestaAlimenticiController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/registroIngestaAlimenticiController.js">
         <metrics statements="73" coveredstatements="0" conditionals="34" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -498,7 +498,7 @@
         <line num="176" count="0" type="stmt"/>
         <line num="177" count="0" type="stmt"/>
       </file>
-      <file name="rutinaController.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\controllers\rutinaController.js">
+      <file name="rutinaController.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/controllers/rutinaController.js">
         <metrics statements="37" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
@@ -541,7 +541,7 @@
     </package>
     <package name="matfi_backend.src.middleware">
       <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
-      <file name="authMiddleware.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\middleware\authMiddleware.js">
+      <file name="authMiddleware.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/middleware/authMiddleware.js">
         <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -557,7 +557,7 @@
     </package>
     <package name="matfi_backend.src.models">
       <metrics statements="235" coveredstatements="0" conditionals="76" coveredconditionals="0" methods="52" coveredmethods="0"/>
-      <file name="ejercicioModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\ejercicioModel.js">
+      <file name="ejercicioModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/ejercicioModel.js">
         <metrics statements="16" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
@@ -576,7 +576,7 @@
         <line num="51" count="0" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
       </file>
-      <file name="historialIntegralModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\historialIntegralModel.js">
+      <file name="historialIntegralModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/historialIntegralModel.js">
         <metrics statements="19" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
@@ -598,7 +598,7 @@
         <line num="127" count="0" type="stmt"/>
         <line num="128" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
-      <file name="ingredienteModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\ingredienteModel.js">
+      <file name="ingredienteModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/ingredienteModel.js">
         <metrics statements="14" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
@@ -615,7 +615,7 @@
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
       </file>
-      <file name="metaFisicaModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\metaFisicaModel.js">
+      <file name="metaFisicaModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/metaFisicaModel.js">
         <metrics statements="20" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
@@ -638,7 +638,7 @@
         <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="66" count="0" type="stmt"/>
       </file>
-      <file name="recetaModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\recetaModel.js">
+      <file name="recetaModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/recetaModel.js">
         <metrics statements="40" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
@@ -681,7 +681,7 @@
         <line num="113" count="0" type="stmt"/>
         <line num="114" count="0" type="stmt"/>
       </file>
-      <file name="registroActividadFisicaModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\registroActividadFisicaModel.js">
+      <file name="registroActividadFisicaModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/registroActividadFisicaModel.js">
         <metrics statements="28" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
@@ -712,7 +712,7 @@
         <line num="138" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="139" count="0" type="stmt"/>
       </file>
-      <file name="registroIngestaAlimenticiModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\registroIngestaAlimenticiModel.js">
+      <file name="registroIngestaAlimenticiModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/registroIngestaAlimenticiModel.js">
         <metrics statements="28" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
@@ -743,7 +743,7 @@
         <line num="132" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="133" count="0" type="stmt"/>
       </file>
-      <file name="rutinaModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\rutinaModel.js">
+      <file name="rutinaModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/rutinaModel.js">
         <metrics statements="40" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
@@ -786,7 +786,7 @@
         <line num="115" count="0" type="stmt"/>
         <line num="116" count="0" type="stmt"/>
       </file>
-      <file name="userModel.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\models\userModel.js">
+      <file name="userModel.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/models/userModel.js">
         <metrics statements="30" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -822,7 +822,7 @@
     </package>
     <package name="matfi_backend.src.routes">
       <metrics statements="59" coveredstatements="59" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="authRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\authRoutes.js">
+      <file name="authRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/authRoutes.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="74" count="1" type="stmt"/>
@@ -830,7 +830,7 @@
         <line num="150" count="1" type="stmt"/>
         <line num="203" count="1" type="stmt"/>
       </file>
-      <file name="ejercicioRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\ejercicioRoutes.js">
+      <file name="ejercicioRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/ejercicioRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="112" count="1" type="stmt"/>
         <line num="113" count="1" type="stmt"/>
@@ -839,7 +839,7 @@
         <line num="117" count="1" type="stmt"/>
         <line num="118" count="1" type="stmt"/>
       </file>
-      <file name="estadisticasRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\estadisticasRoutes.js">
+      <file name="estadisticasRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/estadisticasRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -848,7 +848,7 @@
         <line num="112" count="1" type="stmt"/>
         <line num="160" count="1" type="stmt"/>
       </file>
-      <file name="ingredienteRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\ingredienteRoutes.js">
+      <file name="ingredienteRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/ingredienteRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="100" count="1" type="stmt"/>
         <line num="101" count="1" type="stmt"/>
@@ -857,7 +857,7 @@
         <line num="105" count="1" type="stmt"/>
         <line num="106" count="1" type="stmt"/>
       </file>
-      <file name="metaFisicaRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\metaFisicaRoutes.js">
+      <file name="metaFisicaRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/metaFisicaRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -866,7 +866,7 @@
         <line num="143" count="1" type="stmt"/>
         <line num="170" count="1" type="stmt"/>
       </file>
-      <file name="recetaRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\recetaRoutes.js">
+      <file name="recetaRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/recetaRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="154" count="1" type="stmt"/>
         <line num="155" count="1" type="stmt"/>
@@ -875,7 +875,7 @@
         <line num="159" count="1" type="stmt"/>
         <line num="160" count="1" type="stmt"/>
       </file>
-      <file name="registroActividadFisicaRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\registroActividadFisicaRoutes.js">
+      <file name="registroActividadFisicaRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/registroActividadFisicaRoutes.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -887,7 +887,7 @@
         <line num="228" count="1" type="stmt"/>
         <line num="261" count="1" type="stmt"/>
       </file>
-      <file name="registroIngestaAlimenticiRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\registroIngestaAlimenticiRoutes.js">
+      <file name="registroIngestaAlimenticiRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/registroIngestaAlimenticiRoutes.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -899,7 +899,7 @@
         <line num="216" count="1" type="stmt"/>
         <line num="249" count="1" type="stmt"/>
       </file>
-      <file name="rutinaRoutes.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\routes\rutinaRoutes.js">
+      <file name="rutinaRoutes.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/routes/rutinaRoutes.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="122" count="1" type="stmt"/>
         <line num="123" count="1" type="stmt"/>
@@ -911,7 +911,7 @@
     </package>
     <package name="matfi_backend.src.services">
       <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
-      <file name="authService.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\services\authService.js">
+      <file name="authService.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/services/authService.js">
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="4" count="2" type="stmt"/>
         <line num="6" count="2" type="cond" truecount="1" falsecount="1"/>
@@ -923,7 +923,7 @@
     </package>
     <package name="matfi_backend.src.utils">
       <metrics statements="11" coveredstatements="11" conditionals="11" coveredconditionals="11" methods="5" coveredmethods="5"/>
-      <file name="validation.js" path="C:\Users\Dilian\Documents\proyectos\construccion\matfi_cs_acomp_2026\matfi_backend\src\utils\validation.js">
+      <file name="validation.js" path="/home/dilian/Documentos/proyectos/matfi_cs_acomp_2026/matfi_backend/src/utils/validation.js">
         <metrics statements="11" coveredstatements="11" conditionals="11" coveredconditionals="11" methods="5" coveredmethods="5"/>
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
