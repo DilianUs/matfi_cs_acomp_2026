@@ -106,7 +106,7 @@ document.addEventListener("click", (e) => {
     }
 
     if (btn.id === "btnAlimentacionVista") {
-        fcnCargarVista("alimentacionVista-.html");
+        fcnCargarVista("AlimentacionVista-.html");
     }
 
     if (btn.id === "btnHerramientasVista") {

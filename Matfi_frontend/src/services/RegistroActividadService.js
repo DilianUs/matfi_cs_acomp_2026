@@ -67,4 +67,25 @@ export default class RegistroActividadService {
 
         return data;
     }
+
+    async obtenerRegistroPorFecha(token, fecha){
+
+        const res = await fetch(
+            `${BASE_URL}/registrosActividad/byDate?fecha=${fecha}`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await res.json();
+
+        if(!res.ok){
+            throw new Error(data.error || "Error obteniendo registros");
+        }
+
+        return data;
+    }
 }
