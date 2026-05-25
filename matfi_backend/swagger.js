@@ -66,6 +66,44 @@ const options = {
         description: 'Servidor de Producción'
       }
     ],
+    tags: [
+      {
+        name: 'Autenticación',
+        description: 'Endpoints de autenticación'
+      },
+      {
+        name: 'Meta Física',
+        description: 'Endpoints de meta física'
+      },
+      {
+        name: 'Registro Actividad Física',
+        description: 'Endpoints de registro de actividad física'
+      },
+      {
+        name: 'Registro Ingesta Alimenticia',
+        description: 'Endpoints de registro de ingesta alimenticia'
+      },
+      {
+        name: 'Estadísticas',
+        description: 'Endpoints de estadísticas'
+      },
+      {
+        name: 'Ingredientes',
+        description: 'Gestión de ingredientes'
+      },
+      {
+        name: 'Ejercicios',
+        description: 'Gestión de ejercicios'
+      },
+      {
+        name: 'Recetas',
+        description: 'Gestión de recetas'
+      },
+      {
+        name: 'Rutinas',
+        description: 'Gestión de rutinas'
+      }
+    ],
     components: {
       securitySchemes: {
         BearerAuth: {
@@ -192,6 +230,73 @@ const options = {
             error: { type: 'string', example: 'Mensaje de error' }
           }
         }
+          ,
+          Receta: {
+            type: 'object',
+            properties: {
+              id_receta: { type: 'integer', example: 1 },
+              nombre_receta: { type: 'string', example: 'Ensalada de pollo' },
+              imagen_alusiva: { type: 'string', example: 'https://.../imagen.jpg' },
+              descripcion_general: { type: 'string', example: 'Plato balanceado con...' },
+              pasos_preparacion: { type: 'array', items: { type: 'string' } },
+              calorias_aproximadas: { type: 'number', example: 420 },
+              ingredientes: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    idIngrediente: { type: 'integer' },
+                    nombreIngrediente: { type: 'string' },
+                    unidad: { type: 'string' },
+                    cantidad: { type: 'number' }
+                  }
+                }
+              }
+            }
+          },
+          Ingrediente: {
+            type: 'object',
+            properties: {
+              id_ingrediente: { type: 'integer', example: 1 },
+              nombre_ingrediente: { type: 'string', example: 'Tomate' },
+              unidad: { type: 'string', example: 'unidad' }
+            }
+          },
+          Ejercicio: {
+            type: 'object',
+            properties: {
+              id_ejercicio: { type: 'integer', example: 1 },
+              nombre_ejercicio: { type: 'string', example: 'Flexiones' },
+              cantidad_series: { type: 'integer', example: 3 },
+              cantidad_repeticiones: { type: 'integer', example: 12 },
+              descripcion_ejercicio: { type: 'string', example: 'Descripción del ejercicio' },
+              video_ejercicio: { type: 'string', example: 'https://...' }
+            }
+          },
+          Rutina: {
+            type: 'object',
+            properties: {
+              id_rutina: { type: 'integer', example: 1 },
+              nombre_rutina: { type: 'string', example: 'Full body' },
+              descripcion_rutina: { type: 'string', example: 'Rutina para todo el cuerpo' },
+              imagen_musculos_trabajados: { type: 'string', example: 'https://.../musculos.jpg' },
+              ejercicios: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    idEjercicio: { type: 'integer' },
+                    nombreEjercicio: { type: 'string' },
+                    cantidadSeries: { type: 'integer' },
+                    cantidadRepeticiones: { type: 'integer' },
+                    descripcionEjercicio: { type: 'string' },
+                    videoEjercicio: { type: 'string' },
+                    orden: { type: 'integer' }
+                  }
+                }
+              }
+            }
+          }
       }
     }
   },
