@@ -1,0 +1,4 @@
+node_modules/
+coverage/
+dist/
+tests/eslint-report.html

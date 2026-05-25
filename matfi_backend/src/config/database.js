@@ -11,12 +11,14 @@ const pool = new Pool({
 });
 
 // Verificación de conexión
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error('Error adquiriendo cliente', err.stack);
-  }
-  console.log('Conectado exitosamente a Neon (PostgreSQL)');
-  release();
-});
+if (process.env.NODE_ENV !== 'test') {
+  pool.connect((err, client, release) => {
+    if (err) {
+      return console.error('Error adquiriendo cliente', err.stack);
+    }
+    console.log('Conectado exitosamente a Neon (PostgreSQL)');
+    release();
+  });
+}
 
 export default pool;
