@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preload" href="../styles/Ingreso.css" as="style">
     <link rel="stylesheet" href="../styles/Ingreso.css">
+    <link rel="preload" href="../styles/configuracionInicial.css" as="style">
+    <link rel="stylesheet" href="../styles/configuracionInicial.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <title>MatFi</title>
 </head>
@@ -38,11 +41,6 @@
                     </div>
 
                     <div class="contenedor__datos">
-                        <img class="formulario__icono" src="../../asserts/celularIcono.png" alt="usuario">
-                        <input type="tel" id="telefonoUsuario" name="Telefono" placeholder="Número telefónico" required>
-                    </div>
-
-                    <div class="contenedor__datos">
                         <img  class="formulario__icono" src="../../asserts/correoIcono.png" alt="usuario">
                         <input type="email" id="correoElectronicoRegistro" name="Correo" placeholder="Correo electrónico" required>
                     </div>
@@ -52,9 +50,9 @@
                         <img class="formulario__icono" src="../../asserts/verContraseñaIcono.png" alt="">
                     </div>
 
-                    <button id="btnGuardar" type="submit" class="formulario__button flex">
-                        <p>Comenzar</p>
-                        <img src="../../asserts/vector.png"> 
+                    <button id="btnGuardarRegistro" type="submit" class="formulario__button flex">
+                        <span class="btn-text">Continuar</span>
+                        <img class="btn-icon" src="../../asserts/vector.png"> 
                     </button>
                 </form>
             </div>
@@ -66,6 +64,124 @@
                         <a href="#">Inicia sesión</a>
                     </p>
                 </div> -->
+        </div>
+
+        <div class="contenedor__formulario contenedor__formulario--datos-usuario contenedor--oculto">
+            <h2>Datos Personales</h2>
+            <div class="formulario">
+                <form id="formularioDatosUsuario" method="POST">
+                    <div class="contenedor__datos">
+                        <select id="generoUsuario" style="width: 100%; background: transparent; color: var(--colorTerciario); border: none; outline: none; font-family: var(--fuenteTextoElementos);" required>
+                            <option value="" disabled selected>Género</option>
+                            <option style="color: black;" value="M">Mujer</option>
+                            <option style="color: black;" value="H">Hombre</option>
+                        </select>
+                    </div>
+
+                    <div class="contenedor__datos">
+                        <input type="number" id="edadUsuario" name="Edad" placeholder="Edad" min="1" required>
+                    </div>
+
+                    <div class="contenedor__datos">
+                        <input type="number" id="pesoUsuario" name="Peso" placeholder="Peso (kg)" min="1" step="0.1" required>
+                    </div>
+
+                    <div class="contenedor__datos">
+                        <input type="number" id="alturaUsuario" name="Altura" placeholder="Estatura (cm)" min="1" required>
+                    </div>
+
+                    <button id="btnGuardarDatos" type="submit" class="formulario__button flex">
+                        <span class="btn-text">Continuar</span>
+                        <img class="btn-icon" src="../../asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="contenedor__formulario contenedor__formulario--meta-fisica contenedor--oculto" style="max-width: 100%;">
+            <h2>Meta Física</h2>
+            <div class="formulario" style="max-width: 100%;">
+                <form id="formularioMetaFisicaAcceso" method="POST" style="width: 100%;">
+                    
+                    <div class="modal_apartadoContenido flex" style="flex-direction: column; margin-bottom: 2rem;">
+                        <h3 class="tarjeta__subtituloContenido" style="margin-left: 2rem;">Objetivo físico</h3>
+                        <div class="contenedorOpciones__label flex" style="justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <label class="formularioModal__labelContenedor label-objetivo" for="perdida" style="width: 30%; min-width: 120px;">
+                                <input type="radio" name="objetivoFisico" value="perdida" id="perdida" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/perderGrasaIcono.png" style="width: 4rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1.2rem;">Perder Grasa</h3>
+                                </div>
+                            </label>
+
+                            <label class="formularioModal__labelContenedor label-objetivo" for="mantenimiento" style="width: 30%; min-width: 120px;">
+                                <input type="radio" name="objetivoFisico" value="mantenimiento" id="mantenimiento" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/objetivoMantenimientoIcono.png" style="width: 4rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1.2rem;">Mantener peso</h3>
+                                </div>
+                            </label>
+                            
+                            <label class="formularioModal__labelContenedor label-objetivo" for="ganancia" style="width: 30%; min-width: 120px;">
+                                <input type="radio" name="objetivoFisico" value="ganancia" id="ganancia" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/objetivoMasaMuscularIcono.png" style="width: 4rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1.2rem;">Ganar músculo</h3>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="modal_apartadoContenido flex" style="flex-direction: column; margin-bottom: 2rem;">
+                        <h3 class="tarjeta__subtituloContenido" style="margin-left: 2rem;">Nivel de actividad</h3>
+                        <div class="contenedorOpciones__label flex" style="justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                            <label class="formularioModal__labelContenedor label-nivelActividad" for="sedentario" style="width: 22%; min-width: 90px;">
+                                <input type="radio" name="nivelActividad" value="sedentario" id="sedentario" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/sedentarioIcono.png" style="width: 3rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1rem;">Sedentario</h3>
+                                </div>
+                            </label>
+
+                            <label class="formularioModal__labelContenedor label-nivelActividad" for="ligero" style="width: 22%; min-width: 90px;">
+                                <input type="radio" name="nivelActividad" value="ligero" id="ligero" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/ejercicioLigeroIcono.png" style="width: 3rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1rem;">Ligero</h3>
+                                </div>
+                            </label>
+                            
+                            <label class="formularioModal__labelContenedor label-nivelActividad" for="moderado" style="width: 22%; min-width: 90px;">
+                                <input type="radio" name="nivelActividad" value="moderado" id="moderado" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/ejercicioModeradoIcono.png" style="width: 3rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1rem;">Moderado</h3>
+                                </div>
+                            </label>
+
+                            <label class="formularioModal__labelContenedor label-nivelActividad" for="activo" style="width: 22%; min-width: 90px;">
+                                <input type="radio" name="nivelActividad" value="activo" id="activo" required>
+                                <div class="label-contenido">
+                                    <span class="selectorInput"></span>
+                                    <img class="iconoModal" src="../../asserts/modalsIconos/ejercicioActivoIcono.png" style="width: 3rem;">
+                                    <h3 class="tarjeta__subtituloContenido" style="font-size: 1rem;">Activo</h3>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="btnComenzarFinal" type="submit" class="formulario__button flex">
+                        <span class="btn-text">Finalizar</span>
+                        <img class="btn-icon" src="../../asserts/vector.png"> 
+                    </button>
+                </form>
+            </div>
         </div>
 
         <!-- <div class="inicio sesi{on}"> -->
@@ -84,8 +200,8 @@
                     </div>
 
                     <button id="btnGuardar" type="submit" class="formulario__button flex">
-                        <p>Comenzar</p>
-                        <img src="../../asserts/vector.png"> 
+                        <span class="btn-text">Comenzar</span>
+                        <img class="btn-icon" src="../../asserts/vector.png"> 
                     </button>
                 </form>
             </div>

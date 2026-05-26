@@ -1,18 +1,24 @@
 import UsuarioService from "../services/UsuarioService.js";
 import MetaFisicaService from "../services/MetaFisicaService.js";
 import RegistroActividadService from "../services/RegistroActividadService.js";
+import RegistroIngestaService from "../services/RegistroIngestaService.js";
+import EstadisticasService from "../services/EstadisticasService.js";
 
 export default class InicioDinamicoVista_Controlador {
 
     #usuarioService;
     #metaFisicaService;
     #registroActividadService;
+    #registroIngestaService;
+    #estadisticasService;
 
     constructor(){
 
         this.#usuarioService = new UsuarioService();
         this.#metaFisicaService = new MetaFisicaService();
         this.#registroActividadService = new RegistroActividadService();
+        this.#registroIngestaService = new RegistroIngestaService();
+        this.#estadisticasService = new EstadisticasService();
         this.cargarInformacionInicio();
     }
 
@@ -29,6 +35,8 @@ export default class InicioDinamicoVista_Controlador {
 
             const usuario = await this.#usuarioService.obtenerPerfil(token);
 
+            await this.verificarYCrearRegistrosDiarios(token);
+
             const metasFisicas = await this.#metaFisicaService.obtenerMetasFisicas(token);
             console.log("las metas fisicas son:" , metasFisicas)
             this.cargarDatosUsuario(usuario);
@@ -43,6 +51,63 @@ export default class InicioDinamicoVista_Controlador {
         } catch(error){
 
             console.log("Error cargando datos iniciales", error);
+        }
+    }
+
+    async verificarYCrearRegistrosDiarios(token) {
+        try {
+            const hoy = new Date();
+            // Formato local para comparación de 24 horas
+            const fechaStringHoy = hoy.toISOString().split('T')[0];
+            
+            // Obtener historial existente
+            let historial = [];
+            try {
+                historial = await this.#estadisticasService.obtenerHistorial(token);
+            } catch (err) {
+                console.log("No se pudo obtener historial, asumiendo nuevo", err);
+            }
+
+            let necesitaNuevoRegistro = false;
+
+            if (!historial || historial.length === 0) {
+                necesitaNuevoRegistro = true;
+            } else {
+                // Verificar si pasaron 24 horas. El historial está ordenado? Tomemos el último
+                const ultimoHistorial = historial[historial.length - 1];
+                const fechaUltimo = new Date(ultimoHistorial.fecha).toISOString().split('T')[0];
+                
+                if (fechaUltimo !== fechaStringHoy) {
+                    necesitaNuevoRegistro = true;
+                }
+            }
+
+            if (necesitaNuevoRegistro) {
+                console.log("Creando nuevos registros diarios e historial...");
+                
+                // 1. Crear Registro Actividad Fisica
+                const registroActividad = await this.#registroActividadService.crearRegistro(token, {
+                    fecha: hoy.toISOString(),
+                    caloriasQuemadas: 0
+                });
+
+                // 2. Crear Registro Ingesta Alimenticia
+                const registroIngesta = await this.#registroIngestaService.crearRegistro(token, {
+                    fecha: hoy.toISOString(),
+                    caloriasConsumidas: 0
+                });
+
+                // 3. Crear Historial enlazando ambos
+                await this.#estadisticasService.crearHistorial(token, {
+                    fecha: hoy.toISOString(),
+                    idRegistroActividad: registroActividad.id_registro_actividad || registroActividad.id,
+                    idRegistroIngesta: registroIngesta.id_registro_ingesta || registroIngesta.id
+                });
+                
+                console.log("Registros diarios creados exitosamente");
+            }
+        } catch (error) {
+            console.error("Error al verificar/crear registros diarios:", error);
         }
     }
 
