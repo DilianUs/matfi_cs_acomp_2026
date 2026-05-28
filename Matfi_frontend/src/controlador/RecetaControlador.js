@@ -1,357 +1,255 @@
-import Receta from "../model/Receta.js";
 import RecetaService from "../services/RecetaService.js";
+import RegistroIngestaService from "../services/RegistroIngestaService.js";
 
 export default class RecetaControlador {
-    #refContenedorTarjetas;
     #refContenedorRecetas;
     #refTarjetaDesayuno;
     #refTarjetaAlmuerzo;
     #refTarjetaCena;
     #recetaService;
+    #registroIngestaService;
     #listaRecetas;
+    #recetaActual;
+    #idRegistroIngesta;
 
     constructor(){
-        // this.#refContenedorTarjetas = document.getElementById("panelPrincipal-alimentacion");
-        
-        // const panelPrncipalInicial = this.#refContenedorTarjetas.innerHTML;
         this.#refTarjetaDesayuno = document.getElementById("tarjetaDesayuno");
         this.#refContenedorRecetas = document.querySelectorAll(".tarjetaRecetas");
-        console.log(this.#refContenedorRecetas);
         this.#refTarjetaAlmuerzo = document.getElementById("tarjetaAlmuerzo");
         this.#refTarjetaCena = document.getElementById("tarjetaCena");
         this.#recetaService = new RecetaService();
+        this.#registroIngestaService = new RegistroIngestaService();
+        this.#listaRecetas = [];
+        this.#recetaActual = null;
+        this.#idRegistroIngesta = null;
 
         this.inicializar();
-        this.mostrarContenidoReceta();
-        // this.#refContenedorRecetas = document.querySelectorAll("tarjetaRecetas");
     }
 
     async inicializar() {
         await this.obtenerRecetas();
-
-        this.actualizarTarjetaDesayuno();
-        this.actualizarTarjetaAmuerzo();
-        this.actualizarTarjetaCena();
-        this.cerrarModalnformacionReceta();
+        await this.obtenerRegistroIngestaDeHoy();
+        this.configurarEventos();
     }
 
-    actualizarTarjetaDesayuno(){
-        if(this.#refTarjetaDesayuno){
-            this.#refTarjetaDesayuno.addEventListener('click', (e) => {
-                //metodo
-                this.mostrarListaDesayunos();
-            });
-        }
-        else{
-            alert("Error en la operacion desayuno");
+    async obtenerRecetas() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            this.#listaRecetas = await this.#recetaService.obtenerRecetas(token);
+            console.log("Recetas cargadas:", this.#listaRecetas);
+        } catch (error) {
+            console.log("Error al obtener recetas:", error);
+            this.#listaRecetas = [];
         }
     }
 
-    actualizarTarjetaAmuerzo(){
-        if(this.#refTarjetaAlmuerzo){
-            this.#refTarjetaAlmuerzo.addEventListener('click', (e) => {
-                //metodo
-                this.mostrarListaAlmuerzos();
-            });
-        }
-        else{
-            alert("Error en la operacion almuerzo");
-        }
-    }
+    /**
+     * Solo REUTILIZA el registro de ingesta del día.
+     * No lo crea porque InicioDinamicoVista_Controlador crea los 3 registros juntos
+     * (actividad + ingesta + historial) al iniciar sesión.
+     */
+    async obtenerRegistroIngestaDeHoy() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) return;
 
-    actualizarTarjetaCena(){
-        if(this.#refTarjetaCena){
-            this.#refTarjetaCena.addEventListener('click', (e) => {
-                //metodo
-                this.mostrarListaCenas();
-            });
-        }
-        else{
-            alert("Error en la operacion cena");
-        }
-    }
-    
-    // Revisar cuando se tengan las recetas para el back
-    // async obtenerRecetas(){
-    //     this.#listaRecetas = this.#recetaService.obtenerReceta();
-    // }
+            const hoy = new Date().toISOString().split("T")[0];
 
-    //metodos modificadores de contenido HTML
-    mostrarListaDesayunos(){
-        const recetasDesayuno = this.#listaRecetas.filter(
-            receta => receta.tipo == "Desayuno"
-        );
+            const registros = await this.#registroIngestaService.obtenerRegistroPorFecha(token, hoy);
 
-        let nuevoContenido = `
-            <div class="contenedorTitulo__alimentacion responsivo">
-                <img src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayunoHover.png">
-                <h2 class="tarjeta__titulo">Desayunos</h2>
-            </div>
-        `;
-
-        recetasDesayuno.forEach(receta => {
-            nuevoContenido += `
-                <div class="contenedorListaRecetas listaRecetas">
-                    <div class="listaRecetas_contenidoReceta tarjetaInfoDinamica responsivo" data-id="${receta.id}">
-                        <img src="${receta.imagen}">
-                        <p>${receta.nombre}</p>
-                        <span>${receta.calorias} cal</span>
-                    </div>
-                </div>
-            `;
-        });
-        
-        this.#refTarjetaDesayuno.innerHTML = nuevoContenido;
-    }
-
-    mostrarListaAlmuerzos(){
-        const recetasAlmuerzo = this.#listaRecetas.filter(
-            receta => receta.tipo == "Almuerzo"
-        );
-
-        let nuevoContenido = `
-            <div class="contenedorTitulo__alimentacion responsivo">
-                <img src="../../asserts/paginaAlimentacion_iconos/almuerzo/iconoAlmuerzoHover.png">
-                <h2 class="tarjeta__titulo">Almuerzos</h2>
-            </div>
-        `;
-
-        recetasAlmuerzo.forEach(receta => {
-            nuevoContenido += `
-                <div class="contenedorListaRecetas listaRecetas">
-                    <div class="listaRecetas_contenidoReceta tarjetaInfoDinamica responsivo" data-id="${receta.id}">
-                        <img src="${receta.imagen}">
-                        <p>${receta.nombre}</p>
-                        <span>${receta.calorias} cal</span>
-                    </div>
-                </div>
-            `;
-        });
-        
-
-        this.#refTarjetaAlmuerzo.innerHTML = nuevoContenido;
-    }
-
-    mostrarListaCenas(){
-         const recetasCena = this.#listaRecetas.filter(
-            receta => receta.tipo == "Cena"
-        );
-
-        let nuevoContenido = `
-            <div class="contenedorTitulo__alimentacion responsivo">
-                <img src="../../asserts/paginaAlimentacion_iconos/cena/iconoCenaHover.png">
-                <h2 class="tarjeta__titulo">Cenas</h2>
-            </div>
-
-        `;
-
-        recetasCena.forEach(receta => {
-            nuevoContenido += `
-                <div class="contenedorListaRecetas listaRecetas">
-                    <div class="listaRecetas_contenidoReceta tarjetaInfoDinamica responsivo" data-id="${receta.id}">
-                        <img src="${receta.imagen}">
-                        <p>${receta.nombre}</p>
-                        <span>${receta.calorias} cal</span>
-                    </div>
-                </div>
-            `;
-        });
-        
-
-        this.#refTarjetaCena.innerHTML = nuevoContenido;
-    }
-
-    mostrarContenidoReceta(){
-        // console.log(this.#refContenedorRecetas);
-        console.log(this.#refContenedorRecetas);
-        this.#refContenedorRecetas.forEach(tarjeta => {
-            tarjeta.addEventListener('click', (e) => {
-                // console.log(`estás en: ${tarjeta}`);
-                console.log(tarjeta);
-
-                const recetaSeleccionada = e.target.closest(".tarjetaInfoDinamica");
-                if(recetaSeleccionada){
-                    const id = recetaSeleccionada.dataset.id;
-
-                    console.log(id);
-
-                    const receta = this.#listaRecetas.find(
-                            receta => receta.id == id);
-
-                    this.modalInformacionReceta(receta);
-
-                }
-
-                // tarjeta.addEventListener('click', (e) =>{
-                //     const idTarjeta = e.target.closest("tarjetaInfoDinamica");;
-                //     console.log(idTarjeta);
-                // });
-            });
-        });
-    }
-
-    modalInformacionReceta(receta){
-
-        const modalReceta = document.getElementById("modalAlimentacion");
-
-        document.getElementById("imagenReceta").src = receta.imagen;
-
-        document.getElementById("tituloReceta").textContent = receta.nombre;
-
-        document.getElementById("caloriasReceta").textContent = `${receta.calorias}`;
-
-        document.getElementById("descripcionReceta").textContent = receta.descripcion;
-
-        // ingredientes
-        const ingredientes = document.getElementById("ingredientesReceta");
-
-        ingredientes.innerHTML = "";
-
-        receta.ingredientes.forEach(
-            ingrediente => {
-
-                ingredientes.innerHTML += `
-                    <li>
-                        ${ingrediente}
-                    </li>
-                `;
+            if (registros && registros.length > 0) {
+                this.#idRegistroIngesta = registros[0].id_registro_ingesta;
+                console.log("Registro de ingesta existente reutilizado:", this.#idRegistroIngesta);
+            } else {
+                console.log("No hay registro de ingesta para hoy. Debe crearse desde InicioDinamicoVista_Controlador");
             }
-        );
+        } catch (error) {
+            console.log("Error al obtener registro de ingesta:", error);
+        }
+    }
 
-        // pasos
+    configurarEventos() {
+        if (this.#refTarjetaDesayuno) {
+            this.#refTarjetaDesayuno.addEventListener('click', (e) => {
+                const recetaCard = e.target.closest(".tarjetaInfoDinamica");
+                if (recetaCard) {
+                    this.abrirModalReceta(recetaCard.dataset.id);
+                } else {
+                    this.mostrarListaPorTipo("Desayuno");
+                }
+            });
+        }
+
+        if (this.#refTarjetaAlmuerzo) {
+            this.#refTarjetaAlmuerzo.addEventListener('click', (e) => {
+                const recetaCard = e.target.closest(".tarjetaInfoDinamica");
+                if (recetaCard) {
+                    this.abrirModalReceta(recetaCard.dataset.id);
+                } else {
+                    this.mostrarListaPorTipo("Almuerzo");
+                }
+            });
+        }
+
+        if (this.#refTarjetaCena) {
+            this.#refTarjetaCena.addEventListener('click', (e) => {
+                const recetaCard = e.target.closest(".tarjetaInfoDinamica");
+                if (recetaCard) {
+                    this.abrirModalReceta(recetaCard.dataset.id);
+                } else {
+                    this.mostrarListaPorTipo("Cena");
+                }
+            });
+        }
+
+        const btnCerrar = document.getElementById("btnCerrarModal");
+        if (btnCerrar) {
+            btnCerrar.addEventListener("click", () => {
+                document.getElementById("modalAlimentacion").classList.remove("activo");
+            });
+        }
+
+        const btnConsumo = document.getElementById("btnAgregarConsumo");
+        if (btnConsumo) {
+            btnConsumo.addEventListener("click", () => {
+                this.agregarRecetaAConsumo();
+            });
+        }
+    }
+
+    mostrarListaPorTipo(tipo) {
+        let targetCard;
+        if (tipo === "Desayuno") targetCard = this.#refTarjetaDesayuno;
+        else if (tipo === "Almuerzo") targetCard = this.#refTarjetaAlmuerzo;
+        else if (tipo === "Cena") targetCard = this.#refTarjetaCena;
+
+        if (!targetCard) return;
+
+        const iconosMap = {
+            Desayuno: {
+                img: "../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayunoHover.png",
+                titulo: "Desayunos"
+            },
+            Almuerzo: {
+                img: "../../asserts/paginaAlimentacion_iconos/almuerzo/iconoAlmuerzoHover.png",
+                titulo: "Almuerzos"
+            },
+            Cena: {
+                img: "../../asserts/paginaAlimentacion_iconos/cena/iconoCenaHover.png",
+                titulo: "Cenas"
+            }
+        };
+
+        const info = iconosMap[tipo] || iconosMap.Desayuno;
+
+        let html = `
+            <div class="contenedorTitulo__alimentacion responsivo">
+                <img src="${info.img}">
+                <h2 class="tarjeta__titulo">${info.titulo}</h2>
+            </div>
+        `;
+
+        this.#listaRecetas.forEach(receta => {
+            html += `
+                <div class="contenedorListaRecetas listaRecetas">
+                    <div class="listaRecetas_contenidoReceta tarjetaInfoDinamica responsivo" data-id="${receta.id_receta}">
+                        <img src="${receta.imagen_alusiva || '../../asserts/imagenesPrueba/omelette.jpg'}">
+                        <p>${receta.nombre_receta}</p>
+                        <span>${receta.calorias_aproximadas || 0} cal</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        targetCard.innerHTML = html;
+    }
+
+    abrirModalReceta(idReceta) {
+        const receta = this.#listaRecetas.find(r => r.id_receta == idReceta);
+        if (!receta) return;
+
+        this.#recetaActual = receta;
+
+        const modal = document.getElementById("modalAlimentacion");
+        if (!modal) return;
+
+        document.getElementById("imagenReceta").src = receta.imagen_alusiva || '../../asserts/imagenesPrueba/omelette.jpg';
+        document.getElementById("tituloReceta").textContent = receta.nombre_receta;
+        document.getElementById("caloriasReceta").textContent = `${receta.calorias_aproximadas || 0}`;
+        document.getElementById("descripcionReceta").textContent = receta.descripcion_general || "Sin descripción";
+
+        const ingredientes = document.getElementById("ingredientesReceta");
+        ingredientes.innerHTML = "";
+        if (receta.ingredientes && receta.ingredientes.length > 0) {
+            receta.ingredientes.forEach(ing => {
+                const nombre = ing.nombreIngrediente || ing.nombre_ingrediente || ing;
+                const cantidad = ing.cantidad ? ` (${ing.cantidad})` : '';
+                ingredientes.innerHTML += `<li>${nombre}${cantidad}</li>`;
+            });
+        } else {
+            ingredientes.innerHTML = "<li>Sin ingredientes registrados</li>";
+        }
+
         const pasos = document.getElementById("preparacionReceta");
-
         pasos.innerHTML = "";
 
-        receta.pasos.forEach(paso => {
-            
-            pasos.innerHTML += `
-                    <li>
-                        ${paso}
-                    </li>
-                `;
-            });
+        let pasosArray = receta.pasos_preparacion;
+        if (typeof pasosArray === 'string') {
+            try { pasosArray = JSON.parse(pasosArray); } catch(e) { pasosArray = [pasosArray]; }
+        }
 
-        modalReceta.classList.add(
-            "activo"
-        );
+        if (pasosArray && pasosArray.length > 0) {
+            pasosArray.forEach(paso => {
+                pasos.innerHTML += `<li>${paso}</li>`;
+            });
+        } else {
+            pasos.innerHTML = "<li>Sin pasos registrados</li>";
+        }
+
+        modal.classList.add("activo");
     }
 
-    cerrarModalnformacionReceta(){
-        const btnCerrar = document.getElementById("btnCerrarModal");
+    async agregarRecetaAConsumo() {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("No hay sesión activa");
+                return;
+            }
 
-        const modalReceta =
-            document.getElementById(
-                "modalAlimentacion"
+            if (!this.#recetaActual) {
+                alert("No hay receta seleccionada");
+                return;
+            }
+
+            if (!this.#idRegistroIngesta) {
+                alert("No hay registro de ingesta del día. Regresa al inicio primero.");
+                return;
+            }
+
+            // Agregar receta al registro de ingesta
+            await this.#registroIngestaService.agregarReceta(
+                token,
+                this.#idRegistroIngesta,
+                this.#recetaActual.id_receta
             );
 
-        btnCerrar.addEventListener("click", () => {
-                modalReceta.classList.remove("activo");
-            });
+            // Actualizar calorías del registro
+            const caloriasActuales = this.#recetaActual.calorias_aproximadas || 0;
+            await this.#registroIngestaService.actualizarRegistro(
+                token,
+                this.#idRegistroIngesta,
+                { caloriasConsumidas: caloriasActuales }
+            );
+
+            alert("Receta agregada al consumo del día");
+            document.getElementById("modalAlimentacion").classList.remove("activo");
+
+        } catch (error) {
+            console.log("Error al agregar consumo:", error);
+            alert(error.message || "Error al agregar receta al consumo");
+        }
     }
-
-    // guardarToken(){
-    //     this.#token =
-    //         localStorage.getItem("token");
-    // }
-
-    // metodo de prueba
-    obtenerRecetas(){
-
-        this.#listaRecetas = [
-            {
-                id: 1,
-                nombre: "Huevos con avena",
-                calorias: 430,
-                tipo: "Desayuno",
-                imagen: "../imagenesPrueba/omelette.jpg",
-                descripcion: 
-                "Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica.",
-
-                ingredientes: [
-                    "Avena",
-                    "Huevo",
-                    "Leche"
-                ],
-
-                pasos: [
-                    "Licuar ingredientes",
-                    "Calentar sartén",
-                    "Cocinar"
-                ]
-
-            },
-
-            {
-                id: 2,
-                nombre: "Hotcakes fit",
-                calorias: 510,
-                tipo: "Desayuno",
-                imagen: "../imagenesPrueba/pancakes.jpg",
-                descripcion: 
-                "Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica.",
-
-                ingredientes: [
-                    "Avena",
-                    "Huevo",
-                    "Leche"
-                ],
-
-                pasos: [
-                    "Licuar ingredientes",
-                    "Calentar sartén",
-                    "Cocinar"
-                ]
-
-            },
-
-            {
-                id: 3,
-                nombre: "Pollo con arroz",
-                calorias: 620,
-                tipo: "Almuerzo",
-                imagen: "../imagenesPrueba/pollo.jpg",
-                descripcion: 
-                "Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica.",
-
-                ingredientes: [
-                    "Avena",
-                    "Huevo",
-                    "Leche"
-                ],
-
-                pasos: [
-                    "Licuar ingredientes",
-                    "Calentar sartén",
-                    "Cocinar"
-                ]
-
-            },
-
-            {
-                id: 4,
-                nombre: "Sándwich ligero",
-                calorias: 320,
-                tipo: "Cena",
-                imagen: "../imagenesPrueba/sandwich.jpg",
-                descripcion: 
-                "Lorem Ipsum es simplemente texto de relleno de la industria de la impresión y la composición tipográfica.",
-
-                ingredientes: [
-                    "Avena",
-                    "Huevo",
-                    "Leche"
-                ],
-
-                pasos: [
-                    "Licuar ingredientes",
-                    "Calentar sartén",
-                    "Cocinar"
-                ]
-
-            }
-        ];
-    }
-    
-
 }

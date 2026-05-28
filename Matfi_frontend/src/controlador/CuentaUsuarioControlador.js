@@ -4,16 +4,25 @@ import UsuarioService from "../services/UsuarioService.js";
 import MetaFisicaService from "../services/MetaFisicaService.js";
 import CalculadoraCalorias from "../model/CalculadoraCalorias.js";
 import MetaFisica from "../model/MetaFisica.js";
+import RegistroActividadService from "../services/RegistroActividadService.js";
+import RegistroIngestaService from "../services/RegistroIngestaService.js";
+import EstadisticasService from "../services/EstadisticasService.js";
 
 class CuentaUsuarioControlador {
     #servicioUsuario;
     #servicioMetaFisica;
+    #registroActividadService;
+    #registroIngestaService;
+    #estadisticasService;
     #cuentaUsuario;
     #datosUsuarioTemp;
 
     constructor(){
         this.#servicioUsuario = new UsuarioService();
         this.#servicioMetaFisica = new MetaFisicaService();
+        this.#registroActividadService = new RegistroActividadService();
+        this.#registroIngestaService = new RegistroIngestaService();
+        this.#estadisticasService = new EstadisticasService();
         this.#cuentaUsuario = undefined;
         this.#datosUsuarioTemp = {};
 
@@ -89,6 +98,103 @@ class CuentaUsuarioControlador {
         }
     }
 
+    /**
+     * Verifica si existen los registros diarios y historial para hoy.
+     * Si falta alguno lo crea, si falta el historial lo crea.
+     * Siempre deja los 3 consistentes: actividad + ingesta + historial.
+     * Es el mismo mecanismo que usa InicioDinamicoVista_Controlador.
+     */
+    async verificarYCrearRegistrosDiarios(token) {
+        try {
+            const fechaStringHoy = new Date().toISOString().split('T')[0];
+
+            // 1. Buscar si ya existe registro de actividad para hoy
+            let idRegActividad = null;
+            try {
+                const resAct = await this.#registroActividadService.obtenerRegistroPorFecha(token, fechaStringHoy);
+                if (resAct && resAct.length > 0) {
+                    idRegActividad = resAct[0].id_registro_actividad;
+                    console.log("Registro actividad existente:", idRegActividad);
+                }
+            } catch (err) {
+                console.log("Error al buscar registro actividad:", err);
+            }
+
+            // 2. Buscar si ya existe registro de ingesta para hoy
+            let idRegIngesta = null;
+            try {
+                const resIng = await this.#registroIngestaService.obtenerRegistroPorFecha(token, fechaStringHoy);
+                if (resIng && resIng.length > 0) {
+                    idRegIngesta = resIng[0].id_registro_ingesta;
+                    console.log("Registro ingesta existente:", idRegIngesta);
+                }
+            } catch (err) {
+                console.log("Error al buscar registro ingesta:", err);
+            }
+
+            // 3. Si ya existen ambos, verificar historial
+            if (idRegActividad && idRegIngesta) {
+                console.log("Ambos registros existen. Verificando historial...");
+                let historial = [];
+                try {
+                    historial = await this.#estadisticasService.obtenerHistorial(token);
+                } catch (err) {
+                    console.log("Error al obtener historial:", err);
+                }
+
+                const historialHoy = historial.find(h => {
+                    const fechaH = new Date(h.fecha).toISOString().split('T')[0];
+                    return fechaH === fechaStringHoy;
+                });
+
+                if (!historialHoy) {
+                    console.log("Creando historial faltante...");
+                    await this.#estadisticasService.crearHistorial(token, {
+                        fecha: fechaStringHoy,
+                        idRegistroActividad: idRegActividad,
+                        idRegistroIngesta: idRegIngesta
+                    });
+                    console.log("Historial creado exitosamente");
+                } else {
+                    console.log("Todo completo para hoy");
+                }
+                return;
+            }
+
+            // 4. Crear lo que falte
+            console.log("Faltan registros. Creando lo necesario...");
+
+            if (!idRegActividad) {
+                const resAct = await this.#registroActividadService.crearRegistro(token, {
+                    fecha: fechaStringHoy,
+                    caloriasQuemadas: 0
+                });
+                idRegActividad = resAct.registro?.id_registro_actividad || resAct.id_registro_actividad;
+                console.log("Registro actividad creado:", idRegActividad);
+            }
+
+            if (!idRegIngesta) {
+                const resIng = await this.#registroIngestaService.crearRegistro(token, {
+                    fecha: fechaStringHoy,
+                    caloriasConsumidas: 0
+                });
+                idRegIngesta = resIng.registro?.id_registro_ingesta || resIng.id_registro_ingesta;
+                console.log("Registro ingesta creado:", idRegIngesta);
+            }
+
+            // Crear historial uniendo ambos
+            await this.#estadisticasService.crearHistorial(token, {
+                fecha: fechaStringHoy,
+                idRegistroActividad: idRegActividad,
+                idRegistroIngesta: idRegIngesta
+            });
+            console.log("Historial creado exitosamente");
+
+        } catch (error) {
+            console.error("Error en verificarYCrearRegistrosDiarios:", error);
+        }
+    }
+
     async registrarUsuario(e){
         e.preventDefault();
         
@@ -116,9 +222,11 @@ class CuentaUsuarioControlador {
 
             if (res.token) {
                 localStorage.setItem("token", res.token);
-                localStorage.setItem("usuarioId", res.user.idUsuario);
+                localStorage.setItem("usuarioId", res.user?.idUsuario || res.user?.id_usuario);
 
-                // Ocultar formulario de registro y mostrar datos de usuario
+                // Crear registros diarios iniciales (usuario nuevo, seguro no existen)
+                await this.verificarYCrearRegistrosDiarios(res.token);
+
                 document.querySelector('.contenedor__formulario--registro').classList.add('contenedor--oculto');
                 document.querySelector('.contenedor__formulario--datos-usuario').classList.remove('contenedor--oculto');
             } else {
@@ -157,14 +265,12 @@ class CuentaUsuarioControlador {
             pesoUsuario: peso
         };
 
-        // Guardar temporalmente para la calculadora
         this.#datosUsuarioTemp = { ...datosActualizar };
 
         try {
             const token = localStorage.getItem("token");
             await this.#servicioUsuario.actualizarPerfil(token, datosActualizar);
 
-            // Ocultar datos de usuario y mostrar meta física
             document.querySelector('.contenedor__formulario--datos-usuario').classList.add('contenedor--oculto');
             document.querySelector('.contenedor__formulario--meta-fisica').classList.remove('contenedor--oculto');
 
@@ -197,7 +303,6 @@ class CuentaUsuarioControlador {
         try {
             const token = localStorage.getItem("token");
 
-            // Calcular
             const calculadora = new CalculadoraCalorias(objetivo, actividad);
             calculadora.calcularCaloriasDiarias({
                 peso: this.#datosUsuarioTemp.pesoUsuario,
@@ -267,7 +372,11 @@ class CuentaUsuarioControlador {
 
             if(res && res.token){
                 localStorage.setItem("token", res.token);
-                localStorage.setItem("usuarioId", res.user.idUsuario);
+                localStorage.setItem("usuarioId", res.user?.idUsuario || res.user?.id_usuario);
+
+                // Verificar/crear registros diarios antes de redirigir
+                // Así sea que vaya a inicio, rutinas o alimentación, ya tiene todo consistente
+                await this.verificarYCrearRegistrosDiarios(res.token);
 
                 window.location.href = "inicioDinamico.html";
             }else{

@@ -57,51 +57,131 @@ export default class InicioDinamicoVista_Controlador {
     async verificarYCrearRegistrosDiarios(token) {
         try {
             const hoy = new Date();
-            // Formato local para comparación de 24 horas
             const fechaStringHoy = hoy.toISOString().split('T')[0];
-            
-            // Obtener historial existente
-            let historial = [];
+
+            // 1. Buscar si YA EXISTE un registro de actividad para hoy
+            let registroActividadHoy = null;
             try {
-                historial = await this.#estadisticasService.obtenerHistorial(token);
+                const registrosActividad = await this.#registroActividadService.obtenerRegistroPorFecha(token, fechaStringHoy);
+                if (registrosActividad && registrosActividad.length > 0) {
+                    registroActividadHoy = registrosActividad[0];
+                    console.log("Registro de actividad existente para hoy:", registroActividadHoy.id_registro_actividad);
+                }
             } catch (err) {
-                console.log("No se pudo obtener historial, asumiendo nuevo", err);
+                console.log("Error al buscar registro de actividad para hoy", err);
             }
 
+            // 2. Buscar si YA EXISTE un registro de ingesta para hoy
+            let registroIngestaHoy = null;
+            try {
+                const registrosIngesta = await this.#registroIngestaService.obtenerRegistroPorFecha(token, fechaStringHoy);
+                if (registrosIngesta && registrosIngesta.length > 0) {
+                    registroIngestaHoy = registrosIngesta[0];
+                    console.log("Registro de ingesta existente para hoy:", registroIngestaHoy.id_registro_ingesta);
+                }
+            } catch (err) {
+                console.log("Error al buscar registro de ingesta para hoy", err);
+            }
+
+            // 3. Verificar si ya existen ambos registros => ya está todo listo
+            if (registroActividadHoy && registroIngestaHoy) {
+                console.log("Ya existen registros de actividad e ingesta para hoy. Verificando historial...");
+                
+                // Verificar si ya hay historial que los une
+                let historial = [];
+                try {
+                    historial = await this.#estadisticasService.obtenerHistorial(token);
+                } catch (err) {
+                    console.log("No se pudo obtener historial", err);
+                }
+
+                const historialHoy = historial.find(h => {
+                    const fechaH = new Date(h.fecha).toISOString().split('T')[0];
+                    return fechaH === fechaStringHoy;
+                });
+
+                if (!historialHoy) {
+                    // Existen registros pero no hay historial que los una -> crearlo
+                    console.log("Creando historial para registros existentes...");
+                    await this.#estadisticasService.crearHistorial(token, {
+                        fecha: fechaStringHoy,
+                        idRegistroActividad: registroActividadHoy.id_registro_actividad,
+                        idRegistroIngesta: registroIngestaHoy.id_registro_ingesta
+                    });
+                    console.log("Historial creado exitosamente");
+                } else {
+                    console.log("Todo ya existe para hoy (actividad, ingesta e historial)");
+                }
+                return;
+            }
+
+            // 4. Verificar historial para decidir si es un nuevo día
             let necesitaNuevoRegistro = false;
 
-            if (!historial || historial.length === 0) {
-                necesitaNuevoRegistro = true;
-            } else {
-                // Verificar si pasaron 24 horas. El historial está ordenado? Tomemos el último
-                const ultimoHistorial = historial[historial.length - 1];
-                const fechaUltimo = new Date(ultimoHistorial.fecha).toISOString().split('T')[0];
-                
-                if (fechaUltimo !== fechaStringHoy) {
-                    necesitaNuevoRegistro = true;
+            if (!registroActividadHoy && !registroIngestaHoy) {
+                // No hay registros para hoy, verificar si pasaron 24h
+                let historial = [];
+                try {
+                    historial = await this.#estadisticasService.obtenerHistorial(token);
+                } catch (err) {
+                    console.log("No se pudo obtener historial, asumiendo nuevo", err);
                 }
+
+                if (!historial || historial.length === 0) {
+                    necesitaNuevoRegistro = true;
+                } else {
+                    // El historial viene ordenado DESC (más reciente primero)
+                    const ultimoHistorial = historial[0];
+                    const fechaUltimo = new Date(ultimoHistorial.fecha);
+                    
+                    const msDesdeUltimo = hoy.getTime() - fechaUltimo.getTime();
+                    const horasDesdeUltimo = msDesdeUltimo / (1000 * 60 * 60);
+
+                    if (horasDesdeUltimo >= 24) {
+                        necesitaNuevoRegistro = true;
+                    }
+                }
+            } else {
+                // Solo falta uno de los dos registros
+                necesitaNuevoRegistro = true;
             }
 
             if (necesitaNuevoRegistro) {
                 console.log("Creando nuevos registros diarios e historial...");
                 
-                // 1. Crear Registro Actividad Fisica
-                const registroActividad = await this.#registroActividadService.crearRegistro(token, {
-                    fecha: hoy.toISOString(),
-                    caloriasQuemadas: 0
-                });
+                // Crear registro de actividad si no existe
+                let idRegActividad;
+                if (!registroActividadHoy) {
+                    const resAct = await this.#registroActividadService.crearRegistro(token, {
+                        fecha: fechaStringHoy,
+                        caloriasQuemadas: 0
+                    });
+                    idRegActividad = resAct.registro?.id_registro_actividad || resAct.id_registro_actividad || resAct.id;
+                    console.log("Registro de actividad creado:", idRegActividad);
+                } else {
+                    idRegActividad = registroActividadHoy.id_registro_actividad;
+                    console.log("Reutilizando registro de actividad:", idRegActividad);
+                }
 
-                // 2. Crear Registro Ingesta Alimenticia
-                const registroIngesta = await this.#registroIngestaService.crearRegistro(token, {
-                    fecha: hoy.toISOString(),
-                    caloriasConsumidas: 0
-                });
+                // Crear registro de ingesta si no existe
+                let idRegIngesta;
+                if (!registroIngestaHoy) {
+                    const resIng = await this.#registroIngestaService.crearRegistro(token, {
+                        fecha: fechaStringHoy,
+                        caloriasConsumidas: 0
+                    });
+                    idRegIngesta = resIng.registro?.id_registro_ingesta || resIng.id_registro_ingesta || resIng.id;
+                    console.log("Registro de ingesta creado:", idRegIngesta);
+                } else {
+                    idRegIngesta = registroIngestaHoy.id_registro_ingesta;
+                    console.log("Reutilizando registro de ingesta:", idRegIngesta);
+                }
 
-                // 3. Crear Historial enlazando ambos
+                // Crear historial enlazando ambos
                 await this.#estadisticasService.crearHistorial(token, {
-                    fecha: hoy.toISOString(),
-                    idRegistroActividad: registroActividad.id_registro_actividad || registroActividad.id,
-                    idRegistroIngesta: registroIngesta.id_registro_ingesta || registroIngesta.id
+                    fecha: fechaStringHoy,
+                    idRegistroActividad: idRegActividad,
+                    idRegistroIngesta: idRegIngesta
                 });
                 
                 console.log("Registros diarios creados exitosamente");
@@ -111,14 +191,6 @@ export default class InicioDinamicoVista_Controlador {
         }
     }
 
-    cargarDatosUsuario(usuario){
-
-        const nombreUsuario = document.getElementById("nombreUsuarioTexto");
-
-        if(nombreUsuario){
-            nombreUsuario.textContent = usuario.nombreUsuario || "Usuario";
-        }
-    }
 
     cargarMetaFisica(meta){
 
@@ -159,25 +231,6 @@ export default class InicioDinamicoVista_Controlador {
                 `${meta.calorias_objetivo} kcal`;
         }
     }
-
-    // mostrarMetaVacia(){
-
-    //     const tipoObjetivo = document.getElementById("tipoObjetivoFisicoTexto");
-    //     const fechaInicio = document.querySelectorAll("#fechaInicioTexto")[1];
-    //     const calorias = document.getElementById("caloriasMetaFisicaTexto");
-
-    //     if(tipoObjetivo){
-    //         tipoObjetivo.textContent = "No especificado";
-    //     }
-
-    //     if(fechaInicio){
-    //         fechaInicio.textContent = "No especificada";
-    //     }
-
-    //     if(calorias){
-    //         calorias.textContent = "No establecidas";
-    //     }
-    // }
 
     async cargarActividadDeHoy(token){
 

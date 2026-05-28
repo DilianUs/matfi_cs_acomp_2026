@@ -1,5 +1,4 @@
 import RegistroActividadService from "../services/RegistroActividadService.js";
-// import { rutinas } from "./datosRutinas.js";
 import RutinaService from "../services/RutinaService.js";
 
 export default class RutinaControlador {
@@ -24,35 +23,28 @@ export default class RutinaControlador {
         this.#registroActividadService = new RegistroActividadService();
         this.#rutinaActual = null;
         this.#rutinaService = new RutinaService();
-        // this.#rutinaService = new RutinaService();
 
         this.inicializar();
     }
 
     async inicializar() {
         await this.cargarRutinas();
-        await this.obtenerOCrearRegistroActividad();
+        await this.obtenerRegistroActividadDeHoy();
         this.renderizarRutinas();
         this.eventos();
     }
 
-    // 1. CARGA DE DATOS
     async cargarRutinas() {
-
         try {
-            // luego cambias esto por backend
             this.#listaRutinas = await this.#rutinaService.obtenerRutinas();
             console.log("las rutinas son:")
             console.log(this.#listaRutinas);
-            // this.#listaRutinas = rutinas;
-
         } catch (error) {
             console.log("Error cargando rutinas", error);
             this.#listaRutinas = [];
         }
     }
 
-    // 2. RENDER TARJETAS
     renderizarRutinas() {
 
         if (!this.#refContenedor) return;
@@ -87,7 +79,6 @@ export default class RutinaControlador {
         this.#refContenedor.innerHTML = html;
     }
 
-    //EVENTOS
     eventos() {
 
         this.#refContenedor.addEventListener("click", (e) => {
@@ -115,23 +106,15 @@ export default class RutinaControlador {
         });
     }
 
-    // 4. MODAL DINÁMICO
     abrirModal(r) {
         this.#rutinaActual = r;
 
-        // título
         document.getElementById("modalRutina__titulo").textContent =`Rutina de ${r.nombre_rutina}`;
-
         document.getElementById("modalRutinaDescripcion").textContent =r.descripcion_rutina;
-
-        // stats
         document.getElementById("modalCalorias").textContent ="300 kcal";
-
         document.getElementById("modalTiempo").textContent = "60min";
-
         document.getElementById("modalIntensidad").textContent = "medio";
 
-        // ejercicios
         const contenedor = document.getElementById("modalEjercicios");
         contenedor.innerHTML = "";
 
@@ -152,93 +135,35 @@ export default class RutinaControlador {
         this.#refModal.classList.add("activo");
     }
 
-    async obtenerOCrearRegistroActividad() {
+    /**
+     * Solo REUTILIZA el registro de actividad del día.
+     * No lo crea porque eso lo hace InicioDinamicoVista_Controlador
+     * creando los 3 registros juntos (actividad + ingesta + historial).
+     */
+    async obtenerRegistroActividadDeHoy() {
         try {
-
             const token = localStorage.getItem("token");
-
             if (!token) return;
 
             const hoy = new Date().toISOString().split("T")[0];
 
-            // buscar registros del día
-            const registros =
-                await this.#registroActividadService.obtenerRegistroPorFecha(
-                    token,
-                    hoy
-                );
-
+            const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
             console.log("REGISTROS DEL DÍA:", registros);
 
-            // si ya existe uno, reutilizarlo
-            if (registros.length > 0) {
-
-                this.#idRegistroActividad =
-                    registros[0].id_registro_actividad;
-
-                console.log(
-                    "Registro existente:",
-                    this.#idRegistroActividad
-                );
-
-                return;
+            if (registros && registros.length > 0) {
+                this.#idRegistroActividad = registros[0].id_registro_actividad;
+                console.log("Registro existente reutilizado:", this.#idRegistroActividad);
+            } else {
+                console.log("No hay registro de actividad para hoy. Debe crearse desde InicioDinamicoVista_Controlador");
             }
-
-            // si no existe, crear uno nuevo
-            const datos = {
-                fecha: hoy,
-                caloriasQuemadas: 0,
-                tiempoInvertido: 0,
-                nivelDeIntensidad: "media"
-            };
-
-            const respuesta =
-                await this.#registroActividadService.crearRegistro(
-                    token,
-                    datos
-                );
-
-            console.log("Registro creado:", respuesta);
-
-            this.#idRegistroActividad = respuesta.registro.id_registro_actividad;
-
         } catch (error) {
-
-            console.log("Error creando registro", error);
+            console.log("Error obteniendo registro de actividad", error);
         }
-        // try {
-        //     const token = localStorage.getItem("token");
-
-        //     const hoy = new Date().toISOString().split("T")[0];
-
-        //     const datos = {
-        //         fecha: hoy,
-        //         caloriasQuemadas: 0,
-        //         tiempoInvertido: 0,
-        //         nivelDeIntensidad: "media"
-        //     };
-
-        //     const registro = await this.#registroActividadService.crearRegistro(
-        //         token,
-        //         datos
-        //     );
-        //     console.log(registro);
-
-        //     this.#idRegistroActividad = registro.registro.id_registro_actividad;
-
-        //     console.log("Registro creado:", registro);
-
-        // } catch (error) {
-        //     console.log("Error creando registro", error);
-        // }
     }
 
     async guardarRutinaEnRegistro() {
-
         try {
-
             const token = localStorage.getItem("token");
-
             if (!token) {
                 alert("No hay sesión activa");
                 return;
@@ -249,65 +174,35 @@ export default class RutinaControlador {
                 return;
             }
 
-            // agregar rutina al registro
+            if (!this.#idRegistroActividad) {
+                alert("No hay registro de actividad del día. Regresa al inicio primero.");
+                return;
+            }
+
+            // Agregar rutina al registro de actividad
             await this.#registroActividadService.agregarRutina(
                 token,
                 this.#idRegistroActividad,
                 this.#rutinaActual.id_rutina
             );
 
-            // actualizar estadísticas del registro
+            // Actualizar estadísticas del registro
             await this.#registroActividadService.actualizarRegistro(
                 token,
                 this.#idRegistroActividad,
                 {
-                    caloriasQuemadas:
-                        this.#rutinaActual.caloriasQuemadas || 300,
-
-                    tiempoInvertido:
-                        this.#rutinaActual.tiempoInvertido || 60,
-
-                    nivelDeIntensidad:
-                        this.#rutinaActual.nivelDeIntensidad || "media"
+                    caloriasQuemadas: this.#rutinaActual.caloriasQuemadas || 300,
+                    tiempoInvertido: this.#rutinaActual.tiempoInvertido || 60,
+                    nivelDeIntensidad: this.#rutinaActual.nivelDeIntensidad || "media"
                 }
             );
 
             alert("Rutina agregada correctamente");
-
             this.#refModal.classList.remove("activo");
 
         } catch (error) {
-
             console.log("Error guardando rutina", error);
-
             alert(error.message || "Error al guardar rutina");
         }
-        // try {
-
-        //     const token = localStorage.getItem("token");
-
-        //     if (!token) {
-        //         alert("No hay sesión activa");
-        //         return;
-        //     }
-
-        //     if (!this.#rutinaActual) {
-        //         alert("No hay rutina seleccionada");
-        //         return;
-        //     }
-
-        //     const respuesta = await this.#registroActividadService.agregarRutina(token, this.#idRegistroActividad, this.#rutinaActual.id_rutina);
-
-        //     console.log("Guardado:", respuesta);
-
-        //     alert("Rutina agregada al registro de actividad");
-
-        //     this.#refModal.classList.remove("activo");
-
-        // } catch (error) {
-
-        //     console.log("Error guardando rutina", error);
-        //     alert(error.message || "Error al guardar rutina");
-        // }
     }
 }

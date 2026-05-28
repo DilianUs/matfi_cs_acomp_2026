@@ -40,14 +40,15 @@ class RegistroIngestaAlimenticiController {
         return res.status(400).json({ error: 'Fecha es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
-      if (!caloriasConsumidas || !ValidationUtils.isPositiveNumber(caloriasConsumidas)) {
-        return res.status(400).json({ error: 'Calorías consumidas es requerido y debe ser un número positivo' });
+      // Permitir 0 (registro vacío inicial, las calorías se actualizan al agregar recetas)
+      if (caloriasConsumidas !== undefined && caloriasConsumidas !== null && !ValidationUtils.isPositiveNumber(caloriasConsumidas) && caloriasConsumidas !== 0) {
+        return res.status(400).json({ error: 'Calorías consumidas debe ser un número positivo' });
       }
 
       const nuevoRegistro = await RegistroIngestaAlimenticiModel.create({
         idUsuario: req.user.idUsuario,
         fecha,
-        caloriasConsumidas
+        caloriasConsumidas: caloriasConsumidas || 0
       });
 
       res.status(201).json({
@@ -77,8 +78,8 @@ class RegistroIngestaAlimenticiController {
         return res.status(403).json({ error: 'No tienes permiso para actualizar este registro' });
       }
 
-      // Validaciones
-      if (caloriasConsumidas && !ValidationUtils.isPositiveNumber(caloriasConsumidas)) {
+      // Validaciones - permitir 0
+      if (caloriasConsumidas !== undefined && caloriasConsumidas !== null && !ValidationUtils.isPositiveNumber(caloriasConsumidas) && caloriasConsumidas !== 0) {
         return res.status(400).json({ error: 'Calorías consumidas debe ser un número positivo' });
       }
 
