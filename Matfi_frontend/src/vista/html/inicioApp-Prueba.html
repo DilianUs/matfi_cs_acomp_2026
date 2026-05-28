@@ -103,61 +103,14 @@
 
         <section class="tarjeta tarjetaPieDePagina tarjetaCalendario">
             <div class="tarjetaCalendario__contenido">
-                <div>
-                    <h2 class="tarjeta__titulo">Calendario</h2>
-                </div>
-
                 <div class="tarjetaCalendario__header">
-                    <p class="tarjetaCalendario__mes">Mayo 2026</p>
+                    <button id="btnCalendarioAnterior" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#8a8a8a;padding:0 8px;transition:color 0.2s;line-height:1;" onmouseover="this.style.color='#d5f420'" onmouseout="this.style.color='#8a8a8a'">‹</button>
+                    <p class="tarjetaCalendario__mes" id="calendarioMesTexto">Mayo 2026</p>
+                    <button id="btnCalendarioSiguiente" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#8a8a8a;padding:0 8px;transition:color 0.2s;line-height:1;" onmouseover="this.style.color='#d5f420'" onmouseout="this.style.color='#8a8a8a'">›</button>
                 </div>
 
                 <div class="tarjetaCalendario__grid">
-                    <span>L</span>
-                    <span>M</span>
-                    <span>M</span>
-                    <span>J</span>
-                    <span>V</span>
-                    <span>S</span>
-                    <span>D</span>
-
-                    <!-- días (ejemplo estático) -->
-                    <span class="dia">1</span>
-                    <span class="dia">2</span>
-                    <span class="dia">3</span>
-                    <span class="dia">4</span>
-                    <span class="dia">5</span>
-                    <span class="dia">6</span>
-                    <span class="dia">7</span>
-
-                    <span class="dia">8</span>
-                    <span class="dia">9</span>
-                    <span class="dia">10</span>
-                    <span class="dia">11</span>
-                    <span class="dia">12</span>
-                    <span class="dia">13</span>
-                    <span class="dia">14</span>
-
-                    <span class="dia">15</span>
-                    <span class="dia">9</span>
-                    <span class="dia">16</span>
-                    <span class="dia">17</span>
-                    <span class="dia">18</span>
-                    <span class="dia">19</span>
-                    <span class="dia">20</span>
-
-                    <span class="dia activo">21</span>
-                    <span class="dia">22</span>
-                    <span class="dia">23</span>
-                    <span class="dia">24</span>
-                    <span class="dia">25</span>
-                    <span class="dia">26</span>
-                    <span class="dia">27</span>
-
-                    <span class="dia">28</span>
-                    <span class="dia">29</span>
-                    <span class="dia">30</span>
-                    <span class="dia">31</span>
-                    <!-- <span class="dia">25</span> -->
+                    <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
                 </div>
                 
             </div>
