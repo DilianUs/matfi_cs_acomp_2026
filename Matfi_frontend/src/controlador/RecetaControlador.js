@@ -2,34 +2,48 @@ import RecetaService from "../services/RecetaService.js";
 import RegistroIngestaService from "../services/RegistroIngestaService.js";
 
 export default class RecetaControlador {
-    #refContenedorRecetas;
-    #refTarjetaDesayuno;
-    #refTarjetaAlmuerzo;
-    #refTarjetaCena;
+    #refContenedorTodasRecetas;
+    #refListaTodasRecetas;
+    #inputBusquedaRecetas;
+    #btnFiltrar;
+    #contadorRecetas;
     #recetaService;
     #registroIngestaService;
     #listaRecetas;
+    #listaRecetasFiltradas;
     #recetaActual;
     #idRegistroIngesta;
 
     constructor(){
-        this.#refTarjetaDesayuno = document.getElementById("tarjetaDesayuno");
-        this.#refContenedorRecetas = document.querySelectorAll(".tarjetaRecetas");
-        this.#refTarjetaAlmuerzo = document.getElementById("tarjetaAlmuerzo");
-        this.#refTarjetaCena = document.getElementById("tarjetaCena");
+        // Using setTimeout or ensuring DOM is ready is not strictly necessary if router does innerHTML first, but let's be safe
+        this.#refListaTodasRecetas = document.getElementById("listaTodasRecetas");
+        this.#inputBusquedaRecetas = document.getElementById("inputBusquedaRecetas");
+        this.#btnFiltrar = document.getElementById("btnFiltrar");
+        this.#contadorRecetas = document.getElementById("contadorRecetas");
         this.#recetaService = new RecetaService();
         this.#registroIngestaService = new RegistroIngestaService();
         this.#listaRecetas = [];
+        this.#listaRecetasFiltradas = [];
         this.#recetaActual = null;
         this.#idRegistroIngesta = null;
-
-        this.inicializar();
     }
 
-    async inicializar() {
+    async init() {
+        // Re-query in init just in case constructor ran before innerHTML was ready
+        this.#refListaTodasRecetas = document.getElementById("listaTodasRecetas") || this.#refListaTodasRecetas;
+        this.#inputBusquedaRecetas = document.getElementById("inputBusquedaRecetas") || this.#inputBusquedaRecetas;
+        this.#btnFiltrar = document.getElementById("btnFiltrar") || this.#btnFiltrar;
+        this.#contadorRecetas = document.getElementById("contadorRecetas") || this.#contadorRecetas;
+        
         await this.obtenerRecetas();
         await this.obtenerRegistroIngestaDeHoy();
+        this.renderizarRecetas(this.#listaRecetas);
         this.configurarEventos();
+    }
+
+    // Compatibilidad para router (se llamaba inicializar() pero router llama a init())
+    async inicializar() {
+        await this.init();
     }
 
     async obtenerRecetas() {
@@ -38,10 +52,12 @@ export default class RecetaControlador {
             if (!token) return;
 
             this.#listaRecetas = await this.#recetaService.obtenerRecetas(token);
+            this.#listaRecetasFiltradas = [...this.#listaRecetas];
             console.log("Recetas cargadas:", this.#listaRecetas);
         } catch (error) {
             console.log("Error al obtener recetas:", error);
             this.#listaRecetas = [];
+            this.#listaRecetasFiltradas = [];
         }
     }
 
@@ -72,99 +88,117 @@ export default class RecetaControlador {
     }
 
     configurarEventos() {
-        if (this.#refTarjetaDesayuno) {
-            this.#refTarjetaDesayuno.addEventListener('click', (e) => {
+        if (this.#refListaTodasRecetas) {
+            // Eliminar listener previo si existe para no duplicar (aunque router destruye instancia)
+            this.#refListaTodasRecetas.addEventListener('click', (e) => {
                 const recetaCard = e.target.closest(".tarjetaInfoDinamica");
                 if (recetaCard) {
                     this.abrirModalReceta(recetaCard.dataset.id);
-                } else {
-                    this.mostrarListaPorTipo("Desayuno");
                 }
             });
         }
 
-        if (this.#refTarjetaAlmuerzo) {
-            this.#refTarjetaAlmuerzo.addEventListener('click', (e) => {
-                const recetaCard = e.target.closest(".tarjetaInfoDinamica");
-                if (recetaCard) {
-                    this.abrirModalReceta(recetaCard.dataset.id);
-                } else {
-                    this.mostrarListaPorTipo("Almuerzo");
+        if (this.#inputBusquedaRecetas) {
+            // Evitar comportamiento por defecto del enter que recargue
+            this.#inputBusquedaRecetas.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') e.preventDefault();
+            });
+            this.#inputBusquedaRecetas.addEventListener('keyup', (e) => {
+                this.filtrarRecetas(e.target.value);
+            });
+            // También escuchar 'input' para copiado y pegado
+            this.#inputBusquedaRecetas.addEventListener('input', (e) => {
+                this.filtrarRecetas(e.target.value);
+            });
+        }
+
+        if (this.#btnFiltrar) {
+            this.#btnFiltrar.addEventListener('click', () => {
+                if (this.#inputBusquedaRecetas) {
+                    this.#inputBusquedaRecetas.focus();
                 }
             });
         }
 
-        if (this.#refTarjetaCena) {
-            this.#refTarjetaCena.addEventListener('click', (e) => {
-                const recetaCard = e.target.closest(".tarjetaInfoDinamica");
-                if (recetaCard) {
-                    this.abrirModalReceta(recetaCard.dataset.id);
-                } else {
-                    this.mostrarListaPorTipo("Cena");
-                }
-            });
-        }
+        // Use global event delegation for close button to ensure it binds even if DOM is recreated
+        const modal = document.getElementById("modalAlimentacion");
+        if (modal) {
+            const btnCerrar = document.getElementById("btnCerrarModal");
+            if (btnCerrar) {
+                // Replacing with onclick to avoid duplicate listeners
+                btnCerrar.onclick = () => {
+                    modal.classList.remove("activo");
+                };
+            }
 
-        const btnCerrar = document.getElementById("btnCerrarModal");
-        if (btnCerrar) {
-            btnCerrar.addEventListener("click", () => {
-                document.getElementById("modalAlimentacion").classList.remove("activo");
-            });
-        }
-
-        const btnConsumo = document.getElementById("btnAgregarConsumo");
-        if (btnConsumo) {
-            btnConsumo.addEventListener("click", () => {
-                this.agregarRecetaAConsumo();
-            });
+            const btnConsumo = document.getElementById("btnAgregarConsumo");
+            if (btnConsumo) {
+                btnConsumo.onclick = () => {
+                    this.agregarRecetaAConsumo();
+                };
+            }
         }
     }
 
-    mostrarListaPorTipo(tipo) {
-        let targetCard;
-        if (tipo === "Desayuno") targetCard = this.#refTarjetaDesayuno;
-        else if (tipo === "Almuerzo") targetCard = this.#refTarjetaAlmuerzo;
-        else if (tipo === "Cena") targetCard = this.#refTarjetaCena;
+    filtrarRecetas(terminoBusqueda) {
+        terminoBusqueda = terminoBusqueda.toLowerCase().trim();
+        
+        if (!terminoBusqueda) {
+            this.#listaRecetasFiltradas = [...this.#listaRecetas];
+        } else {
+            this.#listaRecetasFiltradas = this.#listaRecetas.filter(receta => {
+                const nombreMatch = (receta.nombre_receta || "").toLowerCase().includes(terminoBusqueda);
+                
+                let ingredientesMatch = false;
+                if (receta.ingredientes && receta.ingredientes.length > 0) {
+                    ingredientesMatch = receta.ingredientes.some(ing => {
+                        const nombreIng = (ing.nombreIngrediente || ing.nombre_ingrediente || ing).toLowerCase();
+                        return nombreIng.includes(terminoBusqueda);
+                    });
+                }
+                
+                return nombreMatch || ingredientesMatch;
+            });
+        }
+        
+        this.renderizarRecetas(this.#listaRecetasFiltradas);
+    }
 
-        if (!targetCard) return;
+    renderizarRecetas(recetas) {
+        if (!this.#refListaTodasRecetas) return;
+        
+        if (this.#contadorRecetas) {
+            this.#contadorRecetas.textContent = `${recetas.length} recetas encontradas`;
+        }
 
-        const iconosMap = {
-            Desayuno: {
-                img: "../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayunoHover.png",
-                titulo: "Desayunos"
-            },
-            Almuerzo: {
-                img: "../../asserts/paginaAlimentacion_iconos/almuerzo/iconoAlmuerzoHover.png",
-                titulo: "Almuerzos"
-            },
-            Cena: {
-                img: "../../asserts/paginaAlimentacion_iconos/cena/iconoCenaHover.png",
-                titulo: "Cenas"
-            }
-        };
+        let html = '';
+        if (recetas.length === 0) {
+            html = '<p style="grid-column: 1 / -1; text-align: center; color: var(--colorSecundario); font-size: 1.2rem; padding: 2rem;">No se encontraron recetas.</p>';
+        } else {
+            recetas.forEach(receta => {
+                const descripcionCorta = (receta.descripcion_general || "Deliciosa y nutritiva opción para complementar tu alimentación diaria.").substring(0, 100);
+                
+                html += `
+                    <article class="tarjetaRutina tarjetaInfoDinamica" data-id="${receta.id_receta}" style="cursor: pointer; min-height: 320px;">
+                        <div class="tarjetaRutina__nivel" style="height: 220px;">
+                            <img class="tarjetaRutina_icono" src="${receta.imagen_alusiva || '../../asserts/imagenesPrueba/omelette.jpg'}" style="object-fit: cover; width: 100%; height: 100%; border-radius: 1rem 1rem 0 0;">
+                        </div>
+                        <div class="tarjetaRutina__contenedorInformacion" style="flex-grow: 1;">
+                            <h3 class="tarjeta__subtituloContenido tarjetaRutina__nombre">${receta.nombre_receta}</h3>
+                            <p class="tarjeta__texto tarjetaRutina__descripcion" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px;">
+                                ${descripcionCorta}${receta.descripcion_general?.length > 100 ? '...' : ''}
+                            </p>
+                        </div>
+                        <div class="tarjetaRutina__estadisticas responsivo" style="justify-content: space-between; padding: 0 1rem 1rem 1rem; border-top: none;">
+                            <button type="button" class="btnVerReceta" style="background: none; border: 1px solid var(--colorTerciario); color: var(--colorTerciario); padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer;">Ver detalle</button>
+                            <div style="color: var(--colorPrincipal); font-weight: bold;">🔥 ${receta.calorias_aproximadas || 0} kcal</div>
+                        </div>
+                    </article>
+                `;
+            });
+        }
 
-        const info = iconosMap[tipo] || iconosMap.Desayuno;
-
-        let html = `
-            <div class="contenedorTitulo__alimentacion responsivo">
-                <img src="${info.img}">
-                <h2 class="tarjeta__titulo">${info.titulo}</h2>
-            </div>
-        `;
-
-        this.#listaRecetas.forEach(receta => {
-            html += `
-                <div class="contenedorListaRecetas listaRecetas">
-                    <div class="listaRecetas_contenidoReceta tarjetaInfoDinamica responsivo" data-id="${receta.id_receta}">
-                        <img src="${receta.imagen_alusiva || '../../asserts/imagenesPrueba/omelette.jpg'}">
-                        <p>${receta.nombre_receta}</p>
-                        <span>${receta.calorias_aproximadas || 0} cal</span>
-                    </div>
-                </div>
-            `;
-        });
-
-        targetCard.innerHTML = html;
+        this.#refListaTodasRecetas.innerHTML = html;
     }
 
     abrirModalReceta(idReceta) {
@@ -198,7 +232,21 @@ export default class RecetaControlador {
 
         let pasosArray = receta.pasos_preparacion;
         if (typeof pasosArray === 'string') {
-            try { pasosArray = JSON.parse(pasosArray); } catch(e) { pasosArray = [pasosArray]; }
+            try { 
+                pasosArray = JSON.parse(pasosArray); 
+            } catch(e) { 
+                if (pasosArray.startsWith('{') && pasosArray.endsWith('}')) {
+                    let cleanedStr = pasosArray.slice(1, -1);
+                    if (cleanedStr.startsWith('"') && cleanedStr.endsWith('"')) {
+                        cleanedStr = cleanedStr.slice(1, -1);
+                        pasosArray = cleanedStr.split('","');
+                    } else {
+                        pasosArray = cleanedStr.split(',');
+                    }
+                } else {
+                    pasosArray = [pasosArray]; 
+                }
+            }
         }
 
         if (pasosArray && pasosArray.length > 0) {

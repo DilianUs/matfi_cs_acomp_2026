@@ -47,8 +47,9 @@
                     <div class="contenedor__datos">
                         <img class="formulario__icono" src="../../asserts/llaveIcono.png" alt="usuario">
                         <input type="password" id="contraseniaUsuarioRegistro" name="Contraseña" placeholder="Contraseña" required>
-                        <img class="formulario__icono" src="../../asserts/verContraseñaIcono.png" alt="">
+                        <img class="formulario__icono" id="togglePasswordRegistro" src="../../asserts/verContraseñaIcono.png" alt="Mostrar/Ocultar" style="cursor: pointer; transition: opacity 0.3s;">
                     </div>
+                    <span id="errorContraseniaRegistro" style="color: #ff4d4d; font-size: 1.2rem; display: none; margin-top: -1rem; margin-bottom: 1rem; margin-left: 2rem;">La contraseña debe tener al menos 8 caracteres</span>
 
                     <button id="btnGuardarRegistro" type="submit" class="formulario__button flex">
                         <span class="btn-text">Continuar</span>
@@ -196,7 +197,7 @@
                     <div class="contenedor__datos">
                         <img class="formulario__icono" src="../../asserts/llaveIcono.png" alt="usuario">
                         <input type="password" id="contraseniaUsuarioInicio" name="Contraseña" placeholder="Contraseña" required>
-                        <img class="formulario__icono" src="../../asserts/verContraseñaIcono.png" alt="">
+                        <img class="formulario__icono" id="togglePasswordInicio" src="../../asserts/verContraseñaIcono.png" alt="Mostrar/Ocultar" style="cursor: pointer; transition: opacity 0.3s;">
                     </div>
 
                     <button id="btnGuardar" type="submit" class="formulario__button flex">

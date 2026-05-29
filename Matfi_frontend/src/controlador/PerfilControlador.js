@@ -16,6 +16,19 @@ export default class PerfilControlador {
     inicializar(){
         this.recuperarFormularioDatosUsuario();
         this.cargarTarjetaUsuario();
+        this.configurarCierreSesion();
+    }
+
+    configurarCierreSesion() {
+        const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+        if (btnCerrarSesion) {
+            btnCerrarSesion.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("token");
+                localStorage.removeItem("usuarioId");
+                window.location.href = "../../index.html";
+            });
+        }
     }
 
     recuperarFormularioDatosUsuario(){
@@ -119,4 +132,3 @@ export default class PerfilControlador {
         }
     }
 }
-

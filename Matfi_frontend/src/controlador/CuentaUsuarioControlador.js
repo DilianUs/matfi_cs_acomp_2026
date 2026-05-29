@@ -34,6 +34,7 @@ class CuentaUsuarioControlador {
         this.recuperarFormularioDatosUsuario();
         this.recuperarFormularioMetaFisica();
         this.recuperarFormularioInicioSesion();
+        this.configurarMostrarOcultarContrasenias();
     }
 
     mostrarAlerta(titulo, texto, icono) {
@@ -62,12 +63,49 @@ class CuentaUsuarioControlador {
         }
     }
 
+    configurarMostrarOcultarContrasenias() {
+        const btnToggleRegistro = document.getElementById("togglePasswordRegistro");
+        const inputRegistro = document.getElementById("contraseniaUsuarioRegistro");
+        
+        if (btnToggleRegistro && inputRegistro) {
+            btnToggleRegistro.addEventListener("click", () => {
+                const tipoActual = inputRegistro.getAttribute("type");
+                const tipoNuevo = tipoActual === "password" ? "text" : "password";
+                inputRegistro.setAttribute("type", tipoNuevo);
+                btnToggleRegistro.style.opacity = tipoNuevo === "password" ? "1" : "0.5";
+            });
+        }
+
+        const btnToggleInicio = document.getElementById("togglePasswordInicio");
+        const inputInicio = document.getElementById("contraseniaUsuarioInicio");
+
+        if (btnToggleInicio && inputInicio) {
+            btnToggleInicio.addEventListener("click", () => {
+                const tipoActual = inputInicio.getAttribute("type");
+                const tipoNuevo = tipoActual === "password" ? "text" : "password";
+                inputInicio.setAttribute("type", tipoNuevo);
+                btnToggleInicio.style.opacity = tipoNuevo === "password" ? "1" : "0.5";
+            });
+        }
+    }
+
     recuperarFormularioRegistro(){
         const formularioRegistro = document.getElementById("formularioRegistro");
         if(formularioRegistro){
             formularioRegistro.addEventListener('submit', (e) => {
                 this.registrarUsuario(e);
             });
+            
+            const contraseniaInput = document.getElementById('contraseniaUsuarioRegistro');
+            const errorSpan = document.getElementById('errorContraseniaRegistro');
+            if (contraseniaInput && errorSpan) {
+                contraseniaInput.addEventListener('input', () => {
+                    if (contraseniaInput.value.length >= 8) {
+                        errorSpan.style.display = 'none';
+                        contraseniaInput.parentElement.style.border = '';
+                    }
+                });
+            }
         }
     }
 
@@ -214,6 +252,15 @@ class CuentaUsuarioControlador {
 
         if(!nombre || !correo || !contrasenia){
             this.mostrarAlerta("Error", "Faltan datos de registro", "error");
+            this.setEstadoBoton(boton, false, "Continuar");
+            return;
+        }
+
+        if (contrasenia.length < 8) {
+            const errorSpan = document.getElementById('errorContraseniaRegistro');
+            const contraseniaInput = document.getElementById('contraseniaUsuarioRegistro');
+            if (errorSpan) errorSpan.style.display = 'block';
+            if (contraseniaInput) contraseniaInput.parentElement.style.border = '1px solid #ff4d4d';
             this.setEstadoBoton(boton, false, "Continuar");
             return;
         }

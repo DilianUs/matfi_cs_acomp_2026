@@ -104,6 +104,16 @@ export default class RutinaControlador {
         this.#refBtnGuardar.addEventListener("click", () => {
             this.guardarRutinaEnRegistro();
         });
+
+        const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+        if (btnCerrarSesion) {
+            btnCerrarSesion.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("token");
+                localStorage.removeItem("usuarioId");
+                window.location.href = "../../index.html";
+            });
+        }
     }
 
     abrirModal(r) {

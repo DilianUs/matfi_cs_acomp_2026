@@ -22,55 +22,27 @@
 
         <section class="tarjeta tarjetaConsultas">
             <div class="tarjetaConsultas__contenido responsivo">
-                <div class="filtrar">
+                <div class="filtrar" id="btnFiltrar">
                     <p>Filtrar</p>
                     <span class="flecha"></span>
                 </div>
 
                 <div class="tarjetaConsultas__busqueda responsivo">
-                    <input type="text" placeholder="   ¿Qué quieres buscar?">
-                    <img  class="tarjetaBienvenida__iconoBusqueda" src="../../asserts/paginaPrincipal_iconos/busquedaIcono.png">
+                    <input type="text" id="inputBusquedaRecetas" placeholder="   Buscar por nombre o ingrediente...">
+                    <img class="tarjetaBienvenida__iconoBusqueda" src="../../asserts/paginaPrincipal_iconos/busquedaIcono.png">
                 </div>
             </div>
         </section>
 
-        <section class="tarjeta tarjetaPieDePagina tarjetaDesayuno">
-            <div class="tarjetaDesayuno__Contenido tarjetaRecetas" id="tarjetaDesayuno"> <!-- tarjetaRecetas-->
-                <div class="tarjetaDesayuno__iconos panelPrincipal-alimentacion__iconos cuadricula">
-                    <img class="tarjetaDesayuno__icono1" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno1.jpeg" alt="">
-                    <img class="tarjetaDesayuno__icono2" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno2.jpg" alt="">
-                    <img class="tarjetaDesayuno__icono3" src="../../asserts/paginaAlimentacion_iconos/desayuno/iconoDesayuno3.jpg" alt="">
-
-                </div>
-                <h2 class="tarjeta__titulo">Desayunos</h2>
+        <section class="rutinasPorNivel__contenedor rutinasPorNivel" style="grid-column: 1 / -1; display: flex; flex-direction: column; height: calc(100vh - 200px);">
+            <div class="rutinasPorNivel__encabezado responsivo">
+                <h2 style="color: black;" class="tarjeta__titulo">Catálogo de Recetas</h2>
+                <p class="tarjeta__texto" id="contadorRecetas">Cargando recetas...</p>
             </div>
-            
-        </section>
 
-        <section class="tarjeta tarjetaPieDePagina tarjetaAlmuerzo" >
-            <div class="tarjetaAlmuerzo__Contenido tarjetaRecetas" id="tarjetaAlmuerzo"> <!-- tarjetaRecetas-->
-                <div class="tarjetaAlmuerzo__iconos panelPrincipal-alimentacion__iconos cuadricula">
-                    <img class="tarjetaAlmuerzo__icono1" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono1.jpg" alt="">
-                    <img class="tarjetaAlmuerzo__icono2" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono2.jpg" alt="">
-                    <img class="tarjetaAlmuerzo__icono3" src="../../asserts/paginaAlimentacion_iconos/almuerzo/almuerzoIcono3.jpg" alt="">
-                    <img class="tarjetaAlmuerzo__icono4" src="../../asserts/paginaAlimentacion_iconos/almuerzo/iconoAlmuerzo4.png" alt="">
-                </div>
-                <h2 class="tarjeta__titulo">Almuerzos</h2>
+            <div class="listaRutinas__contenedor cuadricula" id="listaTodasRecetas" style="overflow-y: auto; padding-right: 10px; flex-grow: 1; align-content: start;">
+                <!-- Recetas renderizadas dinámicamente -->
             </div>
-            
-        </section>
-
-        <section class="tarjeta tarjetaPieDePagina tarjetaCena" >
-            <div class="tarjetaCena__Contenido tarjetaRecetas" id="tarjetaCena"> <!-- tarjetaRecetas-->
-               <div class="tarjetaCena__iconos panelPrincipal-alimentacion__iconos cuadricula">
-                    <img class="tarjetaCena__icono1" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono1.jpg" alt="imagenCena">
-                    <img class="tarjetaCena__icono2" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono2.jpg" alt="imagenCena">
-                    <img class="tarjetaCena__icono3" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono3.jpg" alt="imagenCena">
-                    <img class="tarjetaCena__icono4" src="../../asserts/paginaAlimentacion_iconos/cena/cenaIcono4.jpg" alt="">
-                </div>
-                <h2 class="tarjeta__titulo">Cenas</h2> 
-            </div>
-            
         </section>
 
     </main>

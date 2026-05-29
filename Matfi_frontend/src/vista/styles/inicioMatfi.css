@@ -683,6 +683,7 @@ p {
     height: 3rem;
     background: var(--colorSombreado);
     border-radius: 3rem;
+    color: var(--colorBlanco, white);
 }
 /* --------------------------------------------------------- revisar y cambiar nombre */
 .filtrar {
@@ -1638,7 +1639,32 @@ body.fondoCalculadora {
 /* para el fondo de los input en formulario es background, no background-color */
 /* altas, bajas, cambios RS */
 
+.modalInfoReceta__contenido {
+    position: relative;
+    width: 70%;
+    background-color: var(--colorPrimario);
+    padding: 2rem;
 
+    border-radius: 1.5rem;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    border-color: var(--colorCuarto);
+    border-width: 0.1rem;
+    border-style: solid;
+    max-height: 80vh; /* Límite de altura */
+    overflow-y: auto; /* Activa el scroll vertical */
+}
 
+/* SCROLL PARA EL MODAL COMPLETO DE RECETAS */
+.modalInfoReceta__contenido::-webkit-scrollbar {
+    width: 0.6rem;
+}
 
+.modalInfoReceta__contenido::-webkit-scrollbar-thumb {
+    background-color: var(--colorSecundario);
+    border-radius: 1rem;
+}
 
+.modalInfoReceta__contenido::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 1.5rem 0; /* Evita que la barra choque con los bordes curvos */
+}

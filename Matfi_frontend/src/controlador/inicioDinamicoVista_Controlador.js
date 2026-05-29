@@ -21,6 +21,7 @@ export default class InicioDinamicoVista_Controlador {
         this.#registroIngestaService = new RegistroIngestaService();
         this.#estadisticasService = new EstadisticasService();
         this.#mesOffset = 0;
+        this.configurarCierreSesion();
         this.cargarInformacionInicio();
     }
 
@@ -54,6 +55,18 @@ export default class InicioDinamicoVista_Controlador {
         } catch(error){
 
             console.log("Error cargando datos iniciales", error);
+        }
+    }
+
+    configurarCierreSesion() {
+        const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+        if (btnCerrarSesion) {
+            btnCerrarSesion.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("token");
+                localStorage.removeItem("usuarioId");
+                window.location.href = "../../index.html";
+            });
         }
     }
 
