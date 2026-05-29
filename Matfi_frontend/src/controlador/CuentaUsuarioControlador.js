@@ -106,7 +106,8 @@ class CuentaUsuarioControlador {
      */
     async verificarYCrearRegistrosDiarios(token) {
         try {
-            const fechaStringHoy = new Date().toISOString().split('T')[0];
+            const d = new Date();
+            const fechaStringHoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
             // 1. Buscar si ya existe registro de actividad para hoy
             let idRegActividad = null;
@@ -317,11 +318,14 @@ class CuentaUsuarioControlador {
                 objetivo
             );
 
+            const fechaIni = metaFisica.fechaInicio;
+            const fechaFin = metaFisica.fechaFinalizacion;
+
             const datosMetaFisica = {
                 tipoDeMetaFisica: metaFisica.objetivoActivo,
                 caloriasObjetivo: Math.round(metaFisica.obtenerCaloriasObjetivo),
-                fechaInicio: metaFisica.fechaInicio.toISOString().split("T")[0],
-                fechaFin: metaFisica.fechaFinalizacion.toISOString().split("T")[0]
+                fechaInicio: `${fechaIni.getFullYear()}-${String(fechaIni.getMonth() + 1).padStart(2, '0')}-${String(fechaIni.getDate()).padStart(2, '0')}`,
+                fechaFin: `${fechaFin.getFullYear()}-${String(fechaFin.getMonth() + 1).padStart(2, '0')}-${String(fechaFin.getDate()).padStart(2, '0')}`
             };
 
             await this.#servicioMetaFisica.crearMetaFisica(token, datosMetaFisica);

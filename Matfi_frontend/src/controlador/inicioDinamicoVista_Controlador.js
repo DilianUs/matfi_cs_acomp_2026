@@ -79,7 +79,7 @@ export default class InicioDinamicoVista_Controlador {
     async verificarYCrearRegistrosDiarios(token) {
         try {
             const hoy = new Date();
-            const fechaStringHoy = hoy.toISOString().split('T')[0];
+            const fechaStringHoy = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}-${String(hoy.getDate()).padStart(2, '0')}`;
 
             let registroActividadHoy = null;
             try {
@@ -219,7 +219,8 @@ export default class InicioDinamicoVista_Controlador {
 
     async actualizarProgresoCalorias(token, caloriasObjetivo) {
         try {
-            const hoy = new Date().toISOString().split("T")[0];
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
             const registros = await this.#registroIngestaService.obtenerRegistroPorFecha(token, hoy);
 
             const caloriasConsumidas = (registros && registros.length > 0) 
@@ -243,7 +244,8 @@ export default class InicioDinamicoVista_Controlador {
 
     async actualizarRutinasRealizadas(token) {
         try {
-            const hoy = new Date().toISOString().split("T")[0];
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
             const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
 
             let rutinasCount = 0;
@@ -271,7 +273,8 @@ export default class InicioDinamicoVista_Controlador {
 
     async cargarActividadDeHoy(token){
         try {
-            const hoy = new Date().toISOString().split("T")[0];
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
             const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
 
@@ -311,7 +314,8 @@ export default class InicioDinamicoVista_Controlador {
 
     async cargarIngestaDeHoy(token) {
         try {
-            const hoy = new Date().toISOString().split("T")[0];
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
             const registros = await this.#registroIngestaService.obtenerRegistroPorFecha(token, hoy);
             
             if (!registros || registros.length === 0) return;

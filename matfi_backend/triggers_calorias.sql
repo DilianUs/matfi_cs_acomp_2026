@@ -55,11 +55,13 @@ $$ LANGUAGE plpgsql;
 -- 3. TRIGGERS para RegistroActividadRutina
 -- ==========================================
 
+DROP TRIGGER IF EXISTS trigger_calorias_actividad_insert ON RegistroActividadRutina;
 CREATE TRIGGER trigger_calorias_actividad_insert
 AFTER INSERT ON RegistroActividadRutina
 FOR EACH ROW
 EXECUTE FUNCTION recalcular_calorias_actividad();
 
+DROP TRIGGER IF EXISTS trigger_calorias_actividad_delete ON RegistroActividadRutina;
 CREATE TRIGGER trigger_calorias_actividad_delete
 AFTER DELETE ON RegistroActividadRutina
 FOR EACH ROW
@@ -69,11 +71,13 @@ EXECUTE FUNCTION recalcular_calorias_actividad();
 -- 4. TRIGGERS para RegistroIngestaReceta
 -- ==========================================
 
+DROP TRIGGER IF EXISTS trigger_calorias_ingesta_insert ON RegistroIngestaReceta;
 CREATE TRIGGER trigger_calorias_ingesta_insert
 AFTER INSERT ON RegistroIngestaReceta
 FOR EACH ROW
 EXECUTE FUNCTION recalcular_calorias_ingesta();
 
+DROP TRIGGER IF EXISTS trigger_calorias_ingesta_delete ON RegistroIngestaReceta;
 CREATE TRIGGER trigger_calorias_ingesta_delete
 AFTER DELETE ON RegistroIngestaReceta
 FOR EACH ROW
@@ -112,7 +116,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trg_proteger_actividad ON RegistroActividadFisicaDiaria;
 CREATE TRIGGER trg_proteger_actividad BEFORE UPDATE ON RegistroActividadFisicaDiaria FOR EACH ROW EXECUTE FUNCTION proteger_suma_calorias_actividad();
+DROP TRIGGER IF EXISTS trg_proteger_ingesta ON RegistroIngestaAlimenticiaDiaria;
 CREATE TRIGGER trg_proteger_ingesta BEFORE UPDATE ON RegistroIngestaAlimenticiaDiaria FOR EACH ROW EXECUTE FUNCTION proteger_suma_calorias_ingesta();
 
 -- ==========================================

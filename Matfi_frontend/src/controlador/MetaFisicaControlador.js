@@ -164,11 +164,14 @@ export default class MetaFisicaControlador {
 
         const token = localStorage.getItem("token");
 
+        const fechaIni = metaFisica.fechaInicio;
+        const fechaFin = metaFisica.fechaFinalizacion;
+
         const datosMetaFisica = {
             tipoDeMetaFisica: metaFisica.objetivoActivo,
             caloriasObjetivo: Math.round(metaFisica.obtenerCaloriasObjetivo),
-            fechaInicio: metaFisica.fechaInicio.toISOString().split("T")[0],
-            fechaFin: metaFisica.fechaFinalizacion.toISOString().split("T")[0]
+            fechaInicio: `${fechaIni.getFullYear()}-${String(fechaIni.getMonth() + 1).padStart(2, '0')}-${String(fechaIni.getDate()).padStart(2, '0')}`,
+            fechaFin: `${fechaFin.getFullYear()}-${String(fechaFin.getMonth() + 1).padStart(2, '0')}-${String(fechaFin.getDate()).padStart(2, '0')}`
         };
 
         try {
@@ -250,4 +253,3 @@ export default class MetaFisicaControlador {
     //     return metaFisica;
     // }
 }
-

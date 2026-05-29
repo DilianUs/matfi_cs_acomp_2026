@@ -145,7 +145,8 @@ export default class RutinaControlador {
             const token = localStorage.getItem("token");
             if (!token) return;
 
-            const hoy = new Date().toISOString().split("T")[0];
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
             const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
             console.log("REGISTROS DEL DÍA:", registros);
