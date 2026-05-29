@@ -10,6 +10,7 @@ export default class RutinaControlador {
     #idRegistroActividad;
     #registroActividadService;
     #listaRutinas;
+    #listaRutinasFiltradas;
     #rutinaActual;
     #rutinaService;
 
@@ -21,99 +22,198 @@ export default class RutinaControlador {
         this.#refBtnGuardar = document.getElementById("btnGuardarRegistroEjercicio");
         this.#idRegistroActividad = null;
         this.#registroActividadService = new RegistroActividadService();
+        this.#listaRutinas = [];
+        this.#listaRutinasFiltradas = [];
         this.#rutinaActual = null;
         this.#rutinaService = new RutinaService();
-
-        this.inicializar();
     }
 
-    async inicializar() {
+    async init() {
+        // Re-query to support router lifecycle
+        this.#refContenedor = document.getElementById("listaRutinas") || this.#refContenedor;
+        this.#refModal = document.getElementById("modalRutina") || this.#refModal;
+        this.#refBtnCerrar = document.getElementById("btnCerrarModal") || this.#refBtnCerrar;
+        this.#refBtnGuardar = document.getElementById("btnGuardarRegistroEjercicio") || this.#refBtnGuardar;
+
         await this.cargarRutinas();
         await this.obtenerRegistroActividadDeHoy();
-        this.renderizarRutinas();
+        this.renderizarRutinas(this.#listaRutinasFiltradas);
         this.eventos();
+    }
+
+    // Compatibilidad router
+    async inicializar() {
+        await this.init();
     }
 
     async cargarRutinas() {
         try {
             this.#listaRutinas = await this.#rutinaService.obtenerRutinas();
+            this.#listaRutinasFiltradas = [...this.#listaRutinas];
             console.log("las rutinas son:")
             console.log(this.#listaRutinas);
         } catch (error) {
             console.log("Error cargando rutinas", error);
             this.#listaRutinas = [];
+            this.#listaRutinasFiltradas = [];
         }
     }
 
-    renderizarRutinas() {
+    renderizarRutinas(rutinas = this.#listaRutinasFiltradas) {
 
         if (!this.#refContenedor) return;
 
         let html = "";
 
-        this.#listaRutinas.forEach(r => {
+        if (rutinas.length === 0) {
+            html = '<p style="grid-column: 1 / -1; text-align: center; color: var(--colorSecundario); font-size: 1.2rem; padding: 2rem;">No se encontraron rutinas.</p>';
+        } else {
+            rutinas.forEach(r => {
 
-            html += `
-                <article class="tarjetaRutina" data-id="${r.id_rutina}">
+                html += `
+                    <article class="tarjetaRutina" data-id="${r.id_rutina}">
 
-                    <div class="tarjetaRutina__nivel">
-                        <h3 class="nivelRutina__subtitulo">Intermedio</h3>
-                        <img class="tarjetaRutina_icono" src="${r.imagen_musculos_trabajados}">
-                    </div>
+                        <div class="tarjetaRutina__nivel">
+                            <h3 class="nivelRutina__subtitulo">Intermedio</h3>
+                            <img class="tarjetaRutina_icono" src="${r.imagen_musculos_trabajados || '../../asserts/imagenesPrueba/rutinaPierna.jpg'}">
+                        </div>
 
-                    <div class="tarjetaRutina__contenedorInformacion">
-                        <h3 class="tarjetaRutina__nombre">${r.nombre_rutina}</h3>
-                        <p class="tarjetaRutina__descripcion">${r.descripcion_rutina}</p>
-                    </div>
+                        <div class="tarjetaRutina__contenedorInformacion">
+                            <h3 class="tarjetaRutina__nombre">${r.nombre_rutina}</h3>
+                            <p class="tarjetaRutina__descripcion" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${r.descripcion_rutina || 'Sin descripción'}</p>
+                        </div>
 
-                    <div class="tarjetaRutina__estadisticas responsivo">
-                        <button class="btnAbrirRutina">Ver rutina</button>
-                        <div>🏋 ${r.ejercicios.length} ejercicios</div>
-                        <div>🔥 300 cal</div>
-                    </div>
+                        <div class="tarjetaRutina__estadisticas responsivo">
+                            <button class="btnAbrirRutina">Ver rutina</button>
+                            <div>🏋 ${r.ejercicios ? r.ejercicios.length : 0} ejercicios</div>
+                            <div>🔥 300 cal</div>
+                        </div>
 
-                </article>
-            `;
-        });
+                    </article>
+                `;
+            });
+        }
 
         this.#refContenedor.innerHTML = html;
     }
 
     eventos() {
 
-        this.#refContenedor.addEventListener("click", (e) => {
-            console.log("CLICK");
+        if (this.#refContenedor) {
+            this.#refContenedor.addEventListener("click", (e) => {
+                console.log("CLICK");
 
-            const btn = e.target.closest(".btnAbrirRutina");
-            if (!btn) return;
+                const btn = e.target.closest(".btnAbrirRutina");
+                if (!btn) return;
 
-            const card = e.target.closest(".tarjetaRutina");
-            const id = Number(card.dataset.id);
+                const card = e.target.closest(".tarjetaRutina");
+                if (!card) return;
 
-            const rutina = this.#listaRutinas.find(r => r.id_rutina === id);
+                const id = Number(card.dataset.id);
+                const rutina = this.#listaRutinas.find(r => r.id_rutina === id);
 
-            if (rutina) {
-                this.abrirModal(rutina);
-            }
+                if (rutina) {
+                    this.abrirModal(rutina);
+                }
+            });
+        }
+
+        if (this.#refBtnCerrar && this.#refModal) {
+            // override para evitar listeners duplicados
+            this.#refBtnCerrar.onclick = () => {
+                this.#refModal.classList.remove("activo");
+            };
+        }
+
+        if (this.#refBtnGuardar) {
+            this.#refBtnGuardar.onclick = () => {
+                this.guardarRutinaEnRegistro();
+            };
+        }
+
+        // Filtro por botones de grupo muscular
+        const botonesGrupo = document.querySelectorAll(".grupoMuscular__btnContenido");
+        botonesGrupo.forEach(btn => {
+            btn.onclick = () => {
+                const grupo = btn.dataset.grupo;
+                this.filtrarPorGrupoMuscular(grupo);
+            };
         });
 
-        this.#refBtnCerrar.addEventListener("click", () => {
-            this.#refModal.classList.remove("activo");
+        // Filtro por botones de tipo/nivel de rutina (Principiante, Intermedio)
+        const botonesTipo = document.querySelectorAll(".tipoRutinas__apartado");
+        botonesTipo.forEach(btn => {
+            btn.onclick = () => {
+                const nivelTexto = btn.querySelector("h3") ? btn.querySelector("h3").textContent : "";
+                this.filtrarPorTexto(nivelTexto);
+            };
         });
 
-        this.#refBtnGuardar.addEventListener("click", () => {
-            this.guardarRutinaEnRegistro();
-        });
+        // Búsqueda por texto (Barra de búsqueda superior)
+        const searchInput = document.querySelector(".tarjetaConsultas__busqueda input");
+        if (searchInput) {
+            searchInput.oninput = (e) => {
+                this.filtrarPorTexto(e.target.value);
+            };
+            searchInput.onkeydown = (e) => {
+                if (e.key === 'Enter') e.preventDefault();
+            };
+        }
 
         const btnCerrarSesion = document.getElementById("btnCerrarSesion");
         if (btnCerrarSesion) {
-            btnCerrarSesion.addEventListener("click", (e) => {
+            btnCerrarSesion.onclick = (e) => {
                 e.preventDefault();
                 localStorage.removeItem("token");
                 localStorage.removeItem("usuarioId");
                 window.location.href = "../../index.html";
+            };
+        }
+    }
+
+    filtrarPorTexto(texto) {
+        const termino = texto.toLowerCase().trim();
+        
+        if (!termino) {
+            this.#listaRutinasFiltradas = [...this.#listaRutinas];
+        } else {
+            this.#listaRutinasFiltradas = this.#listaRutinas.filter(rutina => {
+                const nombre = (rutina.nombre_rutina || "").toLowerCase();
+                const descripcion = (rutina.descripcion_rutina || "").toLowerCase();
+                return nombre.includes(termino) || descripcion.includes(termino);
             });
         }
+        
+        this.renderizarRutinas(this.#listaRutinasFiltradas);
+    }
+
+    filtrarPorGrupoMuscular(grupo) {
+        if (!grupo || grupo === "todas") {
+            this.#listaRutinasFiltradas = [...this.#listaRutinas];
+            this.renderizarRutinas(this.#listaRutinasFiltradas);
+            return;
+        }
+
+        // Diccionario de palabras clave asociadas a cada botón de grupo muscular
+        const keywordsMap = {
+            "pierna": ["pierna", "glúteo", "gluteo", "cuádricep", "cuadricep", "isquio", "pantorrilla"],
+            "push": ["push", "pecho", "hombro", "trícep", "tricep"],
+            "pull": ["pull", "espalda", "bícep", "bicep"],
+            "fullbody": ["fullbody", "full body", "cuerpo completo", "integral"],
+            "brazos": ["brazo", "bícep", "bicep", "trícep", "tricep", "hombro"],
+            "abdomen": ["abdomen", "core", "abs", "abdominal", "vientre"]
+        };
+
+        const keywords = keywordsMap[grupo.toLowerCase()] || [];
+
+        this.#listaRutinasFiltradas = this.#listaRutinas.filter(rutina => {
+            const nombre = (rutina.nombre_rutina || "").toLowerCase();
+            
+            // Verifica si alguna de las palabras clave del grupo está en el nombre de la rutina
+            return keywords.some(kw => nombre.includes(kw));
+        });
+
+        this.renderizarRutinas(this.#listaRutinasFiltradas);
     }
 
     abrirModal(r) {

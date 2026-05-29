@@ -12,6 +12,8 @@ export default class InicioDinamicoVista_Controlador {
     #registroIngestaService;
     #estadisticasService;
     #mesOffset;
+    #metaFisicaActual;
+    #fechasHistorial;
 
     constructor(){
 
@@ -21,6 +23,8 @@ export default class InicioDinamicoVista_Controlador {
         this.#registroIngestaService = new RegistroIngestaService();
         this.#estadisticasService = new EstadisticasService();
         this.#mesOffset = 0;
+        this.#metaFisicaActual = null;
+        this.#fechasHistorial = [];
         this.configurarCierreSesion();
         this.cargarInformacionInicio();
     }
@@ -43,14 +47,21 @@ export default class InicioDinamicoVista_Controlador {
             const metasFisicas = await this.#metaFisicaService.obtenerMetasFisicas(token);
             console.log("las metas fisicas son:" , metasFisicas)
             this.cargarDatosUsuario(usuario);
-            await this.cargarActividadDeHoy(token);
-            await this.cargarIngestaDeHoy(token);
+            
+            // Default to today
+            const d = new Date();
+            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            
+            if(metasFisicas.length > 0){
+                this.#metaFisicaActual = metasFisicas[metasFisicas.length - 1];
+                this.cargarMetaFisica(this.#metaFisicaActual, token);
+            } else {
+                await this.cargarActividadDeFecha(token, hoy);
+                await this.actualizarProgresoCaloriasFecha(token, hoy, 1700);
+            }
+
             await this.actualizarCalendario();
             this.configurarNavegacionCalendario(token);
-
-            if(metasFisicas.length > 0){
-                this.cargarMetaFisica(metasFisicas[metasFisicas.length - 1], token);
-            }
 
         } catch(error){
 
@@ -85,6 +96,29 @@ export default class InicioDinamicoVista_Controlador {
             btnSiguiente.addEventListener("click", async () => {
                 this.#mesOffset++;
                 await this.actualizarCalendario();
+            });
+        }
+
+        // Delegar clic en los días del calendario
+        const calendarioGrid = document.querySelector(".tarjetaCalendario__grid");
+        if (calendarioGrid) {
+            calendarioGrid.addEventListener("click", async (e) => {
+                const diaSpan = e.target.closest(".dia");
+                if (!diaSpan || diaSpan.classList.contains("dia-vacio") || !diaSpan.dataset.fecha) return;
+
+                const fechaSeleccionada = diaSpan.dataset.fecha; // YYYY-MM-DD
+                const lblFecha = document.getElementById("fechaHistorialSeleccionada");
+                if (lblFecha) lblFecha.textContent = fechaSeleccionada;
+                
+                const caloriasObj = this.#metaFisicaActual ? (this.#metaFisicaActual.calorias_objetivo || 1700) : 1700;
+
+                await this.cargarActividadDeFecha(token, fechaSeleccionada);
+                await this.actualizarProgresoCaloriasFecha(token, fechaSeleccionada, caloriasObj);
+                
+                // Resaltar seleccionado visualmente
+                document.querySelectorAll(".dia").forEach(el => el.style.border = "none");
+                diaSpan.style.border = "2px solid var(--colorTerciario)";
+                diaSpan.style.borderRadius = "50%";
             });
         }
     }
@@ -198,7 +232,8 @@ export default class InicioDinamicoVista_Controlador {
     async cargarMetaFisica(meta, token){
 
         const tipoObjetivo = document.getElementById("tipoObjetivoFisicoTexto");
-        const fechaInicio = document.querySelectorAll("#fechaInicioTexto")[1];
+        const fechaInicioObj = document.getElementById("fechaInicioTexto");
+        const fechaFinObj = document.getElementById("fechaFinTexto");
         const calorias = document.getElementById("caloriasMetaFisicaTexto");
         const caloriasProgreso = document.getElementById("caloriasMetaFisica");
 
@@ -211,12 +246,17 @@ export default class InicioDinamicoVista_Controlador {
             tipoObjetivo.textContent = objetivos[meta.tipo_de_meta] || "No especificado";
         }
 
-        if(fechaInicio){
-            const fecha = new Date(meta.fecha_inicio);
-            fechaInicio.textContent = fecha.toLocaleDateString("es-MX");
+        if(fechaInicioObj && meta.fecha_inicio){
+            const fechaIni = new Date(meta.fecha_inicio);
+            fechaInicioObj.textContent = fechaIni.toLocaleDateString("es-MX");
         }
 
-        const caloriasObjetivo = meta.calorias_objetivo || 1853;
+        if(fechaFinObj && meta.fecha_fin){
+            const fechaFin = new Date(meta.fecha_fin);
+            fechaFinObj.textContent = fechaFin.toLocaleDateString("es-MX");
+        }
+
+        const caloriasObjetivo = meta.calorias_objetivo || 1700;
 
         if(calorias){
             calorias.textContent = `${caloriasObjetivo} kcal`;
@@ -226,18 +266,64 @@ export default class InicioDinamicoVista_Controlador {
             caloriasProgreso.textContent = `${caloriasObjetivo} kcal`;
         }
 
-        await this.actualizarProgresoCalorias(token, caloriasObjetivo);
-        await this.actualizarRutinasRealizadas(token);
+        // Progreso semanal basado en calorías
+        await this.actualizarProgresoSemanal(token, caloriasObjetivo);
+
+        const d = new Date();
+        const hoyStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        
+        await this.cargarActividadDeFecha(token, hoyStr);
+        await this.actualizarProgresoCaloriasFecha(token, hoyStr, caloriasObjetivo);
     }
 
-    async actualizarProgresoCalorias(token, caloriasObjetivo) {
+    async actualizarProgresoSemanal(token, caloriasDiarias) {
         try {
-            const d = new Date();
-            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-            const registros = await this.#registroIngestaService.obtenerRegistroPorFecha(token, hoy);
+            const hoy = new Date();
+            const diaSemana = hoy.getDay(); // 0 = Domingo, 1 = Lunes
+            // Ajustar para que la semana inicie en Lunes
+            const diasDesdeLunes = diaSemana === 0 ? 6 : diaSemana - 1;
+            
+            const promesas = [];
+            
+            // Iterar desde el lunes de esta semana hasta el día de hoy
+            for (let i = 0; i <= diasDesdeLunes; i++) {
+                const fechaFiltro = new Date(hoy);
+                fechaFiltro.setDate(hoy.getDate() - (diasDesdeLunes - i));
+                const fechaStr = `${fechaFiltro.getFullYear()}-${String(fechaFiltro.getMonth() + 1).padStart(2, '0')}-${String(fechaFiltro.getDate()).padStart(2, '0')}`;
+                
+                promesas.push(this.#registroIngestaService.obtenerRegistroPorFecha(token, fechaStr));
+            }
 
-            const caloriasConsumidas = (registros && registros.length > 0) 
-                ? (registros[0].calorias_totales_consumidas || 0) 
+            const resultados = await Promise.all(promesas);
+            
+            let caloriasConsumidasSemana = 0;
+            resultados.forEach(registros => {
+                if (registros && registros.length > 0) {
+                    caloriasConsumidasSemana += (registros[0].calorias_totales_consumidas || 0);
+                }
+            });
+
+            // La meta semanal es lo que debe consumir diariamente multiplicado por 7 días
+            const caloriasObjetivoSemanal = caloriasDiarias * 7;
+            let porcentaje = Math.min((caloriasConsumidasSemana / caloriasObjetivoSemanal) * 100, 100);
+
+            const barraObjetivo = document.querySelector(".barraProgreso__relleno");
+            const textoObjetivo = document.querySelector(".tarjetaObjetivos__texto");
+            
+            if (barraObjetivo && textoObjetivo) {
+                barraObjetivo.style.width = `${porcentaje}%`;
+                textoObjetivo.textContent = `${Math.round(porcentaje)}% del consumo semanal (${Math.round(caloriasConsumidasSemana)} / ${caloriasObjetivoSemanal} kcal)`;
+            }
+        } catch (error) {
+            console.log("Error al calcular progreso semanal:", error);
+        }
+    }
+
+    async actualizarProgresoCaloriasFecha(token, fechaStr, caloriasObjetivo) {
+        try {
+            const registrosIngesta = await this.#registroIngestaService.obtenerRegistroPorFecha(token, fechaStr);
+            const caloriasConsumidas = (registrosIngesta && registrosIngesta.length > 0) 
+                ? (registrosIngesta[0].calorias_totales_consumidas || 0) 
                 : 0;
 
             const valorCalorias = document.querySelector(".tarjetaProgreso__valor");
@@ -245,25 +331,17 @@ export default class InicioDinamicoVista_Controlador {
                 valorCalorias.innerHTML = `${caloriasConsumidas} / <span id="caloriasMetaFisica">${caloriasObjetivo}</span> kcal`;
             }
 
-            const barra = document.querySelector(".tarjetaProgreso__barraRelleno");
-            if (barra) {
+            const barras = document.querySelectorAll(".tarjetaProgreso__barraRelleno");
+            if (barras.length > 0) {
                 const porcentaje = Math.min((caloriasConsumidas / caloriasObjetivo) * 100, 100);
-                barra.style.width = `${porcentaje}%`;
+                barras[0].style.width = `${porcentaje}%`;
             }
-        } catch (error) {
-            console.log("Error al actualizar progreso de calorías:", error);
-        }
-    }
 
-    async actualizarRutinasRealizadas(token) {
-        try {
-            const d = new Date();
-            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-            const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
-
+            // Actualizar también progreso de rutinas de esa fecha
+            const registrosAct = await this.#registroActividadService.obtenerRegistroPorFecha(token, fechaStr);
             let rutinasCount = 0;
-            if (registros && registros.length > 0) {
-                const registro = registros[0];
+            if (registrosAct && registrosAct.length > 0) {
+                const registro = registrosAct[0];
                 rutinasCount = (registro.rutinas && Array.isArray(registro.rutinas)) 
                     ? registro.rutinas.filter(r => r !== null).length 
                     : 0;
@@ -274,22 +352,19 @@ export default class InicioDinamicoVista_Controlador {
                 valorRutinas.innerHTML = `${rutinasCount} <span>/ 6</span>`;
             }
 
-            const barras = document.querySelectorAll(".tarjetaProgreso__barraRelleno");
             if (barras.length > 1) {
-                const porcentaje = Math.min((rutinasCount / 6) * 100, 100);
-                barras[1].style.width = `${porcentaje}%`;
+                const porcentajeRut = Math.min((rutinasCount / 6) * 100, 100);
+                barras[1].style.width = `${porcentajeRut}%`;
             }
+
         } catch (error) {
-            console.log("Error al actualizar rutinas realizadas:", error);
+            console.log("Error al actualizar progreso de calorías:", error);
         }
     }
 
-    async cargarActividadDeHoy(token){
+    async cargarActividadDeFecha(token, fechaStr){
         try {
-            const d = new Date();
-            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
-            const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, hoy);
+            const registros = await this.#registroActividadService.obtenerRegistroPorFecha(token, fechaStr);
 
             const contenedor = document.getElementById("contenedorHistorialEntrenamiento");
             if(!contenedor) return;
@@ -297,14 +372,14 @@ export default class InicioDinamicoVista_Controlador {
             contenedor.innerHTML = "";
 
             if(!registros || registros.length === 0){
-                contenedor.innerHTML = `<p class="tarjetaEntrenamiento__detalle">No hay actividad registrada hoy</p>`;
+                contenedor.innerHTML = `<p class="tarjetaEntrenamiento__detalle" style="text-align:center; margin-top:20px;">No hay actividad registrada en esta fecha</p>`;
                 return;
             }
 
             const registro = registros[0];
 
             if(!registro.rutinas || !Array.isArray(registro.rutinas) || registro.rutinas.length === 0){
-                contenedor.innerHTML = `<p class="tarjetaEntrenamiento__detalle">No hay rutinas registradas hoy</p>`;
+                contenedor.innerHTML = `<p class="tarjetaEntrenamiento__detalle" style="text-align:center; margin-top:20px;">No hay rutinas completadas en esta fecha</p>`;
                 return;
             }
 
@@ -321,27 +396,7 @@ export default class InicioDinamicoVista_Controlador {
                 `;
             });
         } catch(error){
-            console.log("Error cargando actividad del día", error);
-        }
-    }
-
-    async cargarIngestaDeHoy(token) {
-        try {
-            const d = new Date();
-            const hoy = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-            const registros = await this.#registroIngestaService.obtenerRegistroPorFecha(token, hoy);
-            
-            if (!registros || registros.length === 0) return;
-
-            const recetas = registros[0].recetas;
-            if (!recetas || !Array.isArray(recetas) || recetas.length === 0) return;
-
-            const contenedorRecetas = document.getElementById("contenedorRecetasConsumidas");
-            if (contenedorRecetas) {
-                contenedorRecetas.innerHTML = `<p>${recetas.length} receta(s) consumida(s) hoy</p>`;
-            }
-        } catch (error) {
-            console.log("Error al cargar ingesta del día:", error);
+            console.log("Error cargando actividad de fecha", error);
         }
     }
 
@@ -350,12 +405,10 @@ export default class InicioDinamicoVista_Controlador {
         if (!calendarioGrid) return;
 
         const hoy = new Date();
-        // Aplicar offset de mes para navegación
         const fechaBase = new Date(hoy.getFullYear(), hoy.getMonth() + this.#mesOffset, 1);
         const year = fechaBase.getFullYear();
         const month = fechaBase.getMonth();
         
-        // Texto del mes
         const mesTexto = fechaBase.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
         const mesCapitalizado = mesTexto.charAt(0).toUpperCase() + mesTexto.slice(1);
         
@@ -368,25 +421,24 @@ export default class InicioDinamicoVista_Controlador {
         const mesActual = hoy.getMonth();
         const anioActual = hoy.getFullYear();
 
-        // Obtener fechas con historial
-        let fechasHistorial = [];
+        // Obtener fechas con historial una sola vez si no se han cargado, o cargarlas del mes actual
         try {
             const token = localStorage.getItem("token");
             if (token) {
                 const historial = await this.#estadisticasService.obtenerHistorial(token);
-                // Filtrar solo historiales del mes/año que estamos viendo
-                fechasHistorial = historial
-                    .filter(h => {
-                        const f = new Date(h.fecha);
-                        return f.getMonth() === month && f.getFullYear() === year;
-                    })
-                    .map(h => new Date(h.fecha).getDate());
+                this.#fechasHistorial = historial.map(h => new Date(h.fecha).toISOString().split('T')[0]);
             }
         } catch (err) {
             console.log("No se pudieron obtener fechas de historial para el calendario");
         }
 
-        // Reconstruir calendario
+        // Meta física start and end date logic
+        let iniMs = 0, finMs = 0;
+        if(this.#metaFisicaActual && this.#metaFisicaActual.fecha_inicio && this.#metaFisicaActual.fecha_fin) {
+            iniMs = new Date(this.#metaFisicaActual.fecha_inicio).getTime();
+            finMs = new Date(this.#metaFisicaActual.fecha_fin).getTime();
+        }
+
         let html = `<span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>`;
         
         const inicio = primerDia === 0 ? 6 : primerDia - 1;
@@ -395,14 +447,36 @@ export default class InicioDinamicoVista_Controlador {
         }
 
         for (let d = 1; d <= ultimoDia; d++) {
+            const dateObj = new Date(year, month, d);
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const dateMs = dateObj.getTime();
+            
             let clase = "dia";
-            // Marcar como activo solo si estamos viendo el mes actual Y es el día de hoy
-            if (this.#mesOffset === 0 && d === diaActual && month === mesActual && year === anioActual) {
-                clase += " activo";
-            } else if (fechasHistorial.includes(d)) {
+            let inlineStyle = "cursor: pointer;";
+
+            // Si hay historial en este día
+            if (this.#fechasHistorial.includes(dateStr)) {
                 clase += " historial";
             }
-            html += `<span class="${clase}">${d}</span>`;
+
+            // Lógica de colores de la meta física
+            if (iniMs > 0 && finMs > 0) {
+                if (dateStr === this.#metaFisicaActual.fecha_inicio.split('T')[0]) {
+                    inlineStyle += " background-color: var(--colorTerciario); color: black; font-weight: bold;";
+                } else if (dateStr === this.#metaFisicaActual.fecha_fin.split('T')[0]) {
+                    inlineStyle += " background-color: #ff4757; color: white; font-weight: bold;";
+                } else if (dateMs > iniMs && dateMs < finMs && dateMs <= hoy.getTime()) {
+                    // Días transcurridos
+                    inlineStyle += " background-color: rgba(213, 244, 32, 0.2);";
+                }
+            }
+
+            // Marcar el día actual
+            if (this.#mesOffset === 0 && d === diaActual && month === mesActual && year === anioActual) {
+                clase += " activo";
+            } 
+            
+            html += `<span class="${clase}" data-fecha="${dateStr}" style="${inlineStyle}">${d}</span>`;
         }
 
         calendarioGrid.innerHTML = html;

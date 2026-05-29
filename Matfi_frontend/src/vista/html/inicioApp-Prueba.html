@@ -35,6 +35,7 @@
         <section class="tarjeta tarjetaEntrenamiento">
             <div class="tarjetaEntrenamiento__contenedor">
                 <h2 class="tarjeta__titulo">Historial de entrenamiento</h2>
+                <p id="fechaHistorialSeleccionada" style="color: var(--colorSecundario); margin-top: -10px; margin-bottom: 10px;">Hoy</p>
 
                 <div id="contenedorHistorialEntrenamiento" class="tarjetaEntrenamiento__contenedor">
                     <!-- html dinamico -->
@@ -45,7 +46,7 @@
         <section class="tarjeta tarjetaProgreso">
             
             <div class="tarjetaProgreso__contenedor">
-                <h2 class="tarjeta__titulo">Progreso semanal</h2>
+                <h2 class="tarjeta__titulo">Progreso diario</h2>
                 <!-- calorias -->
                 <article class="tarjetaProgreso__estadistica">
 
@@ -128,8 +129,13 @@
                     </div>
 
                     <div class="tarjetaObjetivos__bloque">
-                        <p class="tarjetaObjetivos__label" id="fechaInicioTexto">Fecha de inicio</p>
+                        <p class="tarjetaObjetivos__label" id="fechaInicioTextoLabel">Fecha de inicio</p>
                         <p class="tarjetaObjetivos__valor" id="fechaInicioTexto">No especificada</p>
+                    </div>
+
+                    <div class="tarjetaObjetivos__bloque">
+                        <p class="tarjetaObjetivos__label" id="fechaFinTextoLabel">Fecha de finalización</p>
+                        <p class="tarjetaObjetivos__valor" id="fechaFinTexto">No especificada</p>
                     </div>
 
                     <div class="tarjetaObjetivos__bloque">
@@ -143,7 +149,7 @@
                     <div class="barraProgreso">
                         <div class="barraProgreso__relleno" style="width: 70%"></div>
                     </div>
-                    <p class="tarjetaObjetivos__texto">70% del objetivo semanal</p>
+                    <p class="tarjetaObjetivos__texto">70% del objetivo completado</p>
                 </div>
             </div>
         </section>
