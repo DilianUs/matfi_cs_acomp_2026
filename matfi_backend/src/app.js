@@ -27,8 +27,8 @@ const swaggerUiOptions = {
   customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui.min.css',
   customJs: [
     'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui-bundle.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui-standalone-preset.js'
-  ]
+    'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.11.8/swagger-ui-standalone-preset.js',
+  ],
 };
 app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(null, swaggerUiOptions));
 app.get('/api/swagger.json', (req, res) => {
@@ -39,9 +39,7 @@ app.get('/api/swagger.json', (req, res) => {
 
   const spec = JSON.parse(JSON.stringify(swaggerSpec));
   const apiBase = configured || `${protocol}://${host}`;
-  spec.servers = [
-    { url: apiBase, description: 'Auto-detected server' }
-  ];
+  spec.servers = [{ url: apiBase, description: 'Auto-detected server' }];
 
   if (!configured) {
     spec.servers.push({ url: 'http://localhost:3000', description: 'Local development' });

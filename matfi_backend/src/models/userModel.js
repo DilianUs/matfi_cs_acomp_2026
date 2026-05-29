@@ -22,7 +22,15 @@ class UserModel {
 
   // Crear nuevo usuario
   static async create(userData) {
-    const { nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario, correoUsuario, contraseniaUsuario } = userData;
+    const {
+      nombreUsuario,
+      edadUsuario,
+      generoUsuario,
+      estaturaUsuario,
+      pesoUsuario,
+      correoUsuario,
+      contraseniaUsuario,
+    } = userData;
 
     try {
       // Iniciar transacción
@@ -36,7 +44,13 @@ class UserModel {
           VALUES ($1, $2, $3, $4, $5)
           RETURNING id_usuario
         `;
-        const userResult = await client.query(userQuery, [nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario]);
+        const userResult = await client.query(userQuery, [
+          nombreUsuario,
+          edadUsuario,
+          generoUsuario,
+          estaturaUsuario,
+          pesoUsuario,
+        ]);
         const idUsuario = userResult.rows[0].id_usuario;
 
         // Encriptar contraseña
@@ -49,7 +63,11 @@ class UserModel {
           VALUES ($1, $2, $3)
           RETURNING id_cuenta
         `;
-        const accountResult = await client.query(accountQuery, [correoUsuario, hashedPassword, idUsuario]);
+        const accountResult = await client.query(accountQuery, [
+          correoUsuario,
+          hashedPassword,
+          idUsuario,
+        ]);
 
         await client.query('COMMIT');
 
@@ -57,7 +75,7 @@ class UserModel {
           idCuenta: accountResult.rows[0].id_cuenta,
           idUsuario,
           nombreUsuario,
-          correoUsuario
+          correoUsuario,
         };
       } catch (error) {
         await client.query('ROLLBACK');
@@ -89,7 +107,14 @@ class UserModel {
         WHERE id_usuario = $6
         RETURNING id_usuario, nombre_usuario, edad_usuario, genero_usuario, estatura_usuario, peso_usuario
       `;
-      const result = await pool.query(query, [nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario, idUsuario]);
+      const result = await pool.query(query, [
+        nombreUsuario,
+        edadUsuario,
+        generoUsuario,
+        estaturaUsuario,
+        pesoUsuario,
+        idUsuario,
+      ]);
       return result.rows[0] || null;
     } catch (error) {
       throw new Error('Error al actualizar perfil de usuario');

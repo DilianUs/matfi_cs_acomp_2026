@@ -36,7 +36,10 @@ class IngredienteController {
         return res.status(400).json({ error: 'Nombre de ingrediente es requerido' });
       }
 
-      const ingredienteActualizado = await IngredienteModel.update(id, { nombreIngrediente, unidad });
+      const ingredienteActualizado = await IngredienteModel.update(id, {
+        nombreIngrediente,
+        unidad,
+      });
       if (!ingredienteActualizado) {
         return res.status(404).json({ error: 'Ingrediente no encontrado' });
       }

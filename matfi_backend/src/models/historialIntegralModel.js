@@ -43,7 +43,12 @@ class HistorialIntegralModel {
       VALUES ($1, $2, $3, $4)
       RETURNING id_historial, id_usuario, fecha, id_registro_actividad, id_registro_ingesta
     `;
-    const result = await pool.query(query, [idUsuario, fecha, idRegistroActividad, idRegistroIngesta]);
+    const result = await pool.query(query, [
+      idUsuario,
+      fecha,
+      idRegistroActividad,
+      idRegistroIngesta,
+    ]);
     return result.rows[0];
   }
 

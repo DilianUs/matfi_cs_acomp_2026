@@ -22,7 +22,10 @@ class RegistroActividadFisicaController {
         return res.status(400).json({ error: 'Fecha es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
-      const registros = await RegistroActividadFisicaModel.findByUserAndDate(req.user.idUsuario, fecha);
+      const registros = await RegistroActividadFisicaModel.findByUserAndDate(
+        req.user.idUsuario,
+        fecha
+      );
       res.json(registros);
     } catch (error) {
       console.error('Error al obtener registros por fecha:', error);
@@ -58,12 +61,12 @@ class RegistroActividadFisicaController {
         fecha,
         caloriasQuemadas,
         tiempoInvertido,
-        nivelDeIntensidad
+        nivelDeIntensidad,
       });
 
       res.status(201).json({
         message: 'Registro de actividad creado exitosamente',
-        registro: nuevoRegistro
+        registro: nuevoRegistro,
       });
     } catch (error) {
       console.error('Error al crear registro de actividad:', error);
@@ -84,7 +87,7 @@ class RegistroActividadFisicaController {
       }
 
       // Verificar permisos
-      if (!await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para actualizar este registro' });
       }
 
@@ -105,12 +108,12 @@ class RegistroActividadFisicaController {
       const registroActualizado = await RegistroActividadFisicaModel.update(id, {
         caloriasQuemadas,
         tiempoInvertido,
-        nivelDeIntensidad
+        nivelDeIntensidad,
       });
 
       res.json({
         message: 'Registro de actividad actualizado exitosamente',
-        registro: registroActualizado
+        registro: registroActualizado,
       });
     } catch (error) {
       console.error('Error al actualizar registro de actividad:', error);
@@ -130,7 +133,7 @@ class RegistroActividadFisicaController {
       }
 
       // Verificar permisos
-      if (!await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para eliminar este registro' });
       }
 
@@ -159,7 +162,7 @@ class RegistroActividadFisicaController {
       }
 
       // Verificar permisos
-      if (!await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para modificar este registro' });
       }
 
@@ -167,7 +170,7 @@ class RegistroActividadFisicaController {
 
       res.status(201).json({
         message: 'Rutina agregada al registro exitosamente',
-        rutina
+        rutina,
       });
     } catch (error) {
       console.error('Error al agregar rutina:', error);
@@ -187,7 +190,7 @@ class RegistroActividadFisicaController {
       }
 
       // Verificar permisos
-      if (!await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroActividadFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para modificar este registro' });
       }
 

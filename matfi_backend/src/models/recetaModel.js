@@ -42,7 +42,13 @@ class RecetaModel {
   }
 
   static async create(data, ingredients = []) {
-    const { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas } = data;
+    const {
+      nombreReceta,
+      imagenAlusiva,
+      descripcionGeneral,
+      pasosPreparacion,
+      caloriasAproximadas,
+    } = data;
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -51,7 +57,13 @@ class RecetaModel {
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id_receta
       `;
-      const result = await client.query(query, [nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas]);
+      const result = await client.query(query, [
+        nombreReceta,
+        imagenAlusiva,
+        descripcionGeneral,
+        pasosPreparacion,
+        caloriasAproximadas,
+      ]);
       const idReceta = result.rows[0].id_receta;
 
       if (Array.isArray(ingredients) && ingredients.length > 0) {
@@ -61,7 +73,11 @@ class RecetaModel {
         `;
 
         for (const ingrediente of ingredients) {
-          await client.query(insertRelation, [idReceta, ingrediente.idIngrediente, ingrediente.cantidad]);
+          await client.query(insertRelation, [
+            idReceta,
+            ingrediente.idIngrediente,
+            ingrediente.cantidad,
+          ]);
         }
       }
 
@@ -76,7 +92,13 @@ class RecetaModel {
   }
 
   static async update(id, data, ingredients = null) {
-    const { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas } = data;
+    const {
+      nombreReceta,
+      imagenAlusiva,
+      descripcionGeneral,
+      pasosPreparacion,
+      caloriasAproximadas,
+    } = data;
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -86,7 +108,14 @@ class RecetaModel {
             pasos_preparacion = $4, calorias_aproximadas = $5
         WHERE id_receta = $6
       `;
-      await client.query(updateQuery, [nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas, id]);
+      await client.query(updateQuery, [
+        nombreReceta,
+        imagenAlusiva,
+        descripcionGeneral,
+        pasosPreparacion,
+        caloriasAproximadas,
+        id,
+      ]);
 
       if (Array.isArray(ingredients)) {
         await client.query('DELETE FROM RecetaIngrediente WHERE id_receta = $1', [id]);

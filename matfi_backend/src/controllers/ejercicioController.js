@@ -14,12 +14,24 @@ class EjercicioController {
 
   static async create(req, res) {
     try {
-      const { nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio } = req.body;
+      const {
+        nombreEjercicio,
+        cantidadSeries,
+        cantidadRepeticiones,
+        descripcionEjercicio,
+        videoEjercicio,
+      } = req.body;
       if (!ValidationUtils.isNotEmpty(nombreEjercicio)) {
         return res.status(400).json({ error: 'Nombre de ejercicio es requerido' });
       }
 
-      const nuevoEjercicio = await EjercicioModel.create({ nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio });
+      const nuevoEjercicio = await EjercicioModel.create({
+        nombreEjercicio,
+        cantidadSeries,
+        cantidadRepeticiones,
+        descripcionEjercicio,
+        videoEjercicio,
+      });
       res.status(201).json(nuevoEjercicio);
     } catch (error) {
       console.error('Error al crear ejercicio:', error);
@@ -30,12 +42,24 @@ class EjercicioController {
   static async update(req, res) {
     try {
       const { id } = req.params;
-      const { nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio } = req.body;
+      const {
+        nombreEjercicio,
+        cantidadSeries,
+        cantidadRepeticiones,
+        descripcionEjercicio,
+        videoEjercicio,
+      } = req.body;
       if (!ValidationUtils.isNotEmpty(nombreEjercicio)) {
         return res.status(400).json({ error: 'Nombre de ejercicio es requerido' });
       }
 
-      const ejercicioActualizado = await EjercicioModel.update(id, { nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio });
+      const ejercicioActualizado = await EjercicioModel.update(id, {
+        nombreEjercicio,
+        cantidadSeries,
+        cantidadRepeticiones,
+        descripcionEjercicio,
+        videoEjercicio,
+      });
       if (!ejercicioActualizado) {
         return res.status(404).json({ error: 'Ejercicio no encontrado' });
       }

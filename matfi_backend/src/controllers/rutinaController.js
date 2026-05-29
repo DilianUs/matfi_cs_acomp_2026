@@ -23,7 +23,10 @@ class RutinaController {
         return res.status(400).json({ error: 'Ejercicios debe ser un arreglo' });
       }
 
-      const nuevaRutina = await RutinaModel.create({ nombreRutina, descripcionRutina, imagenMusculosTrabajados }, ejercicios);
+      const nuevaRutina = await RutinaModel.create(
+        { nombreRutina, descripcionRutina, imagenMusculosTrabajados },
+        ejercicios
+      );
       res.status(201).json(nuevaRutina);
     } catch (error) {
       console.error('Error al crear rutina:', error);
@@ -43,7 +46,11 @@ class RutinaController {
         return res.status(400).json({ error: 'Ejercicios debe ser un arreglo' });
       }
 
-      const rutinaActualizada = await RutinaModel.update(id, { nombreRutina, descripcionRutina, imagenMusculosTrabajados }, ejercicios);
+      const rutinaActualizada = await RutinaModel.update(
+        id,
+        { nombreRutina, descripcionRutina, imagenMusculosTrabajados },
+        ejercicios
+      );
       if (!rutinaActualizada) {
         return res.status(404).json({ error: 'Rutina no encontrada' });
       }

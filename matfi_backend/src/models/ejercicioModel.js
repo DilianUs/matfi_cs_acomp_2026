@@ -24,18 +24,36 @@ class EjercicioModel {
   }
 
   static async create(data) {
-    const { nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio } = data;
+    const {
+      nombreEjercicio,
+      cantidadSeries,
+      cantidadRepeticiones,
+      descripcionEjercicio,
+      videoEjercicio,
+    } = data;
     const query = `
       INSERT INTO Ejercicio (nombre_ejercicio, cantidad_series, cantidad_repeticiones, descripcion_ejercicio, video_ejercicio)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING id_ejercicio, nombre_ejercicio, cantidad_series, cantidad_repeticiones, descripcion_ejercicio, video_ejercicio
     `;
-    const result = await pool.query(query, [nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio]);
+    const result = await pool.query(query, [
+      nombreEjercicio,
+      cantidadSeries,
+      cantidadRepeticiones,
+      descripcionEjercicio,
+      videoEjercicio,
+    ]);
     return result.rows[0];
   }
 
   static async update(id, data) {
-    const { nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio } = data;
+    const {
+      nombreEjercicio,
+      cantidadSeries,
+      cantidadRepeticiones,
+      descripcionEjercicio,
+      videoEjercicio,
+    } = data;
     const query = `
       UPDATE Ejercicio
       SET nombre_ejercicio = $1, cantidad_series = $2, cantidad_repeticiones = $3,
@@ -43,7 +61,14 @@ class EjercicioModel {
       WHERE id_ejercicio = $6
       RETURNING id_ejercicio, nombre_ejercicio, cantidad_series, cantidad_repeticiones, descripcion_ejercicio, video_ejercicio
     `;
-    const result = await pool.query(query, [nombreEjercicio, cantidadSeries, cantidadRepeticiones, descripcionEjercicio, videoEjercicio, id]);
+    const result = await pool.query(query, [
+      nombreEjercicio,
+      cantidadSeries,
+      cantidadRepeticiones,
+      descripcionEjercicio,
+      videoEjercicio,
+      id,
+    ]);
     return result.rows[0] || null;
   }
 

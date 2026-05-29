@@ -6,11 +6,25 @@ class AuthController {
   // Registro de usuario
   static async register(req, res) {
     try {
-      const { nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario, correoUsuario, contraseniaUsuario } = req.body;
+      const {
+        nombreUsuario,
+        edadUsuario,
+        generoUsuario,
+        estaturaUsuario,
+        pesoUsuario,
+        correoUsuario,
+        contraseniaUsuario,
+      } = req.body;
 
       // Validación
-      if (!ValidationUtils.isNotEmpty(nombreUsuario) || !ValidationUtils.isValidEmail(correoUsuario) || !ValidationUtils.isValidPassword(contraseniaUsuario)) {
-        return res.status(400).json({ error: 'Datos inválidos. Verifique nombre, correo y contraseña' });
+      if (
+        !ValidationUtils.isNotEmpty(nombreUsuario) ||
+        !ValidationUtils.isValidEmail(correoUsuario) ||
+        !ValidationUtils.isValidPassword(contraseniaUsuario)
+      ) {
+        return res
+          .status(400)
+          .json({ error: 'Datos inválidos. Verifique nombre, correo y contraseña' });
       }
 
       if (edadUsuario && !ValidationUtils.isPositiveNumber(edadUsuario)) {
@@ -39,14 +53,14 @@ class AuthController {
         estaturaUsuario,
         pesoUsuario,
         correoUsuario,
-        contraseniaUsuario
+        contraseniaUsuario,
       });
 
       // Generar token
       const token = AuthService.generateToken({
         idUsuario: newUser.idUsuario,
         idCuenta: newUser.idCuenta,
-        correo: newUser.correoUsuario
+        correo: newUser.correoUsuario,
       });
 
       res.status(201).json({
@@ -54,9 +68,9 @@ class AuthController {
         user: {
           idUsuario: newUser.idUsuario,
           nombreUsuario: newUser.nombreUsuario,
-          correoUsuario: newUser.correoUsuario
+          correoUsuario: newUser.correoUsuario,
         },
-        token
+        token,
       });
     } catch (error) {
       console.error('Error en registro:', error);
@@ -70,7 +84,10 @@ class AuthController {
       const { correoUsuario, contraseniaUsuario } = req.body;
 
       // Validación
-      if (!ValidationUtils.isValidEmail(correoUsuario) || !ValidationUtils.isValidPassword(contraseniaUsuario)) {
+      if (
+        !ValidationUtils.isValidEmail(correoUsuario) ||
+        !ValidationUtils.isValidPassword(contraseniaUsuario)
+      ) {
         return res.status(400).json({ error: 'Correo o contraseña inválidos' });
       }
 
@@ -81,7 +98,10 @@ class AuthController {
       }
 
       // Verificar contraseña
-      const isPasswordValid = await UserModel.verifyPassword(contraseniaUsuario, user.contrasenia_usuario);
+      const isPasswordValid = await UserModel.verifyPassword(
+        contraseniaUsuario,
+        user.contrasenia_usuario
+      );
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Credenciales inválidas' });
       }
@@ -90,7 +110,7 @@ class AuthController {
       const token = AuthService.generateToken({
         idUsuario: user.id_usuario,
         idCuenta: user.id_cuenta,
-        correo: user.correo_usuario
+        correo: user.correo_usuario,
       });
 
       res.json({
@@ -98,9 +118,9 @@ class AuthController {
         user: {
           idUsuario: user.id_usuario,
           nombreUsuario: user.nombre_usuario,
-          correoUsuario: user.correo_usuario
+          correoUsuario: user.correo_usuario,
         },
-        token
+        token,
       });
     } catch (error) {
       console.error('Error en login:', error);
@@ -123,7 +143,7 @@ class AuthController {
         generoUsuario: user.genero_usuario,
         estaturaUsuario: user.estatura_usuario,
         pesoUsuario: user.peso_usuario,
-        correoUsuario: user.correo_usuario
+        correoUsuario: user.correo_usuario,
       });
     } catch (error) {
       console.error('Error al obtener perfil:', error);
@@ -135,7 +155,7 @@ class AuthController {
   static async updateProfile(req, res) {
     try {
       const { nombreUsuario, edadUsuario, generoUsuario, estaturaUsuario, pesoUsuario } = req.body;
-      
+
       // Validación básica si se envían los datos
       if (edadUsuario && !ValidationUtils.isPositiveNumber(edadUsuario)) {
         return res.status(400).json({ error: 'Edad debe ser un número positivo' });
@@ -152,7 +172,7 @@ class AuthController {
         edadUsuario,
         generoUsuario,
         estaturaUsuario,
-        pesoUsuario
+        pesoUsuario,
       });
 
       if (!updatedUser) {
@@ -167,8 +187,8 @@ class AuthController {
           edadUsuario: updatedUser.edad_usuario,
           generoUsuario: updatedUser.genero_usuario,
           estaturaUsuario: updatedUser.estatura_usuario,
-          pesoUsuario: updatedUser.peso_usuario
-        }
+          pesoUsuario: updatedUser.peso_usuario,
+        },
       });
     } catch (error) {
       console.error('Error al actualizar perfil:', error);

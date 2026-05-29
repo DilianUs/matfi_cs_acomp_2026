@@ -55,7 +55,11 @@ class RutinaModel {
         VALUES ($1, $2, $3)
         RETURNING id_rutina
       `;
-      const result = await client.query(query, [nombreRutina, descripcionRutina, imagenMusculosTrabajados]);
+      const result = await client.query(query, [
+        nombreRutina,
+        descripcionRutina,
+        imagenMusculosTrabajados,
+      ]);
       const idRutina = result.rows[0].id_rutina;
 
       if (Array.isArray(exercises) && exercises.length > 0) {
@@ -64,7 +68,11 @@ class RutinaModel {
           VALUES ($1, $2, $3)
         `;
         for (const ejercicio of exercises) {
-          await client.query(insertRelation, [idRutina, ejercicio.idEjercicio, ejercicio.orden || null]);
+          await client.query(insertRelation, [
+            idRutina,
+            ejercicio.idEjercicio,
+            ejercicio.orden || null,
+          ]);
         }
       }
 
@@ -88,7 +96,12 @@ class RutinaModel {
         SET nombre_rutina = $1, descripcion_rutina = $2, imagen_musculos_trabajados = $3
         WHERE id_rutina = $4
       `;
-      await client.query(updateQuery, [nombreRutina, descripcionRutina, imagenMusculosTrabajados, id]);
+      await client.query(updateQuery, [
+        nombreRutina,
+        descripcionRutina,
+        imagenMusculosTrabajados,
+        id,
+      ]);
 
       if (Array.isArray(exercises)) {
         await client.query('DELETE FROM RutinaEjercicio WHERE id_rutina = $1', [id]);

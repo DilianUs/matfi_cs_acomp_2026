@@ -50,6 +50,7 @@ matfi_backend/
 ## Endpoints de Autenticación
 
 ### Registro de Usuario
+
 - **POST** `/api/auth/register`
 - **Body**:
   ```json
@@ -65,6 +66,7 @@ matfi_backend/
   ```
 
 ### Inicio de Sesión
+
 - **POST** `/api/auth/login`
 - **Body**:
   ```json
@@ -75,6 +77,7 @@ matfi_backend/
   ```
 
 ### Obtener Perfil
+
 - **GET** `/api/auth/profile`
 - **Headers**: `Authorization: Bearer <token>`
 
@@ -101,6 +104,7 @@ El esquema de la base de datos se encuentra en `estructuradb.sql`. Utiliza Postg
 ## Desarrollo
 
 Para desarrollo, utiliza:
+
 ```bash
 npm run dev
 ```

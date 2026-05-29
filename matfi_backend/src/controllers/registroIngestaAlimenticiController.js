@@ -22,7 +22,10 @@ class RegistroIngestaAlimenticiController {
         return res.status(400).json({ error: 'Fecha es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
-      const registros = await RegistroIngestaAlimenticiModel.findByUserAndDate(req.user.idUsuario, fecha);
+      const registros = await RegistroIngestaAlimenticiModel.findByUserAndDate(
+        req.user.idUsuario,
+        fecha
+      );
       res.json(registros);
     } catch (error) {
       console.error('Error al obtener registros por fecha:', error);
@@ -41,19 +44,24 @@ class RegistroIngestaAlimenticiController {
       }
 
       // Permitir 0 (registro vacío inicial, las calorías se actualizan al agregar recetas)
-      if (caloriasConsumidas !== undefined && caloriasConsumidas !== null && !ValidationUtils.isPositiveNumber(caloriasConsumidas) && caloriasConsumidas !== 0) {
+      if (
+        caloriasConsumidas !== undefined &&
+        caloriasConsumidas !== null &&
+        !ValidationUtils.isPositiveNumber(caloriasConsumidas) &&
+        caloriasConsumidas !== 0
+      ) {
         return res.status(400).json({ error: 'Calorías consumidas debe ser un número positivo' });
       }
 
       const nuevoRegistro = await RegistroIngestaAlimenticiModel.create({
         idUsuario: req.user.idUsuario,
         fecha,
-        caloriasConsumidas: caloriasConsumidas || 0
+        caloriasConsumidas: caloriasConsumidas || 0,
       });
 
       res.status(201).json({
         message: 'Registro de ingesta creado exitosamente',
-        registro: nuevoRegistro
+        registro: nuevoRegistro,
       });
     } catch (error) {
       console.error('Error al crear registro de ingesta:', error);
@@ -74,22 +82,27 @@ class RegistroIngestaAlimenticiController {
       }
 
       // Verificar permisos
-      if (!await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para actualizar este registro' });
       }
 
       // Validaciones - permitir 0
-      if (caloriasConsumidas !== undefined && caloriasConsumidas !== null && !ValidationUtils.isPositiveNumber(caloriasConsumidas) && caloriasConsumidas !== 0) {
+      if (
+        caloriasConsumidas !== undefined &&
+        caloriasConsumidas !== null &&
+        !ValidationUtils.isPositiveNumber(caloriasConsumidas) &&
+        caloriasConsumidas !== 0
+      ) {
         return res.status(400).json({ error: 'Calorías consumidas debe ser un número positivo' });
       }
 
       const registroActualizado = await RegistroIngestaAlimenticiModel.update(id, {
-        caloriasConsumidas
+        caloriasConsumidas,
       });
 
       res.json({
         message: 'Registro de ingesta actualizado exitosamente',
-        registro: registroActualizado
+        registro: registroActualizado,
       });
     } catch (error) {
       console.error('Error al actualizar registro de ingesta:', error);
@@ -109,7 +122,7 @@ class RegistroIngestaAlimenticiController {
       }
 
       // Verificar permisos
-      if (!await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para eliminar este registro' });
       }
 
@@ -138,7 +151,7 @@ class RegistroIngestaAlimenticiController {
       }
 
       // Verificar permisos
-      if (!await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para modificar este registro' });
       }
 
@@ -146,7 +159,7 @@ class RegistroIngestaAlimenticiController {
 
       res.status(201).json({
         message: 'Receta agregada al registro exitosamente',
-        receta
+        receta,
       });
     } catch (error) {
       console.error('Error al agregar receta:', error);
@@ -166,7 +179,7 @@ class RegistroIngestaAlimenticiController {
       }
 
       // Verificar permisos
-      if (!await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await RegistroIngestaAlimenticiModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para modificar este registro' });
       }
 

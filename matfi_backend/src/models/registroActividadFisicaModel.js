@@ -89,7 +89,13 @@ class RegistroActividadFisicaModel {
       VALUES ($1, $2, $3, $4, $5)
       RETURNING id_registro_actividad, id_usuario, fecha, calorias_quemadas, tiempo_invertido, nivel_de_intensidad
     `;
-    const result = await pool.query(query, [idUsuario, fecha, caloriasQuemadas, tiempoInvertido, nivelDeIntensidad]);
+    const result = await pool.query(query, [
+      idUsuario,
+      fecha,
+      caloriasQuemadas,
+      tiempoInvertido,
+      nivelDeIntensidad,
+    ]);
     return result.rows[0];
   }
 
@@ -104,7 +110,12 @@ class RegistroActividadFisicaModel {
       WHERE id_registro_actividad = $4
       RETURNING id_registro_actividad, id_usuario, fecha, calorias_quemadas, tiempo_invertido, nivel_de_intensidad
     `;
-    const result = await pool.query(query, [caloriasQuemadas, tiempoInvertido, nivelDeIntensidad, idRegistroActividad]);
+    const result = await pool.query(query, [
+      caloriasQuemadas,
+      tiempoInvertido,
+      nivelDeIntensidad,
+      idRegistroActividad,
+    ]);
     return result.rows[0] || null;
   }
 
@@ -127,13 +138,15 @@ class RegistroActividadFisicaModel {
 
   // Eliminar rutina de registro de actividad
   static async removeRutina(idRegistroActividad, idRutina) {
-    const query = 'DELETE FROM RegistroActividadRutina WHERE id_registro_actividad = $1 AND id_rutina = $2';
+    const query =
+      'DELETE FROM RegistroActividadRutina WHERE id_registro_actividad = $1 AND id_rutina = $2';
     await pool.query(query, [idRegistroActividad, idRutina]);
   }
 
   // Verificar si el usuario es propietario del registro
   static async isOwner(idRegistroActividad, idUsuario) {
-    const query = 'SELECT id_usuario FROM RegistroActividadFisicaDiaria WHERE id_registro_actividad = $1';
+    const query =
+      'SELECT id_usuario FROM RegistroActividadFisicaDiaria WHERE id_registro_actividad = $1';
     const result = await pool.query(query, [idRegistroActividad]);
     if (!result.rows[0]) return false;
     return result.rows[0].id_usuario === idUsuario;

@@ -21,7 +21,9 @@ class MetaFisicaController {
       // Validaciones
       const tiposValidos = ['perdida', 'ganancia', 'mantenimiento'];
       if (!tipoDeMetaFisica || !tiposValidos.includes(tipoDeMetaFisica)) {
-        return res.status(400).json({ error: 'tipo_de_meta debe ser: perdida, ganancia o mantenimiento' });
+        return res
+          .status(400)
+          .json({ error: 'tipo_de_meta debe ser: perdida, ganancia o mantenimiento' });
       }
 
       if (!ValidationUtils.isPositiveNumber(caloriasObjetivo)) {
@@ -29,11 +31,15 @@ class MetaFisicaController {
       }
 
       if (!fechaInicio || !ValidationUtils.isValidDate(fechaInicio)) {
-        return res.status(400).json({ error: 'Fecha inicio es requerida y debe ser válida (YYYY-MM-DD)' });
+        return res
+          .status(400)
+          .json({ error: 'Fecha inicio es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
       if (!fechaFin || !ValidationUtils.isValidDate(fechaFin)) {
-        return res.status(400).json({ error: 'Fecha fin es requerida y debe ser válida (YYYY-MM-DD)' });
+        return res
+          .status(400)
+          .json({ error: 'Fecha fin es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
       // Validar que fechaFin sea mayor que fechaInicio
@@ -46,12 +52,12 @@ class MetaFisicaController {
         tipoDeMetaFisica,
         caloriasObjetivo,
         fechaInicio,
-        fechaFin
+        fechaFin,
       });
 
       res.status(201).json({
         message: 'Meta física creada exitosamente',
-        meta: nuevaMeta
+        meta: nuevaMeta,
       });
     } catch (error) {
       console.error('Error al crear meta física:', error);
@@ -71,7 +77,7 @@ class MetaFisicaController {
         return res.status(404).json({ error: 'Meta física no encontrada' });
       }
 
-      if (!await MetaFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await MetaFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para actualizar esta meta' });
       }
 
@@ -79,7 +85,9 @@ class MetaFisicaController {
       if (tipoDeMetaFisica) {
         const tiposValidos = ['perdida', 'ganancia', 'mantenimiento'];
         if (!tiposValidos.includes(tipoDeMetaFisica)) {
-          return res.status(400).json({ error: 'tipo_de_meta debe ser: perdida, ganancia o mantenimiento' });
+          return res
+            .status(400)
+            .json({ error: 'tipo_de_meta debe ser: perdida, ganancia o mantenimiento' });
         }
       }
 
@@ -106,12 +114,12 @@ class MetaFisicaController {
         tipoDeMetaFisica,
         caloriasObjetivo,
         fechaInicio,
-        fechaFin
+        fechaFin,
       });
 
       res.json({
         message: 'Meta física actualizada exitosamente',
-        meta: metaActualizada
+        meta: metaActualizada,
       });
     } catch (error) {
       console.error('Error al actualizar meta física:', error);
@@ -131,7 +139,7 @@ class MetaFisicaController {
       }
 
       // Verificar que pertenece al usuario autenticado
-      if (!await MetaFisicaModel.isOwner(id, req.user.idUsuario)) {
+      if (!(await MetaFisicaModel.isOwner(id, req.user.idUsuario))) {
         return res.status(403).json({ error: 'No tienes permiso para eliminar esta meta' });
       }
 

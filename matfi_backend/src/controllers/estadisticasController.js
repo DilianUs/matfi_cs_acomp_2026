@@ -19,11 +19,15 @@ class EstadisticasController {
       const { fechaInicio, fechaFin } = req.query;
 
       if (!fechaInicio || !ValidationUtils.isValidDate(fechaInicio)) {
-        return res.status(400).json({ error: 'fechaInicio es requerida y debe ser válida (YYYY-MM-DD)' });
+        return res
+          .status(400)
+          .json({ error: 'fechaInicio es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
       if (!fechaFin || !ValidationUtils.isValidDate(fechaFin)) {
-        return res.status(400).json({ error: 'fechaFin es requerida y debe ser válida (YYYY-MM-DD)' });
+        return res
+          .status(400)
+          .json({ error: 'fechaFin es requerida y debe ser válida (YYYY-MM-DD)' });
       }
 
       if (new Date(fechaFin) < new Date(fechaInicio)) {
@@ -55,7 +59,9 @@ class EstadisticasController {
         }
 
         if (new Date(fechaFin) < new Date(fechaInicio)) {
-          return res.status(400).json({ error: 'fechaFin debe ser igual o posterior a fechaInicio' });
+          return res
+            .status(400)
+            .json({ error: 'fechaFin debe ser igual o posterior a fechaInicio' });
         }
 
         estadisticas = await HistorialIntegralModel.getEstadisticas(
@@ -83,7 +89,9 @@ class EstadisticasController {
         caloriasConsumidasPromedio: parseFloat(estadisticas.calorias_consumidas_promedio) || 0,
         totalRutinasDiferentes: parseInt(estadisticas.total_rutinas_diferentes) || 0,
         totalRecetasDiferentes: parseInt(estadisticas.total_recetas_diferentes) || 0,
-        balanceCalorias: (parseFloat(estadisticas.calorias_quemadas_total) || 0) - (parseFloat(estadisticas.calorias_consumidas_total) || 0)
+        balanceCalorias:
+          (parseFloat(estadisticas.calorias_quemadas_total) || 0) -
+          (parseFloat(estadisticas.calorias_consumidas_total) || 0),
       };
 
       res.json(result);
@@ -103,19 +111,21 @@ class EstadisticasController {
       }
 
       if (!idRegistroActividad && !idRegistroIngesta) {
-        return res.status(400).json({ error: 'Al menos uno de idRegistroActividad o idRegistroIngesta es requerido' });
+        return res
+          .status(400)
+          .json({ error: 'Al menos uno de idRegistroActividad o idRegistroIngesta es requerido' });
       }
 
       const nuevoHistorial = await HistorialIntegralModel.create({
         idUsuario: req.user.idUsuario,
         fecha,
         idRegistroActividad,
-        idRegistroIngesta
+        idRegistroIngesta,
       });
 
       res.status(201).json({
         message: 'Historial integral creado exitosamente',
-        historial: nuevoHistorial
+        historial: nuevoHistorial,
       });
     } catch (error) {
       console.error('Error al crear historial:', error);

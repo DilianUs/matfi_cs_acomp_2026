@@ -121,13 +121,15 @@ class RegistroIngestaAlimenticiModel {
 
   // Eliminar receta de registro de ingesta
   static async removeReceta(idRegistroIngesta, idReceta) {
-    const query = 'DELETE FROM RegistroIngestaReceta WHERE id_registro_ingesta = $1 AND id_receta = $2';
+    const query =
+      'DELETE FROM RegistroIngestaReceta WHERE id_registro_ingesta = $1 AND id_receta = $2';
     await pool.query(query, [idRegistroIngesta, idReceta]);
   }
 
   // Verificar si el usuario es propietario del registro
   static async isOwner(idRegistroIngesta, idUsuario) {
-    const query = 'SELECT id_usuario FROM RegistroIngestaAlimenticiaDiaria WHERE id_registro_ingesta = $1';
+    const query =
+      'SELECT id_usuario FROM RegistroIngestaAlimenticiaDiaria WHERE id_registro_ingesta = $1';
     const result = await pool.query(query, [idRegistroIngesta]);
     if (!result.rows[0]) return false;
     return result.rows[0].id_usuario === idUsuario;

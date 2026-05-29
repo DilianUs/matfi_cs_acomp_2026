@@ -14,7 +14,14 @@ class RecetaController {
 
   static async create(req, res) {
     try {
-      const { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas, ingredientes } = req.body;
+      const {
+        nombreReceta,
+        imagenAlusiva,
+        descripcionGeneral,
+        pasosPreparacion,
+        caloriasAproximadas,
+        ingredientes,
+      } = req.body;
       if (!ValidationUtils.isNotEmpty(nombreReceta)) {
         return res.status(400).json({ error: 'Nombre de receta es requerido' });
       }
@@ -23,7 +30,10 @@ class RecetaController {
         return res.status(400).json({ error: 'Ingredientes debe ser un arreglo' });
       }
 
-      const nuevaReceta = await RecetaModel.create({ nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas }, ingredientes);
+      const nuevaReceta = await RecetaModel.create(
+        { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas },
+        ingredientes
+      );
       res.status(201).json(nuevaReceta);
     } catch (error) {
       console.error('Error al crear receta:', error);
@@ -34,7 +44,14 @@ class RecetaController {
   static async update(req, res) {
     try {
       const { id } = req.params;
-      const { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas, ingredientes } = req.body;
+      const {
+        nombreReceta,
+        imagenAlusiva,
+        descripcionGeneral,
+        pasosPreparacion,
+        caloriasAproximadas,
+        ingredientes,
+      } = req.body;
       if (!ValidationUtils.isNotEmpty(nombreReceta)) {
         return res.status(400).json({ error: 'Nombre de receta es requerido' });
       }
@@ -43,7 +60,11 @@ class RecetaController {
         return res.status(400).json({ error: 'Ingredientes debe ser un arreglo' });
       }
 
-      const recetaActualizada = await RecetaModel.update(id, { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas }, ingredientes);
+      const recetaActualizada = await RecetaModel.update(
+        id,
+        { nombreReceta, imagenAlusiva, descripcionGeneral, pasosPreparacion, caloriasAproximadas },
+        ingredientes
+      );
       if (!recetaActualizada) {
         return res.status(404).json({ error: 'Receta no encontrada' });
       }

@@ -32,7 +32,13 @@ class MetaFisicaModel {
       VALUES ($1, $2, $3, $4, $5)
       RETURNING id_meta, id_usuario, tipo_de_meta, calorias_objetivo, fecha_inicio, fecha_fin
     `;
-    const result = await pool.query(query, [idUsuario, tipoDeMetaFisica, caloriasObjetivo, fechaInicio, fechaFin]);
+    const result = await pool.query(query, [
+      idUsuario,
+      tipoDeMetaFisica,
+      caloriasObjetivo,
+      fechaInicio,
+      fechaFin,
+    ]);
     return result.rows[0];
   }
 
@@ -48,7 +54,13 @@ class MetaFisicaModel {
       WHERE id_meta = $5
       RETURNING id_meta, id_usuario, tipo_de_meta, calorias_objetivo, fecha_inicio, fecha_fin
     `;
-    const result = await pool.query(query, [tipoDeMetaFisica, caloriasObjetivo, fechaInicio, fechaFin, idMeta]);
+    const result = await pool.query(query, [
+      tipoDeMetaFisica,
+      caloriasObjetivo,
+      fechaInicio,
+      fechaFin,
+      idMeta,
+    ]);
     return result.rows[0] || null;
   }
 

@@ -4,8 +4,8 @@ const mockVerify = jest.fn();
 
 jest.unstable_mockModule('../src/services/authService.js', () => ({
   default: {
-    verifyToken: mockVerify
-  }
+    verifyToken: mockVerify,
+  },
 }));
 
 let authMiddleware;
@@ -45,7 +45,9 @@ test('calls next and attaches user when token is valid', () => {
 });
 
 test('responds 401 when token is invalid', () => {
-  mockVerify.mockImplementation(() => { throw new Error('Token inválido'); });
+  mockVerify.mockImplementation(() => {
+    throw new Error('Token inválido');
+  });
 
   const req = { headers: { authorization: 'Bearer bad.token' } };
   const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
