@@ -191,7 +191,6 @@ export default class RutinaControlador {
                 token,
                 this.#idRegistroActividad,
                 {
-                    caloriasQuemadas: this.#rutinaActual.caloriasQuemadas || 300,
                     tiempoInvertido: this.#rutinaActual.tiempoInvertido || 60,
                     nivelDeIntensidad: this.#rutinaActual.nivelDeIntensidad || "media"
                 }

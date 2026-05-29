@@ -80,6 +80,42 @@ FOR EACH ROW
 EXECUTE FUNCTION recalcular_calorias_ingesta();
 
 -- ==========================================
+-- 4.5. TRIGGERS DE PROTECCIÓN CONTRA EL FRONTEND
+-- ==========================================
+-- Estos triggers BEFORE UPDATE garantizan que si el frontend envía un valor
+-- de calorías incorrecto al intentar actualizar, la BD lo recalcule obligatoriamente.
+
+CREATE OR REPLACE FUNCTION proteger_suma_calorias_actividad()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.calorias_quemadas = COALESCE((
+        SELECT SUM(COALESCE(e.cantidad_series, 0) * COALESCE(e.cantidad_repeticiones, 0) * 0.5)
+        FROM RegistroActividadRutina rar
+        JOIN RutinaEjercicio re ON rar.id_rutina = re.id_rutina
+        JOIN Ejercicio e ON re.id_ejercicio = e.id_ejercicio
+        WHERE rar.id_registro_actividad = NEW.id_registro_actividad
+    ), 0);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION proteger_suma_calorias_ingesta()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.calorias_totales_consumidas = COALESCE((
+        SELECT SUM(COALESCE(r.calorias_aproximadas, 0))
+        FROM RegistroIngestaReceta rir
+        JOIN Receta r ON rir.id_receta = r.id_receta
+        WHERE rir.id_registro_ingesta = NEW.id_registro_ingesta
+    ), 0);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_proteger_actividad BEFORE UPDATE ON RegistroActividadFisicaDiaria FOR EACH ROW EXECUTE FUNCTION proteger_suma_calorias_actividad();
+CREATE TRIGGER trg_proteger_ingesta BEFORE UPDATE ON RegistroIngestaAlimenticiaDiaria FOR EACH ROW EXECUTE FUNCTION proteger_suma_calorias_ingesta();
+
+-- ==========================================
 -- 5. RECALCULAR DATOS EXISTENTES (una sola vez)
 -- ==========================================
 -- Ejecuta los cálculos para todos los registros existentes en la BD

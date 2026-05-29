@@ -236,14 +236,6 @@ export default class RecetaControlador {
                 this.#recetaActual.id_receta
             );
 
-            // Actualizar calorías del registro
-            const caloriasActuales = this.#recetaActual.calorias_aproximadas || 0;
-            await this.#registroIngestaService.actualizarRegistro(
-                token,
-                this.#idRegistroIngesta,
-                { caloriasConsumidas: caloriasActuales }
-            );
-
             alert("Receta agregada al consumo del día");
             document.getElementById("modalAlimentacion").classList.remove("activo");
 
