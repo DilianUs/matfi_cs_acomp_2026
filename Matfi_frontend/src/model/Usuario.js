@@ -48,8 +48,8 @@ export default class Usuario {
 }
 
 
-const nuevoUsuario = new Usuario("Cecilia Canul", 22, "mujer", 157, 59);
-console.log(nuevoUsuario.mostrarUsuario())
+// const nuevoUsuario = new Usuario("Cecilia Canul", 22, "mujer", 157, 59);
+// console.log(nuevoUsuario.mostrarUsuario())
 
 //ambos imprimen cosas distintas
 //console.log(nuevoUsuario.mostrarUsuario())

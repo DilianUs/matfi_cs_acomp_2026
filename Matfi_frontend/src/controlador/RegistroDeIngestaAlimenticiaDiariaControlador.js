@@ -6,9 +6,9 @@ class RegistroDeIngestaAlimenticiaDiariaControlador {
     #refRecetaId;
     #refBtnGuardar;
     #consumoDiario;
-    #recetaServicio;
+    #recetaService;
 
-    constructor(consumoDiario, recetaServicio) {
+    constructor(consumoDiario, recetaService) {
 
         this.#consumoDiario = new RegistroDeIngestaAlimenticiaDiaria();
         this.#recetaService = new RecetaService();
@@ -42,7 +42,7 @@ class RegistroDeIngestaAlimenticiaDiariaControlador {
             }
 
             const receta =
-                this.#recetaServicio.obtenerRecetaPorId(
+                this.#recetaService.obtenerRecetaPorId(
                     recetaId
                 );
 

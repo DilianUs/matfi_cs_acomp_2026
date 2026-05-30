@@ -3,7 +3,7 @@ export default class Receta {
     /**Encapsulamiento de propiedades */
     #nombreReceta;
     #ingredientes;
-    #imagenAlusiva;
+    // #imagenAlusiva;
     #descripcionGeneral;
     #pasosPreparacion;
     #caloriasAproximadas;

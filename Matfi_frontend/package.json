@@ -1,5 +1,28 @@
 {
-  "dependencies": {
-    "sweetalert2": "^11.26.25"
+  "name": "matfi_frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:css": "stylelint \"src/vista/styles/**/*.css\"",
+    "lint:html": "htmlhint \"src/vista/**/*.html\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@testing-library/dom": "^10.4.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "htmlhint": "^1.6.3",
+    "jsdom": "^29.1.1",
+    "stylelint": "^16.26.1",
+    "stylelint-config-standard": "^39.0.1",
+    "vitest": "^4.1.7"
   }
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1780103475891" clover="3.2.0">
+  <project timestamp="1780103475891" name="All files">
+    <metrics statements="87" coveredstatements="73" conditionals="15" coveredconditionals="9" methods="41" coveredmethods="32" elements="143" coveredelements="114" complexity="0" loc="87" ncloc="87" packages="2" files="6" classes="6"/>
+    <package name="controlador">
+      <metrics statements="22" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="6" coveredmethods="6"/>
+      <file name="CalculadoraControlador.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\controlador\CalculadoraControlador.js">
+        <metrics statements="22" coveredstatements="19" conditionals="4" coveredconditionals="1" methods="6" coveredmethods="6"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="64" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="model">
+      <metrics statements="65" coveredstatements="54" conditionals="11" coveredconditionals="8" methods="35" coveredmethods="26"/>
+      <file name="CalculadoraCalorias.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\model\CalculadoraCalorias.js">
+        <metrics statements="19" coveredstatements="16" conditionals="8" coveredconditionals="5" methods="8" coveredmethods="7"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="27" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="39" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="66" count="2" type="stmt"/>
+      </file>
+      <file name="CuentaDeUsuario.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\model\CuentaDeUsuario.js">
+        <metrics statements="13" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="5"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="21" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+      </file>
+      <file name="MetaFisica.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\model\MetaFisica.js">
+        <metrics statements="13" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+      </file>
+      <file name="RegistroDeIngestaAlimenticiaDiaria.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\model\RegistroDeIngestaAlimenticiaDiaria.js">
+        <metrics statements="12" coveredstatements="12" conditionals="1" coveredconditionals="1" methods="7" coveredmethods="7"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+      </file>
+      <file name="Usuario.js" path="C:\Users\canul\OneDrive\Desktop\gitMatfi\matfi_cs_acomp_2026\Matfi_frontend\src\model\Usuario.js">
+        <metrics statements="8" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

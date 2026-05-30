@@ -1,4 +1,4 @@
-import Usuario from "../model/Usuario.js";
+// import Usuario from "../model/Usuario.js";
 import CuentaDeUsuario from "../model/CuentaDeUsuario.js";
 import UsuarioService from "../services/UsuarioService.js";
 import MetaFisicaService from "../services/MetaFisicaService.js";

@@ -15,10 +15,10 @@ export default class CuentaDeUsuario {
     }
 
     iniciarSesion(correo, contrasenia){
-        if(this.#correoCuenta === correo && this.#contraseniaCuenta === contrasenia){
-            console.log("inicio de sesion exitoso")
-        }else {console.log("No se pudo iniciar sesion")}
-        // return this.correoCuenta === correo && this.contraseniaCuenta === contrasenia;
+        // if(this.#correoCuenta === correo && this.#contraseniaCuenta === contrasenia){
+        //     console.log("inicio de sesion exitoso")
+        // }else {console.log("No se pudo iniciar sesion")}
+        return this.correoCuenta === correo && this.contraseniaCuenta === contrasenia;
     }
 
     cerrarSesion(){
@@ -37,9 +37,9 @@ export default class CuentaDeUsuario {
 
     mostrarCuentaUsuario(){
         return `
-            \correo: ${this.nombreEjercicio}
-            contrasenia: ${this.cantidadSeries}
-            telefono: ${this.cantidadRepeticiones}
+            correo: ${this.#correoCuenta}
+            contrasenia: ${this.#contraseniaCuenta}
+            telefono: ${this.#telefonoCuenta}
             usuario: ${this.#usuarioDelSistema}`
     }
 
